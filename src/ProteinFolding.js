@@ -79,7 +79,10 @@ function generateParticles(numOfParticles, particleRadius) {
     let generatedCircleId = numOfGeneratedParticles + 1;
 
     if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
-      particles.push({ id: numOfGeneratedParticles.toString(), x: randX, y: randY, color: 'red' });
+      particles.push({ 
+        id: numOfGeneratedParticles.toString(), 
+        x: randX, y: randY, color: 'red'
+      });
       numOfGeneratedParticles += 1;
     }
   }
@@ -170,11 +173,56 @@ function ProteinFolding() {
     setTotalEnergy(calculateTotalEnergy(particles));
   };
 
+  function handleParticleDragStart(event) {
+    let handledParticle = event.target;
+
+    setParticles(
+      particles.map((particle) => {
+        if (particle.id === handledParticle.id()) {
+          particle.xOnDragStart = particle.x;
+          particle.yOnDragStart = particle.y;
+        }
+
+        return particle;
+      })
+    );
+  }
+
+  function handleParticleDragEnd(event) {
+    let handledParticle = event.target;
+
+    setParticles(
+      particles.map((particle) => {
+        if (particle.id === handledParticle.id()) {
+          if (isValidParticlePosition(
+              particles,
+              handledParticle.x(),
+              handledParticle.y(),
+              particle.id,
+              particleRadius
+            )
+          ) {
+            particle.x = handledParticle.x();
+            particle.y = handledParticle.y();
+          } else {
+            // particle.x = handledParticle.xOnDragStart();
+            // particle.y = handledParticle.yOnDragStart();
+          }
+        }
+
+        return particle;
+      })
+    ); 
+  }
+
   useEffect(() => {
+    setTotalEnergy(calculateTotalEnergy(particles));
+    
     if (totalEnergy < minTotalEnergy) {
       setMinTotalEnergy(totalEnergy);
     }
-  }, [totalEnergy, minTotalEnergy]);
+  
+  }, [particles, totalEnergy, minTotalEnergy]);
 
   return (
     <>
@@ -210,14 +258,17 @@ function ProteinFolding() {
       <div className='protein-stage'>
         <Stage width={stageWidth} height={stageHeight}>
           <Layer>
-            {particles.map((circle) => (
+            {particles.map((particle) => (
               <Circle
-                key={circle.id}
-                id={circle.id}
-                x={circle.x}
-                y={circle.y}
+                key={particle.id}
+                id={particle.id}
+                x={particle.x}
+                y={particle.y}
                 radius={particleRadius}
-                fill={circle.color}
+                fill={particle.color}
+                draggable
+                onDragStart={handleParticleDragStart}
+                onDragEnd={handleParticleDragEnd}
               />
             ))}
           </Layer>
