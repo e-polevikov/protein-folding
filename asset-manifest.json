@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/protein-folding/static/css/main.45ccc4ca.css",
-    "main.js": "/protein-folding/static/js/main.51423306.js",
+    "main.js": "/protein-folding/static/js/main.9f32972f.js",
     "index.html": "/protein-folding/index.html",
     "main.45ccc4ca.css.map": "/protein-folding/static/css/main.45ccc4ca.css.map",
-    "main.51423306.js.map": "/protein-folding/static/js/main.51423306.js.map"
+    "main.9f32972f.js.map": "/protein-folding/static/js/main.9f32972f.js.map"
   },
   "entrypoints": [
     "static/css/main.45ccc4ca.css",
-    "static/js/main.51423306.js"
+    "static/js/main.9f32972f.js"
   ]
 }
