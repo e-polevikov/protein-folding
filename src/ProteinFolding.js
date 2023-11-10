@@ -98,7 +98,7 @@ function ProteinFolding() {
   const [minTotalEnergy, setMinTotalEnergy] = useState(0.0);
   const intervalRef = useRef(null);
 
-  function startProteingFolding() {
+  function startProteinFolding() {
     intervalRef.current = setInterval(() => {
       moveParticlesRandomly();
     }, iterationDelayMs);
@@ -148,8 +148,9 @@ function ProteinFolding() {
       }
       
       // If total energy increases after a particle is moved, the particle
-      // remains on its position with the probability equal to 'p'. Otherwise,
-      // the particle is 'moved back' to its initial position.
+      // remains on its position with the probability equal to 'p'. Therefore,
+      // 1 - p is the probability that the particle will be 'moved back' to its
+      // initial position.
 
       if (calculateTotalEnergy(particlesCopy) > calculateTotalEnergy(particles)
           && Math.random() < 1 - p
@@ -197,7 +198,7 @@ function ProteinFolding() {
         <br/>
         <hr></hr>
 
-        <button onClick={startProteingFolding}>Старт</button>
+        <button onClick={startProteinFolding}>Старт</button>
         <button onClick={pauseProteinFolding}>Пауза</button>
 
         <br/>
