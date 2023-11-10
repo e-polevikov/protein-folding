@@ -168,7 +168,7 @@ function ProteinFolding() {
 
   return (
     <>
-      <h1>Эксперимент по сворачиванию белка</h1>
+      <h1>Задача "Сворачивание белка" для конкурса КИО</h1>
       
       <div className='params-container'>
         <label>Радиус частицы: </label>
