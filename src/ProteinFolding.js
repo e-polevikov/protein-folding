@@ -4,16 +4,16 @@ import {Stage, Layer, Circle} from 'react-konva';
 const stageWidth = window.innerWidth * 0.7;
 const stageHeight = window.innerHeight * 0.8;
 
-const initialCellRadius = 20;
-const initialNumberOfCells = 15;
+const initialParticleRadius = 20;
+const initialNumberOfParticles = 15;
 
 const initialP = 0.1;
 const iterationDelayMs = 10;
-const maxAttemptsToMoveCellRandomly = 10;
+const maxAttemptsToMoveParticleRandomly = 10;
 
-function calculateCellEnergy(cell1, cell2) {
-  let xDistance = Math.pow((cell1.x - cell2.x), 2);
-  let yDistance = Math.pow((cell1.y - cell2.y), 2);
+function calculateParticleEnergy(particle1, particle2) {
+  let xDistance = Math.pow((particle1.x - particle2.x), 2);
+  let yDistance = Math.pow((particle1.y - particle2.y), 2);
   let totalDist = Math.sqrt(xDistance + yDistance);
 
   let energy = 1 / Math.pow(totalDist, 12) - 1 / Math.pow(totalDist, 6);
@@ -22,80 +22,80 @@ function calculateCellEnergy(cell1, cell2) {
   return energy;
 }
 
-function calculateTotalEnergy(cells) {
+function calculateTotalEnergy(particles) {
   let totalEnergy = 0.0;
 
-  for (let i = 0; i < cells.length - 1; i++) {
-    for (let j = i + 1; j < cells.length; j++) {
-      totalEnergy += calculateCellEnergy(cells[i], cells[j]);
+  for (let i = 0; i < particles.length - 1; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      totalEnergy += calculateParticleEnergy(particles[i], particles[j]);
     }
   }
 
   return totalEnergy;
 }
 
-function isValidCellPosition(cells, randX, randY, cellId, cellRadius) {
-  let cellIntersectsExisting = false;
+function isValidParticlePosition(particles, randX, randY, particleId, particleRadius) {
+  let particleIntersectsExisting = false;
 
-  for (let i = 0; i < cells.length; i++) {
-    if (i === cellId) {
+  for (let i = 0; i < particles.length; i++) {
+    if (i === particleId) {
       continue;
     }
 
-    let xDistance = (cells[i].x - randX) * (cells[i].x - randX);
-    let yDistance = (cells[i].y - randY) * (cells[i].y - randY);
+    let xDistance = (particles[i].x - randX) * (particles[i].x - randX);
+    let yDistance = (particles[i].y - randY) * (particles[i].y - randY);
 
-    if (xDistance + yDistance <= 4.0 * cellRadius * cellRadius) {
-      cellIntersectsExisting = true;
+    if (xDistance + yDistance <= 4.0 * particleRadius * particleRadius) {
+      particleIntersectsExisting = true;
       break;
     }
   }
 
-  let cellIntersectsStageBoudaries = false;
+  let particleIntersectsStageBoudaries = false;
 
-  if (randX - cellRadius < 0.0 || randX + cellRadius > stageWidth) {
-    cellIntersectsStageBoudaries = true;
+  if (randX - particleRadius < 0.0 || randX + particleRadius > stageWidth) {
+    particleIntersectsStageBoudaries = true;
   }
 
-  if (randY - cellRadius < 0.0 || randY + cellRadius > stageHeight) {
-    cellIntersectsStageBoudaries = true;
+  if (randY - particleRadius < 0.0 || randY + particleRadius > stageHeight) {
+    particleIntersectsStageBoudaries = true;
   }
 
-  return !cellIntersectsExisting && !cellIntersectsStageBoudaries;
+  return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
 
-function generateCells(numOfCells, cellRadius) {
-  let cells = [];
-  let numOfGeneratedCells = 0;
+function generateParticles(numOfParticles, particleRadius) {
+  let particles = [];
+  let numOfGeneratedParticles = 0;
 
-  while (numOfGeneratedCells < numOfCells) {
+  while (numOfGeneratedParticles < numOfParticles) {
     let randX = Math.random() * stageWidth;
     let randY = Math.random() * stageHeight;
-    let generatedCircleId = numOfGeneratedCells + 1;
+    let generatedCircleId = numOfGeneratedParticles + 1;
 
-    if (isValidCellPosition(cells, randX, randY, generatedCircleId, cellRadius)) {
-      cells.push({ id: numOfGeneratedCells.toString(), x: randX, y: randY, color: 'red' });
-      numOfGeneratedCells += 1;
+    if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
+      particles.push({ id: numOfGeneratedParticles.toString(), x: randX, y: randY, color: 'red' });
+      numOfGeneratedParticles += 1;
     }
   }
 
-  return cells;
+  return particles;
 }
 
 function ProteinFolding() {
-  const [cellRadius, setCellRadius] = useState(initialCellRadius);
-  const [cellsCount, setCellsCount] = useState(initialNumberOfCells);
-  const [cells, setCells] = useState(generateCells(cellsCount, cellRadius));
+  const [particleRadius, setParticleRadius] = useState(initialParticleRadius);
+  const [particlesCount, setParticlesCount] = useState(initialNumberOfParticles);
+  const [particles, setParticles] = useState(generateParticles(particlesCount, particleRadius));
   
   const [p, setP] = useState(initialP);
 
-  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(cells));
+  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(particles));
   const [minTotalEnergy, setMinTotalEnergy] = useState(0.0);
   const intervalRef = useRef(null);
 
   function startProteingFolding() {
     intervalRef.current = setInterval(() => {
-      moveCellsRandomly();
+      moveParticlesRandomly();
     }, iterationDelayMs);
   }
 
@@ -103,61 +103,61 @@ function ProteinFolding() {
     clearInterval(intervalRef.current);
   }
 
-  function generateNewCells() {
+  function generateNewParticles() {
     clearInterval(intervalRef.current);
 
-    let currentCircleRadius = document.getElementById('cell-radius').value;
-    let currentCirclesCount = document.getElementById('cells-count').value;
-    let currentP = document.getElementById('cell-move-probability').value;
+    let currentCircleRadius = document.getElementById('particle-radius').value;
+    let currentCirclesCount = document.getElementById('particles-count').value;
+    let currentP = document.getElementById('particle-move-probability').value;
 
-    setCellRadius(currentCircleRadius);
-    setCellsCount(currentCirclesCount);
+    setParticleRadius(currentCircleRadius);
+    setParticlesCount(currentCirclesCount);
     setP(currentP);
 
-    setCells(generateCells(currentCirclesCount, currentCircleRadius));
-    setTotalEnergy(calculateTotalEnergy(cells));
+    setParticles(generateParticles(currentCirclesCount, currentCircleRadius));
+    setTotalEnergy(calculateTotalEnergy(particles));
     setMinTotalEnergy(0.0);
   }
 
-  function moveCellsRandomly() {
-    let cellsCopy = JSON.parse(JSON.stringify(cells));
+  function moveParticlesRandomly() {
+    let particlesCopy = JSON.parse(JSON.stringify(particles));
 
-    cellsCopy.map((cell) => {
-      let cellIsMoved = false;
+    particlesCopy.map((particle) => {
+      let particleIsMoved = false;
       let numAttempsToMove = 0;
-      let currentX = cell.x;
-      let currentY = cell.y;
+      let currentX = particle.x;
+      let currentY = particle.y;
 
-      while (!cellIsMoved && numAttempsToMove < maxAttemptsToMoveCellRandomly) {
-        let randX = cell.x + (Math.random() - 0.5) * 10;
-        let randY = cell.y + (Math.random() - 0.5) * 10;
-        let currentCellId = Number(cell.id);
+      while (!particleIsMoved && numAttempsToMove < maxAttemptsToMoveParticleRandomly) {
+        let randX = particle.x + (Math.random() - 0.5) * 10;
+        let randY = particle.y + (Math.random() - 0.5) * 10;
+        let currentParticleId = Number(particle.id);
 
-        if (isValidCellPosition(cellsCopy, randX, randY, currentCellId, cellRadius)) {
-          cell.x = randX;
-          cell.y = randY;
-          cellIsMoved = true;
+        if (isValidParticlePosition(particlesCopy, randX, randY, currentParticleId, particleRadius)) {
+          particle.x = randX;
+          particle.y = randY;
+          particleIsMoved = true;
         }
 
         numAttempsToMove += 1;
       }
 
-      if (calculateTotalEnergy(cellsCopy) > calculateTotalEnergy(cells)
+      if (calculateTotalEnergy(particlesCopy) > calculateTotalEnergy(particles)
           && Math.random() < 1 - p
       ) {
-        cell.x = currentX;
-        cell.y = currentY;
+        particle.x = currentX;
+        particle.y = currentY;
       }
       
-      return cell;
+      return particle;
     });
 
-    for (let i = 0; i < cells.length; i++) {
-      cells[i] = cellsCopy[i];
+    for (let i = 0; i < particles.length; i++) {
+      particles[i] = particlesCopy[i];
     }
 
-    setCells(cells);
-    setTotalEnergy(calculateTotalEnergy(cells));
+    setParticles(particles);
+    setTotalEnergy(calculateTotalEnergy(particles));
   };
 
   useEffect(() => {
@@ -172,18 +172,18 @@ function ProteinFolding() {
       
       <div className='params-container'>
         <label>Радиус частицы: </label>
-        <input id='cell-radius' type='number' defaultValue={initialCellRadius}/>
+        <input id='particle-radius' type='number' defaultValue={initialParticleRadius}/>
         <br/><br/>
 
         <label>Количество частиц: </label>
-        <input id='cells-count' type='number' defaultValue={initialNumberOfCells}/>
+        <input id='particles-count' type='number' defaultValue={initialNumberOfParticles}/>
         <br/><br/>
 
         <label>P: </label>
-        <input id='cell-move-probability' type='number' defaultValue={initialP}></input>
+        <input id='particle-move-probability' type='number' defaultValue={initialP}></input>
         <br/><br/>
 
-        <button onClick={generateNewCells}>Обновить</button>
+        <button onClick={generateNewParticles}>Обновить</button>
 
         <br/>
         <hr></hr>
@@ -200,13 +200,13 @@ function ProteinFolding() {
       <div className='protein-stage'>
         <Stage width={stageWidth} height={stageHeight}>
           <Layer>
-            {cells.map((circle) => (
+            {particles.map((circle) => (
               <Circle
                 key={circle.id}
                 id={circle.id}
                 x={circle.x}
                 y={circle.y}
-                radius={cellRadius}
+                radius={particleRadius}
                 fill={circle.color}
               />
             ))}
