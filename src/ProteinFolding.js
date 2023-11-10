@@ -7,9 +7,14 @@ const stageHeight = window.innerHeight * 0.8;
 const initialParticleRadius = 20;
 const initialNumberOfParticles = 15;
 
+// Probability to move a particle if total energy
+// increases after the particle is moved randomly
 const initialP = 0.1;
-const iterationDelayMs = 10;
 const maxAttemptsToMoveParticleRandomly = 10;
+
+// Delay between rerendering of protein particles
+const iterationDelayMs = 10;
+
 
 function calculateParticleEnergy(particle1, particle2) {
   let xDistance = Math.pow((particle1.x - particle2.x), 2);
@@ -42,10 +47,10 @@ function isValidParticlePosition(particles, randX, randY, particleId, particleRa
       continue;
     }
 
-    let xDistance = (particles[i].x - randX) * (particles[i].x - randX);
-    let yDistance = (particles[i].y - randY) * (particles[i].y - randY);
+    let xDistance = Math.pow((particles[i].x - randX), 2);
+    let yDistance = Math.pow((particles[i].y - randY), 2);
 
-    if (xDistance + yDistance <= 4.0 * particleRadius * particleRadius) {
+    if (xDistance + yDistance <= 4.0 * Math.pow(particleRadius, 2)) {
       particleIntersectsExisting = true;
       break;
     }
@@ -141,6 +146,10 @@ function ProteinFolding() {
 
         numAttempsToMove += 1;
       }
+      
+      // If total energy increases after a particle is moved, the particle
+      // remains on its position with the probability equal to 'p'. Otherwise,
+      // the particle is 'moved back' to its initial position.
 
       if (calculateTotalEnergy(particlesCopy) > calculateTotalEnergy(particles)
           && Math.random() < 1 - p
