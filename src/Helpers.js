@@ -85,17 +85,18 @@ export function generateParticles(numOfParticles, particleRadius) {
   let numOfGeneratedParticles = 0;
 
   while (numOfGeneratedParticles < numOfParticles) {
-      let randX = Math.random() * stageWidth;
-      let randY = Math.random() * stageHeight;
-      let generatedCircleId = numOfGeneratedParticles + 1;
+    let randX = Math.random() * stageWidth;
+    let randY = Math.random() * stageHeight;
+    let generatedCircleId = numOfGeneratedParticles + 1;
 
-      if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
+    if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
       particles.push({ 
-          id: numOfGeneratedParticles.toString(), 
-          x: randX, y: randY, color: getRandomColor()
+        id: numOfGeneratedParticles.toString(), 
+        x: randX, y: randY, color: getRandomColor()
       });
+      
       numOfGeneratedParticles += 1;
-      }
+    }
   }
 
   return particles;
