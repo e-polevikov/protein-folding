@@ -54,23 +54,27 @@ function ProteinFolding() {
     setParticlesCount(currentCirclesCount);
     setP(currentP);
 
-    let redGreenInteractionPower = Number(document.getElementById('red-green').value);
-    let blueGreenInteractionPower = Number(document.getElementById('blue-green').value);
-    let redBlueInteractionPower = Number(document.getElementById('red-blue').value);
+    let redGreenInteractionPower = Number(document.getElementById('red-green-power').value);
+    let blueGreenInteractionPower = Number(document.getElementById('blue-green-power').value);
+    let redBlueInteractionPower = Number(document.getElementById('red-blue-power').value);
+
+    let redInteractionPower = Number(document.getElementById('red-power').value);
+    let greenInteractionPower = Number(document.getElementById('green-power').value);
+    let blueInteractionPower = Number(document.getElementById('blue-power').value);
 
     let currentInteractionPowers = {
       'red': {
-        'red': 1,
+        'red': redInteractionPower,
         'green': redGreenInteractionPower,
         'blue': redBlueInteractionPower},
       'green': {
         'red': redGreenInteractionPower,
-        'green': 1,
+        'green': greenInteractionPower,
         'blue': blueGreenInteractionPower},
       'blue': {
         'red': redBlueInteractionPower,
         'green': blueGreenInteractionPower,
-        'blue': 1
+        'blue': blueInteractionPower
       }
     };
 
@@ -216,16 +220,28 @@ function ProteinFolding() {
 
         <p>Силы взаимодействия: </p>
 
+        <label>Красные: </label>
+        <input id='red-power' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
+        <label>Зеленые: </label>
+        <input id='green-power' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
+        <label>Синие: </label>
+        <input id='blue-power' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
         <label>Красная - Зеленая: </label>
-        <input id='red-green' type='number' defaultValue={1.0}></input>
+        <input id='red-green-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
         <label>Синяя - Зеленая: </label>
-        <input id='blue-green' type='number' defaultValue={1.0}></input>
+        <input id='blue-green-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
         <label>Красная - Синяя: </label>
-        <input id='red-blue' type='number' defaultValue={1.0}></input>
+        <input id='red-blue-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
         <hr/>
