@@ -174,6 +174,7 @@ function ProteinFolding() {
   };
 
   function handleParticleDragStart(event) {
+    /*
     let handledParticle = event.target;
 
     setParticles(
@@ -186,6 +187,7 @@ function ProteinFolding() {
         return particle;
       })
     );
+    */
   }
 
   function handleParticleDragEnd(event) {
