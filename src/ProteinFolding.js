@@ -7,9 +7,16 @@ const stageHeight = window.innerHeight * 0.8;
 const initialParticleRadius = 20;
 const initialNumberOfParticles = 15;
 
+const particleColors = ['red', 'green', 'blue'];
+const interactionPower = {
+  'red': {'red': 1, 'green': 3, 'blue': -1.5},
+  'green': {'red': 3, 'green': 1, 'blue': -3},
+  'blue': {'red': -1.5, 'green': -3, 'blue': 1}
+};
+
 // Probability to move a particle if total energy
 // increases after the particle is moved randomly
-const initialP = 0.1;
+const initialP = 0.05;
 const maxAttemptsToMoveParticleRandomly = 10;
 
 // Delay between rerendering of protein particles
@@ -23,6 +30,8 @@ function calculateParticleEnergy(particle1, particle2) {
 
   let energy = 1 / Math.pow(totalDist, 12) - 1 / Math.pow(totalDist, 6);
   energy = Math.pow(10, 10) * 4.0 * energy;
+
+  energy = energy * interactionPower[particle1.color][particle2.color];
 
   return energy;
 }
@@ -81,7 +90,7 @@ function generateParticles(numOfParticles, particleRadius) {
     if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
       particles.push({ 
         id: numOfGeneratedParticles.toString(), 
-        x: randX, y: randY, color: 'red'
+        x: randX, y: randY, color: particleColors[Math.floor(Math.random() * 3)]
       });
       numOfGeneratedParticles += 1;
     }
