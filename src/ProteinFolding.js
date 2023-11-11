@@ -13,7 +13,8 @@ import {
 import {
   calculateTotalEnergy,
   isValidParticlePosition,
-  generateParticles
+  generateParticles,
+  getRandomColor
 } from './Helpers.js';
 
 
@@ -144,6 +145,20 @@ function ProteinFolding() {
     ); 
   }
 
+  function changeParticleColor(event) {
+    let handledParticle = event.target;
+
+    setParticles(
+      particles.map((particle) => {
+        if (particle.id === handledParticle.id()) {
+          particle.color = getRandomColor(particle.color);
+        }
+
+        return particle;
+      })
+    );
+  }
+
   useEffect(() => {
     setTotalEnergy(calculateTotalEnergy(particles));
     
@@ -198,6 +213,7 @@ function ProteinFolding() {
                 draggable
                 onDragStart={handleParticleDragStart}
                 onDragEnd={handleParticleDragEnd}
+                onClick={changeParticleColor}
               />
             ))}
           </Layer>

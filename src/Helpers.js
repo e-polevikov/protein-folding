@@ -17,6 +17,26 @@ function calculateParticleEnergy(particle1, particle2) {
 
   return energy;
 }
+
+function getRandomInteger(maxValueExcl) {
+  return Math.floor(Math.random() * (maxValueExcl));
+}
+
+export function getRandomColor(colorToExclude) {
+  let numColors = 3;
+
+  if (colorToExclude == null) {
+    return particleColors[getRandomInteger(numColors)];
+  }
+
+  while (true) {
+    let color = particleColors[getRandomInteger(numColors)];
+
+    if (color !== colorToExclude) {
+      return color;
+    }
+  } 
+}
   
 export function calculateTotalEnergy(particles) {
   let totalEnergy = 0.0;
@@ -72,7 +92,7 @@ export function generateParticles(numOfParticles, particleRadius) {
       if (isValidParticlePosition(particles, randX, randY, generatedCircleId, particleRadius)) {
       particles.push({ 
           id: numOfGeneratedParticles.toString(), 
-          x: randX, y: randY, color: particleColors[Math.floor(Math.random() * 3)]
+          x: randX, y: randY, color: getRandomColor()
       });
       numOfGeneratedParticles += 1;
       }
