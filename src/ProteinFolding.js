@@ -7,7 +7,8 @@ import {
   initialNumberOfParticles,
   initialP,
   maxAttemptsToMoveParticleRandomly,
-  iterationDelayMs
+  iterationDelayMs,
+  initialInteractionPowers
 } from './Constants.js';
 
 import {
@@ -22,10 +23,11 @@ function ProteinFolding() {
   const [particleRadius, setParticleRadius] = useState(initialParticleRadius);
   const [particlesCount, setParticlesCount] = useState(initialNumberOfParticles);
   const [particles, setParticles] = useState(generateParticles(particlesCount, particleRadius));
+  const [interactionPowers, setInteractionPowers] = useState(initialInteractionPowers);
   
   const [p, setP] = useState(initialP);
 
-  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(particles));
+  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(particles, interactionPowers));
   const [minTotalEnergy, setMinTotalEnergy] = useState(0.0);
   const intervalRef = useRef(null);
 
@@ -39,19 +41,42 @@ function ProteinFolding() {
     clearInterval(intervalRef.current);
   }
 
-  function generateNewParticles() {
+  // Generates new experiment configuration randomly
+  // taking parameter values into account
+  function updateParticles() {
     clearInterval(intervalRef.current);
 
-    let currentCircleRadius = document.getElementById('particle-radius').value;
-    let currentCirclesCount = document.getElementById('particles-count').value;
-    let currentP = document.getElementById('particle-move-probability').value;
+    let currentCircleRadius = Number(document.getElementById('particle-radius').value);
+    let currentCirclesCount = Number(document.getElementById('particles-count').value);
+    let currentP = Number(document.getElementById('particle-move-probability').value);
 
     setParticleRadius(currentCircleRadius);
     setParticlesCount(currentCirclesCount);
     setP(currentP);
 
+    let redGreenInteractionPower = Number(document.getElementById('red-green').value);
+    let blueGreenInteractionPower = Number(document.getElementById('blue-green').value);
+    let redBlueInteractionPower = Number(document.getElementById('red-blue').value);
+
+    let currentInteractionPowers = {
+      'red': {
+        'red': 1,
+        'green': redGreenInteractionPower,
+        'blue': redBlueInteractionPower},
+      'green': {
+        'red': redGreenInteractionPower,
+        'green': 1,
+        'blue': blueGreenInteractionPower},
+      'blue': {
+        'red': redBlueInteractionPower,
+        'green': blueGreenInteractionPower,
+        'blue': 1
+      }
+    };
+
+    setInteractionPowers(currentInteractionPowers);
     setParticles(generateParticles(currentCirclesCount, currentCircleRadius));
-    setTotalEnergy(calculateTotalEnergy(particles));
+    setTotalEnergy(calculateTotalEnergy(particles, currentInteractionPowers));
     setMinTotalEnergy(0.0);
   }
 
@@ -83,7 +108,7 @@ function ProteinFolding() {
       // 1 - p is the probability that the particle will be 'moved back' to its
       // initial position.
 
-      if (calculateTotalEnergy(particlesCopy) > calculateTotalEnergy(particles)
+      if (calculateTotalEnergy(particlesCopy, interactionPowers) > calculateTotalEnergy(particles, interactionPowers)
           && Math.random() < 1 - p
       ) {
         particle.x = currentX;
@@ -98,7 +123,7 @@ function ProteinFolding() {
     }
 
     setParticles(particles);
-    setTotalEnergy(calculateTotalEnergy(particles));
+    setTotalEnergy(calculateTotalEnergy(particles, interactionPowers));
   };
 
   function handleParticleDragStart(event) {
@@ -160,19 +185,21 @@ function ProteinFolding() {
   }
 
   useEffect(() => {
-    setTotalEnergy(calculateTotalEnergy(particles));
+    setTotalEnergy(calculateTotalEnergy(particles, interactionPowers));
     
     if (totalEnergy < minTotalEnergy) {
       setMinTotalEnergy(totalEnergy);
     }
   
-  }, [particles, totalEnergy, minTotalEnergy]);
+  }, [particles, totalEnergy, minTotalEnergy, interactionPowers]);
 
   return (
     <>
       <h1>Задача "Сворачивание белка" для конкурса КИО</h1>
       
       <div className='params-container'>
+        <p>Параметры эксперимента:</p>
+
         <label>Радиус частицы: </label>
         <input id='particle-radius' type='number' defaultValue={initialParticleRadius}/>
         <br/><br/>
@@ -185,11 +212,25 @@ function ProteinFolding() {
         <input id='particle-move-probability' type='number' defaultValue={initialP}></input>
         <br/><br/>
 
-        <button onClick={generateNewParticles}>Обновить</button>
+        <hr/>
 
-        <br/>
-        <hr></hr>
+        <p>Силы взаимодействия: </p>
 
+        <label>Красная - Зеленая: </label>
+        <input id='red-green' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
+        <label>Синяя - Зеленая: </label>
+        <input id='blue-green' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
+        <label>Красная - Синяя: </label>
+        <input id='red-blue' type='number' defaultValue={1.0}></input>
+        <br/><br/>
+
+        <hr/>
+
+        <button onClick={updateParticles}>Обновить</button>
         <button onClick={startProteinFolding}>Старт</button>
         <button onClick={pauseProteinFolding}>Пауза</button>
 

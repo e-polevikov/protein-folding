@@ -1,19 +1,20 @@
 import {
   stageWidth,
   stageHeight,
-  particleColors,
-  interactionPower,
+  particleColors
 } from './Constants.js';
 
-function calculateParticleEnergy(particle1, particle2) {
+function calculateParticleEnergy(particle1, particle2, interactionPowers) {
   let xDistance = Math.pow((particle1.x - particle2.x), 2);
   let yDistance = Math.pow((particle1.y - particle2.y), 2);
   let totalDist = Math.sqrt(xDistance + yDistance);
 
   let energy = 1 / Math.pow(totalDist, 12) - 1 / Math.pow(totalDist, 6);
-  energy = Math.pow(10, 10) * 4.0 * energy;
+  energy *= 4.0 * Math.pow(10, 10);
 
-  energy = energy * interactionPower[particle1.color][particle2.color];
+  if (interactionPowers != null) {
+    energy *= interactionPowers[particle1.color][particle2.color];
+  }
 
   return energy;
 }
@@ -38,12 +39,15 @@ export function getRandomColor(colorToExclude) {
   } 
 }
   
-export function calculateTotalEnergy(particles) {
+export function calculateTotalEnergy(particles, interactionPowers) {
   let totalEnergy = 0.0;
 
   for (let i = 0; i < particles.length - 1; i++) {
     for (let j = i + 1; j < particles.length; j++) {
-      totalEnergy += calculateParticleEnergy(particles[i], particles[j]);
+      totalEnergy += calculateParticleEnergy(
+        particles[i], particles[j],
+        interactionPowers
+      );
     }
   }
 
