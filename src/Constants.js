@@ -1,14 +1,14 @@
 export const stageWidth = window.innerWidth * 0.7;
 export const stageHeight = window.innerHeight * 0.8;
 
-export const initialParticleRadius = 25;
-export const initialNumberOfParticles = 35;
+export const initialParticleRadius = 60;
+export const initialNumberOfParticles = 12;
 
 export const particleColors = ['red', 'green', 'blue'];
 export const initialInteractionPowers = {
-  'red': {'red': 1, 'green': 1, 'blue': 1},
-  'green': {'red': 1, 'green': 1, 'blue': 1},
-  'blue': {'red': 1, 'green': 1, 'blue': 1}
+  'red': {'red': 2, 'green': 5, 'blue': 4},
+  'green': {'red': 5, 'green': 1, 'blue': -1},
+  'blue': {'red': 4, 'green': -1, 'blue': -1}
 };
 
 // Probability to move a particle if total energy

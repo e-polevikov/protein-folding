@@ -25,3 +25,8 @@ h1 {
 .blue-color-span {
   color: blue;
 }
+
+.btn {
+  padding: 10px;
+  margin: 4px;
+}

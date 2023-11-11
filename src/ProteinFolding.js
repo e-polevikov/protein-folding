@@ -27,7 +27,7 @@ function ProteinFolding() {
   
   const [p, setP] = useState(initialP);
 
-  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(particles, interactionPowers));
+  const [totalEnergy, setTotalEnergy] = useState(calculateTotalEnergy(particles, initialInteractionPowers));
   const [minTotalEnergy, setMinTotalEnergy] = useState(0.0);
   const intervalRef = useRef(null);
 
@@ -202,7 +202,7 @@ function ProteinFolding() {
       <h1>Задача "Сворачивание белка" для конкурса КИО</h1>
       
       <div className='params-container'>
-        <p>Параметры эксперимента:</p>
+        <p><b>Параметры эксперимента:</b></p>
 
         <label>Радиус частицы: </label>
         <input id='particle-radius' type='number' defaultValue={initialParticleRadius}/>
@@ -218,46 +218,46 @@ function ProteinFolding() {
 
         <hr/>
 
-        <p>Силы взаимодействия: </p>
+        <p><b>Силы взаимодействия:</b></p>
 
         <label><span className='red-color-span'>Красные: </span></label>
-        <input id='red-power' type='number' defaultValue={1.0}></input>
+        <input id='red-power' type='number' defaultValue={interactionPowers['red']['red']}></input>
         <br/><br/>
 
         <label><span className='green-color-span'>Зеленые: </span></label>
-        <input id='green-power' type='number' defaultValue={1.0}></input>
+        <input id='green-power' type='number' defaultValue={interactionPowers['green']['green']}></input>
         <br/><br/>
 
         <label><span className='blue-color-span'>Синие: </span> </label>
-        <input id='blue-power' type='number' defaultValue={1.0}></input>
+        <input id='blue-power' type='number' defaultValue={interactionPowers['blue']['blue']}></input>
         <br/><br/>
 
         <label>
           <span className='red-color-span'>Красные</span> -
           <span className='green-color-span'> Зеленые: </span>
         </label>
-        <input id='red-green-power' type='number' defaultValue={1.0}></input>
+        <input id='red-green-power' type='number' defaultValue={interactionPowers['red']['green']}></input>
         <br/><br/>
 
         <label>
           <span className='blue-color-span'>Синие</span> - 
           <span className='green-color-span'> Зеленые: </span>
         </label>
-        <input id='blue-green-power' type='number' defaultValue={1.0}></input>
+        <input id='blue-green-power' type='number' defaultValue={interactionPowers['blue']['green']}></input>
         <br/><br/>
 
         <label>
           <span className='red-color-span'>Красные</span> - 
           <span className='blue-color-span'> Синие: </span>
         </label>
-        <input id='red-blue-power' type='number' defaultValue={1.0}></input>
+        <input id='red-blue-power' type='number' defaultValue={interactionPowers['red']['blue']}></input>
         <br/><br/>
 
         <hr/>
 
-        <button onClick={updateParticles}>Обновить</button>
-        <button onClick={startProteinFolding}>Старт</button>
-        <button onClick={pauseProteinFolding}>Пауза</button>
+        <button className='btn' onClick={updateParticles}>Обновить</button>
+        <button className='btn' onClick={startProteinFolding}>Старт</button>
+        <button className='btn' onClick={pauseProteinFolding}>Пауза</button>
 
         <br/>
 
