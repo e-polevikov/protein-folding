@@ -220,27 +220,36 @@ function ProteinFolding() {
 
         <p>Силы взаимодействия: </p>
 
-        <label>Красные: </label>
+        <label><span className='red-color-span'>Красные: </span></label>
         <input id='red-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
-        <label>Зеленые: </label>
+        <label><span className='green-color-span'>Зеленые: </span></label>
         <input id='green-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
-        <label>Синие: </label>
+        <label><span className='blue-color-span'>Синие: </span> </label>
         <input id='blue-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
-        <label>Красная - Зеленая: </label>
+        <label>
+          <span className='red-color-span'>Красные</span> -
+          <span className='green-color-span'> Зеленые: </span>
+        </label>
         <input id='red-green-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
-        <label>Синяя - Зеленая: </label>
+        <label>
+          <span className='blue-color-span'>Синие</span> - 
+          <span className='green-color-span'> Зеленые: </span>
+        </label>
         <input id='blue-green-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 
-        <label>Красная - Синяя: </label>
+        <label>
+          <span className='red-color-span'>Красные</span> - 
+          <span className='blue-color-span'> Синие: </span>
+        </label>
         <input id='red-blue-power' type='number' defaultValue={1.0}></input>
         <br/><br/>
 

@@ -13,3 +13,15 @@
 h1 {
   text-align: center;
 }
+
+.red-color-span {
+  color: red;
+}
+
+.green-color-span {
+  color: green;
+}
+
+.blue-color-span {
+  color: blue;
+}
