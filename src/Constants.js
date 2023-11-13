@@ -1,8 +1,8 @@
 export const stageWidth = window.innerWidth * 0.7;
 export const stageHeight = window.innerHeight * 0.8;
 
-export const initialParticleRadius = 60;
-export const initialNumberOfParticles = 12;
+export const initialParticleRadius = 20;
+export const initialNumberOfParticles = 3;
 
 export const particleColors = ['red', 'green', 'blue'];
 export const initialInteractionPowers = {

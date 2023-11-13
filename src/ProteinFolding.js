@@ -15,7 +15,8 @@ import {
   calculateTotalEnergy,
   isValidParticlePosition,
   generateParticles,
-  getRandomColor
+  getRandomColor,
+  moveParticlesChainRandomly
 } from './Helpers.js';
 
 
@@ -33,7 +34,10 @@ function ProteinFolding() {
 
   function startProteinFolding() {
     intervalRef.current = setInterval(() => {
-      moveParticlesRandomly();
+      //moveParticlesRandomly();
+      moveParticlesChainRandomly(particles, interactionPowers, particleRadius);
+      setParticles(movedParticlesChain);
+      // setTotalEnergy(calculateTotalEnergy(particles, interactionPowers));
     }, iterationDelayMs);
   }
 
