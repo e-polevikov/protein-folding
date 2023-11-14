@@ -8,7 +8,7 @@ function getRandomInteger(maxValueExcl) {
   return Math.floor(Math.random() * (maxValueExcl));
 }
 
-function generateParticleColor(colorToExclude) {
+export function generateParticleColor(colorToExclude) {
   let numColors = particleColors.length;
 
   if (colorToExclude == null) {

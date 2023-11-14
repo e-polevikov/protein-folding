@@ -13,7 +13,8 @@ import {
 import {
   generateParticles,
   moveParticlesRandomly,
-  calculateTotalEnergy
+  calculateTotalEnergy,
+  generateParticleColor
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -51,6 +52,24 @@ function ProteinFoldingStage() {
 
   function pauseProteinFolding() {
     setFoldingStarted(false);
+  }
+
+  function changeParticleColor(event) {
+    if (foldingStarted) {
+      return;
+    }
+
+    let handledParticle = event.target;
+
+    setParticles(
+      particles.map((particle) => {
+        if (particle.id === handledParticle.id()) {
+          particle.color = generateParticleColor(particle.color);
+        }
+
+        return particle;
+      })
+    );
   }
 
   function generateNewProtein() {
@@ -234,6 +253,7 @@ function ProteinFoldingStage() {
                 y={particle.y}
                 radius={particleRadius}
                 fill={particle.color}
+                onClick={changeParticleColor}
               />
             ))}
           </Layer>
