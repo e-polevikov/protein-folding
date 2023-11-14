@@ -72,6 +72,25 @@ function ProteinFoldingStage() {
     );
   }
 
+  function handleParticleDragMove(event) {
+    let handledParticle = event.target;
+
+    let newParticles = particles.map((particle) => {
+      if (particle.id === handledParticle.id()) {
+        particle.x = handledParticle.x();
+        particle.y = handledParticle.y();
+      }
+
+      return particle;
+    });
+
+    let energy = calculateTotalEnergy(newParticles, interactionPowers);
+
+    setParticles(newParticles);
+    setEnergy(energy);
+    setMinEnergy(Math.min(energy, minEnergy));
+  }
+
   function generateNewProtein() {
     if (!foldingStarted) {
       let currentNumParticles = Number(numParticlesRef.current.value);
@@ -254,6 +273,8 @@ function ProteinFoldingStage() {
                 radius={particleRadius}
                 fill={particle.color}
                 onClick={changeParticleColor}
+                draggable
+                onDragMove={handleParticleDragMove}
               />
             ))}
           </Layer>
