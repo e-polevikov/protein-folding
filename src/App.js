@@ -1,9 +1,9 @@
-import ProteinFolding from './ProteinFolding.js';
+import ProteinFoldingStage from './ProteinFoldingStage';
 
 function App() {
   return (
     <>
-      <ProteinFolding/>
+      <ProteinFoldingStage/>
     </>
   );
 }
