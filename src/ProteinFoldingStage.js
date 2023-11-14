@@ -12,7 +12,8 @@ import {
 
 import {
   generateParticles,
-  moveParticlesRandomly
+  moveParticlesRandomly,
+  calculateTotalEnergy
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -35,6 +36,12 @@ function ProteinFoldingStage() {
   const [particles, setParticles] = useState(generateParticles(
     numParticles, particleRadius
   ));
+
+  const [energy, setEnergy] = useState(calculateTotalEnergy(
+    particles, interactionPowers
+  ));
+
+  const [minEnergy, setMinEnergy] = useState(energy);
 
   const [foldingStarted, setFoldingStarted] = useState(false);
 
@@ -75,7 +82,13 @@ function ProteinFoldingStage() {
       };
 
       setInteractionPowers(currentInteractionPowers);
-      setParticles(generateParticles(currentNumParticles, currentParticleRadius));
+
+      let newParticles = generateParticles(currentNumParticles, currentParticleRadius);
+      let energy = calculateTotalEnergy(newParticles, currentInteractionPowers);
+
+      setParticles(newParticles);
+      setEnergy(energy);
+      setMinEnergy(energy);
     }
   }
 
@@ -86,8 +99,12 @@ function ProteinFoldingStage() {
           particles, particleRadius,
           moveP, interactionPowers
         );
+
+        let currentEnergy = calculateTotalEnergy(movedParticles, interactionPowers);
   
         setParticles(movedParticles);
+        setEnergy(currentEnergy);
+        setMinEnergy(Math.min(minEnergy, currentEnergy));
       }, particlesMoveDelayMs);
     }
   });
@@ -198,6 +215,12 @@ function ProteinFoldingStage() {
         <button className='btn' onClick={startProteinFolding}>Старт</button>
         <button className='btn' onClick={pauseProteinFolding}>Пауза</button>
         <button className='btn' onClick={generateNewProtein}>Новый эксперимент</button>
+
+        <br/>
+
+        <p>Текущая энергия взаимодействия: {energy.toFixed(2)}</p>
+        <p>Минимальная энергия взаимодействия: {minEnergy.toFixed(2)}</p>
+
       </div>
 
       <div className='protein-folding-stage'>
