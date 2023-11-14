@@ -61,15 +61,19 @@ function ProteinFoldingStage() {
 
     let handledParticle = event.target;
 
-    setParticles(
-      particles.map((particle) => {
-        if (particle.id === handledParticle.id()) {
-          particle.color = generateParticleColor(particle.color);
-        }
+    let newParticles = particles.map((particle) => {
+      if (particle.id === handledParticle.id()) {
+        particle.color = generateParticleColor(particle.color);
+      }
 
-        return particle;
-      })
-    );
+      return particle;
+    });
+
+    let energy = calculateTotalEnergy(newParticles, interactionPowers);
+
+    setParticles(newParticles);
+    setEnergy(energy);
+    setMinEnergy(Math.min(energy, minEnergy));
   }
 
   function handleParticleDragMove(event) {
