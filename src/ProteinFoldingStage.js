@@ -34,6 +34,8 @@ function ProteinFoldingStage() {
   const redBlueInteractionPowerRef = useRef(null);
   const greenBlueInteractionPowerRef = useRef(null);
 
+  const particlesAsChainRef = useRef(null);
+
   const [particles, setParticles] = useState(generateParticles(
     numParticles, particleRadius
   ));
@@ -125,7 +127,14 @@ function ProteinFoldingStage() {
 
       setInteractionPowers(currentInteractionPowers);
 
-      let newParticles = generateParticles(currentNumParticles, currentParticleRadius);
+      let particlesAsChain = particlesAsChainRef.current.checked;
+
+      let newParticles = generateParticles(
+        currentNumParticles,
+        currentParticleRadius,
+        particlesAsChain
+      );
+      
       let energy = calculateTotalEnergy(newParticles, currentInteractionPowers);
 
       setParticles(newParticles);
@@ -183,6 +192,15 @@ function ProteinFoldingStage() {
           ref={movePRef}
           type='number'
           defaultValue={moveP}
+        />
+
+        <br/>
+        <br/>
+
+        <label>Белок-цепочка</label>
+        <input
+          ref={particlesAsChainRef}
+          type='checkbox'
         />
 
         <hr/>

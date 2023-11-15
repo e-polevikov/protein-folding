@@ -57,7 +57,46 @@ function isValidParticlePosition(
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
 
-export function generateParticles(numOfParticles, particleRadius) {
+function generateParticlesChain(numOfParticles, particleRadius) {
+  let particles = [];
+  let numOfGeneratedParticles = 0;
+
+  particles.push({ 
+    id: numOfGeneratedParticles.toString(), 
+    x: stageWidth * 0.15, y: stageHeight * 0.5,
+    color: generateParticleColor()
+  });
+
+  numOfGeneratedParticles += 1;
+
+  while (numOfGeneratedParticles < numOfParticles) {
+    let currentX = particles[particles.length - 1].x;
+    let currentY = particles[particles.length - 1].y;
+
+    let alpha = 30 * (Math.random() * 2 - 1);
+    let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
+    let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
+
+    let generatedCircleId = numOfGeneratedParticles + 1;
+    
+    if (isValidParticlePosition(particles, nextX, nextY, generatedCircleId, particleRadius)) {
+      particles.push({ 
+        id: numOfGeneratedParticles.toString(), 
+        x: nextX, y: nextY, color: generateParticleColor()
+      });
+
+      numOfGeneratedParticles += 1;
+    }
+  }
+
+  return particles;
+}
+
+export function generateParticles(numOfParticles, particleRadius, particlesAsChain) {
+  if (particlesAsChain != null && particlesAsChain) {
+    return generateParticlesChain(numOfParticles, particleRadius);
+  }
+
   let particles = [];
   let numOfGeneratedParticles = 0;
 
