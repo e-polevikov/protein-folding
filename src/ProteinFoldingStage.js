@@ -146,9 +146,12 @@ function ProteinFoldingStage() {
   useEffect(() => {
     if (foldingStarted) {
       setTimeout(() => {
+        let particlesAsChain = particlesAsChainRef.current.checked;
+
         let movedParticles = moveParticlesRandomly(
           particles, particleRadius,
-          moveP, interactionPowers
+          moveP, interactionPowers,
+          particlesAsChain
         );
 
         let currentEnergy = calculateTotalEnergy(movedParticles, interactionPowers);
