@@ -186,22 +186,29 @@ export function calculateTotalEnergy(particles, interactionPowers) {
   return totalEnergy;
 }
 
-export function moveParticlesChain(particles) {
+export function moveParticlesChain(particles, pivotParticleId, rotationDirection) {
   let movedParticles = JSON.parse(JSON.stringify(particles));
-  let pivotParticleId = 0;
 
   let pivotX = particles[pivotParticleId].x;
   let pivotY = particles[pivotParticleId].y;
 
-  for (let i = 1; i < movedParticles.length; i++) {
-    let currentX = movedParticles[pivotParticleId + i].x;
-    let currentY = movedParticles[pivotParticleId + i].y;
+  for (let i = pivotParticleId + 1; i < movedParticles.length; i++) {
+    let currentX = movedParticles[i].x;
+    let currentY = movedParticles[i].y;
 
     let currentAngle = Math.atan(
       (pivotY - currentY) / (pivotX - currentX)
     );
 
-    let alpha = currentAngle + 0.025;
+    let alpha = currentAngle;
+
+    if (rotationDirection === 0) {
+      alpha += 0.025;
+    }
+
+    if (rotationDirection === 1) {
+      alpha -= 0.025;
+    }
 
     let distance = Math.sqrt(
       Math.pow(pivotX - currentX, 2) + Math.pow(pivotY - currentY, 2)
@@ -210,8 +217,8 @@ export function moveParticlesChain(particles) {
     let nextX = pivotX + distance / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = pivotY + Math.tan(alpha) * (nextX - pivotX);
 
-    movedParticles[pivotParticleId + i].x = nextX;
-    movedParticles[pivotParticleId + i].y = nextY;
+    movedParticles[i].x = nextX;
+    movedParticles[i].y = nextY;
   }
 
   return movedParticles;

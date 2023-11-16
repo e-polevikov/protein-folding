@@ -39,6 +39,8 @@ function ProteinFoldingStage() {
   const greenBlueInteractionPowerRef = useRef(null);
 
   const particlesAsChainRef = useRef(null);
+  const pivotParticleRef = useRef(null);
+  const rotationDirectionRef = useRef(null);
 
   const [particles, setParticles] = useState(generateParticles(
     numParticles, particleRadius
@@ -180,7 +182,7 @@ function ProteinFoldingStage() {
 
       if (particlesAsChain) {
         newParticles = generateParticlesChain(
-          6,
+          numParticles,
           currentParticleRadius    
         );
       } else {
@@ -199,8 +201,19 @@ function ProteinFoldingStage() {
   }
 
   function rotateParticlesChain(event) {
-    let movedParticlesChain = moveParticlesChain(particles);
+    let pivotParticleId = Number(pivotParticleRef.current.value);
+    let rotationDirection = Number(rotationDirectionRef.current.value);
+
+    let movedParticlesChain = moveParticlesChain(
+      particles, pivotParticleId, rotationDirection
+    );
+
     setParticles(movedParticlesChain);
+
+    let energy = calculateTotalEnergy(movedParticlesChain, interactionPowers);
+
+    setEnergy(energy);
+    setMinEnergy(energy);
   }
 
   useEffect(() => {
@@ -257,12 +270,35 @@ function ProteinFoldingStage() {
         <br/>
         <br/>
 
-        <label>Белок-цепочка</label>
+        <hr/>
+
+        <label>Белок-цепочка: </label>
         <input
           ref={particlesAsChainRef}
           type='checkbox'
         />
 
+        <br/>
+        <br/>
+
+        <label>Опорный элемент: </label>
+        <input
+          ref={pivotParticleRef}
+          type='number'
+          defaultValue={0}
+        />
+
+        <br/>
+        <br/>
+
+        <label>Направление поворота:</label>
+        <input
+          ref={rotationDirectionRef}
+          type='number'
+          defaultValue={0}
+        />
+
+        <br/>
         <br/>
 
         <button className='btn' onClick={rotateParticlesChain}>Повернуть цепочку</button>
