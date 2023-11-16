@@ -180,10 +180,12 @@ export function calculateTotalEnergy(particles, interactionPowers) {
 
   for (let i = 0; i < particles.length - 1; i++) {
     for (let j = i + 1; j < particles.length; j++) {
-      totalEnergy += calculateParticleEnergy(
+      let energy = calculateParticleEnergy(
         particles[i], particles[j],
         interactionPowers
       );
+
+      totalEnergy += energy;
     }
   }
 
