@@ -1,7 +1,7 @@
 import {
-  particleColors,
-  particlesMoveAttemptsLimit,
-  stageWidth, stageHeight
+  PARTICLE_COLORS,
+  MOVE_ATTEMPTS_LIMIT,
+  STAGE_WIDTH, STAGE_HEIGHT
 } from './Constants';
 
 function randomSign() {
@@ -17,14 +17,14 @@ function getRandomInteger(maxValueExcl) {
 }
 
 export function generateParticleColor(colorToExclude) {
-  let numColors = particleColors.length;
+  let numColors = PARTICLE_COLORS.length;
 
   if (colorToExclude == null) {
-    return particleColors[getRandomInteger(numColors)];
+    return PARTICLE_COLORS[getRandomInteger(numColors)];
   }
 
   while (true) {
-    let color = particleColors[getRandomInteger(numColors)];
+    let color = PARTICLE_COLORS[getRandomInteger(numColors)];
 
     if (color !== colorToExclude) {
       return color;
@@ -62,11 +62,11 @@ export function isValidParticlePosition(
 
   let particleIntersectsStageBoudaries = false;
 
-  if (randX - particleRadius < 0.0 || randX + particleRadius >= stageWidth) {
+  if (randX - particleRadius < 0.0 || randX + particleRadius >= STAGE_WIDTH) {
     particleIntersectsStageBoudaries = true;
   }
 
-  if (randY - particleRadius < 0.0 || randY + particleRadius >= stageHeight) {
+  if (randY - particleRadius < 0.0 || randY + particleRadius >= STAGE_HEIGHT) {
     particleIntersectsStageBoudaries = true;
   }
 
@@ -101,8 +101,8 @@ function generateParticlesChain(numOfParticles, particleRadius) {
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: stageWidth * 0.5 + randomSign() * Math.random() * 10,
-    y: stageHeight * 0.5 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.5 + randomSign() * Math.random() * 10,
+    y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
 
@@ -142,8 +142,8 @@ export function generateParticles(numOfParticles, particleRadius, particlesAsCha
   let numOfGeneratedParticles = 0;
 
   while (numOfGeneratedParticles < numOfParticles) {
-    let randX = Math.random() * (stageWidth - particleRadius);
-    let randY = Math.random() * (stageHeight - particleRadius);
+    let randX = Math.random() * (STAGE_WIDTH - particleRadius);
+    let randY = Math.random() * (STAGE_HEIGHT - particleRadius);
     let generatedParticleId = numOfGeneratedParticles + 1;
 
     if (isValidParticlePosition(
@@ -261,7 +261,7 @@ export function moveParticlesRandomly(
     let currentX = particle.x;
     let currentY = particle.y;
 
-    while (!particleIsMoved && moveAttempts < particlesMoveAttemptsLimit) {
+    while (!particleIsMoved && moveAttempts < MOVE_ATTEMPTS_LIMIT) {
       let randX = particle.x + (Math.random() - 0.5) * 10;
       let randY = particle.y + (Math.random() - 0.5) * 10;
       let currentParticleId = Number(particle.id);

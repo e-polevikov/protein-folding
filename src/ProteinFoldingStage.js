@@ -2,12 +2,12 @@ import {useState, useEffect, useRef} from 'react';
 import {Stage, Layer, Circle} from 'react-konva';
 
 import {
-  stageWidth, stageHeight,
-  particlesMoveDelayMs,
-  initialInteractionPowers,
-  initialMoveP,
-  initialNumberOfParticles,
-  initialParticleRadius,
+  STAGE_WIDTH, STAGE_HEIGHT,
+  PARTICLES_MOVE_DELAY_MS,
+  INTERACTION_POWERS,
+  MOVE_P,
+  INITIAL_NUMBER_OF_PARTICLES,
+  INITIAL_PARTICLE_RADIUS,
 } from './Constants';
 
 import {
@@ -20,10 +20,10 @@ import {
 } from './Helpers';
 
 function ProteinFoldingStage() {
-  const [numParticles, setNumParticles] = useState(initialNumberOfParticles);
-  const [particleRadius, setParticleRadius] = useState(initialParticleRadius);
-  const [interactionPowers, setInteractionPowers] = useState(initialInteractionPowers);
-  const [moveP, setMoveP] = useState(initialMoveP);
+  const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);
+  const [particleRadius, setParticleRadius] = useState(INITIAL_PARTICLE_RADIUS);
+  const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
+  const [moveP, setMoveP] = useState(MOVE_P);
 
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
@@ -98,8 +98,8 @@ function ProteinFoldingStage() {
   function handleParticleDragMove(event) {
     let handledParticle = event.target;
     
-    if (handledParticle.x() + particleRadius >= stageWidth) {
-      handledParticle.x(stageWidth - particleRadius);
+    if (handledParticle.x() + particleRadius >= STAGE_WIDTH) {
+      handledParticle.x(STAGE_WIDTH - particleRadius);
     }
 
     if (handledParticle.x() - particleRadius < 0) {
@@ -110,8 +110,8 @@ function ProteinFoldingStage() {
       handledParticle.y(particleRadius);
     }
 
-    if (handledParticle.y() + particleRadius >= stageHeight) {
-      handledParticle.y(stageHeight - particleRadius);
+    if (handledParticle.y() + particleRadius >= STAGE_HEIGHT) {
+      handledParticle.y(STAGE_HEIGHT - particleRadius);
     }
 
     let newParticles = particles.map((particle) => {
@@ -129,6 +129,7 @@ function ProteinFoldingStage() {
 
     if (intersectingParticlesIds.length === 0) {
       setParticles(newParticles);
+
       let energy = calculateTotalEnergy(newParticles, interactionPowers);
 
       setEnergy(energy);
@@ -204,7 +205,7 @@ function ProteinFoldingStage() {
         setParticles(movedParticles);
         setEnergy(currentEnergy);
         setMinEnergy(Math.min(minEnergy, currentEnergy));
-      }, particlesMoveDelayMs);
+      }, PARTICLES_MOVE_DELAY_MS);
     }
   });
 
@@ -219,7 +220,7 @@ function ProteinFoldingStage() {
         <input
           ref={numParticlesRef}
           type='number'
-          defaultValue={initialNumberOfParticles}
+          defaultValue={INITIAL_NUMBER_OF_PARTICLES}
         />
 
         <br/>
@@ -229,7 +230,7 @@ function ProteinFoldingStage() {
         <input
           ref={particleRadiusRef}
           type='number'
-          defaultValue={initialParticleRadius}
+          defaultValue={INITIAL_PARTICLE_RADIUS}
         />
 
         <br/>
@@ -332,7 +333,7 @@ function ProteinFoldingStage() {
       </div>
 
       <div className='protein-folding-stage'>
-        <Stage width={stageWidth} height={stageHeight}>
+        <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
           <Layer>
             {particles.map((particle) => (
               <Circle

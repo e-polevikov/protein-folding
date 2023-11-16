@@ -1,18 +1,18 @@
-export const stageWidth = window.innerWidth * 0.7;
-export const stageHeight = window.innerHeight * 0.8;
+export const STAGE_WIDTH = window.innerWidth * 0.7;
+export const STAGE_HEIGHT = window.innerHeight * 0.8;
 
-export const particleColors = ['red', 'green', 'blue'];
+export const PARTICLE_COLORS = ['red', 'green', 'blue'];
 
-export const particlesMoveAttemptsLimit = 10;
-export const initialMoveP = 0.005;
+export const MOVE_ATTEMPTS_LIMIT = 10;
+export const MOVE_P = 0.005;
 
-export const initialNumberOfParticles = 20;
-export const initialParticleRadius = 80;
+export const INITIAL_NUMBER_OF_PARTICLES = 20;
+export const INITIAL_PARTICLE_RADIUS = 80;
 
-export const initialInteractionPowers = {
+export const INTERACTION_POWERS = {
   'red': {'red': -1, 'green': 1, 'blue': 1},
   'green': {'red': 1, 'green': -1, 'blue': 1},
   'blue': {'red': 1, 'green': 1, 'blue': -1}
 };
 
-export const particlesMoveDelayMs = 10;
+export const PARTICLES_MOVE_DELAY_MS = 10;
