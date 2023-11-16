@@ -95,13 +95,13 @@ function haveIntersection(particle1, particle2, particleRadius) {
   return xDistance + yDistance < 4.0 * Math.pow(particleRadius, 2);
 }
 
-function generateParticlesChain(numOfParticles, particleRadius) {
+export function generateParticlesChain(numOfParticles, particleRadius) {
   let particles = [];
   let numOfGeneratedParticles = 0;
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: STAGE_WIDTH * 0.5 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.15 + randomSign() * Math.random() * 10,
     y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
@@ -113,7 +113,7 @@ function generateParticlesChain(numOfParticles, particleRadius) {
     let currentY = particles[particles.length - 1].y;
 
     let alpha = 2 * Math.random() - 1;
-    let nextX = currentX + randomSign() * 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
+    let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
 
     let generatedParticleId = numOfGeneratedParticles + 1;
@@ -131,13 +131,7 @@ function generateParticlesChain(numOfParticles, particleRadius) {
   return particles;
 }
 
-export function generateParticles(numOfParticles, particleRadius, particlesAsChain) {
-  if (particlesAsChain != null && particlesAsChain) {
-    return generateParticlesChain(numOfParticles, particleRadius);
-  }
-
-  // Otherwise, generate particles randomly:
-
+export function generateParticles(numOfParticles, particleRadius) {
   let particles = [];
   let numOfGeneratedParticles = 0;
 
@@ -192,67 +186,43 @@ export function calculateTotalEnergy(particles, interactionPowers) {
   return totalEnergy;
 }
 
-function moveParticlesChain(
-  particles,
-  particleRadius,
-  moveP,
-  interactionPowers
-) {
-  let movedParticles = [];
-  let numOfMovedParticles = 0;
+export function moveParticlesChain(particles) {
+  let movedParticles = JSON.parse(JSON.stringify(particles));
+  let pivotParticleId = 0;
 
-  movedParticles.push({ 
-    id: numOfMovedParticles.toString(), 
-    x: particles[0].x + randomSign() * Math.random() * 10,
-    y: particles[0].y + randomSign() * Math.random() * 10,
-    color: particles[numOfMovedParticles].color
-  });
+  let pivotX = particles[pivotParticleId].x;
+  let pivotY = particles[pivotParticleId].y;
 
-  numOfMovedParticles += 1;
+  for (let i = 1; i < movedParticles.length; i++) {
+    let currentX = movedParticles[pivotParticleId + i].x;
+    let currentY = movedParticles[pivotParticleId + i].y;
 
-  while (numOfMovedParticles < particles.length) {
-    let currentX = movedParticles[movedParticles.length - 1].x;
-    let currentY = movedParticles[movedParticles.length - 1].y;
+    let currentAngle = Math.atan(
+      (pivotY - currentY) / (pivotX - currentX)
+    );
 
-    let alpha = 2 * Math.random() - 1;
-    let nextX = currentX + randomSign() * 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
-    let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
+    let alpha = currentAngle + 0.025;
 
-    let generatedParticleId = numOfMovedParticles + 1;
-    
-    if (isValidParticlePosition(movedParticles, nextX, nextY, generatedParticleId, particleRadius)) {
-      movedParticles.push({ 
-        id: numOfMovedParticles.toString(), 
-        x: nextX, y: nextY, color: particles[numOfMovedParticles].color
-      });
+    let distance = Math.sqrt(
+      Math.pow(pivotX - currentX, 2) + Math.pow(pivotY - currentY, 2)
+    );
 
-      numOfMovedParticles += 1;
-    }
+    let nextX = pivotX + distance / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
+    let nextY = pivotY + Math.tan(alpha) * (nextX - pivotX);
+
+    movedParticles[pivotParticleId + i].x = nextX;
+    movedParticles[pivotParticleId + i].y = nextY;
   }
 
-  if (calculateTotalEnergy(movedParticles, interactionPowers) < 
-      calculateTotalEnergy(particles, interactionPowers) ||
-      Math.random() < moveP
-  ) {
-    return movedParticles
-  }
-
-  return particles;
+  return movedParticles;
 }
 
 export function moveParticlesRandomly(
   particles,
   particleRadius,
   moveP,
-  interactionPowers,
-  particlesAsChain
+  interactionPowers
 ) {
-  if (particlesAsChain != null && particlesAsChain) {
-    return moveParticlesChain(particles, particleRadius, moveP, interactionPowers);
-  }
-
-  // Otherwise, move particles randomly:
-
   let movedParticles = JSON.parse(JSON.stringify(particles));
 
   movedParticles.map((particle) => {

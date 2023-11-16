@@ -12,7 +12,9 @@ import {
 
 import {
   generateParticles,
+  generateParticlesChain,
   moveParticlesRandomly,
+  moveParticlesChain,
   calculateTotalEnergy,
   generateParticleColor,
   findIntersectingParticles,
@@ -173,14 +175,21 @@ function ProteinFoldingStage() {
 
       setInteractionPowers(currentInteractionPowers);
 
-      let particlesAsChain = particlesAsChainRef.current.checked;
+      let particlesAsChain = particlesAsChainRef.current.value;
+      let newParticles = [];
 
-      let newParticles = generateParticles(
-        currentNumParticles,
-        currentParticleRadius,
-        particlesAsChain
-      );
-      
+      if (particlesAsChain) {
+        newParticles = generateParticlesChain(
+          6,
+          currentParticleRadius    
+        );
+      } else {
+        newParticles = generateParticles(
+          currentNumParticles,
+          currentParticleRadius,
+        );
+      }
+
       let energy = calculateTotalEnergy(newParticles, currentInteractionPowers);
 
       setParticles(newParticles);
@@ -189,15 +198,17 @@ function ProteinFoldingStage() {
     }
   }
 
+  function rotateParticlesChain(event) {
+    let movedParticlesChain = moveParticlesChain(particles);
+    setParticles(movedParticlesChain);
+  }
+
   useEffect(() => {
     if (foldingStarted) {
       setTimeout(() => {
-        let particlesAsChain = particlesAsChainRef.current.checked;
-
         let movedParticles = moveParticlesRandomly(
           particles, particleRadius,
           moveP, interactionPowers,
-          particlesAsChain
         );
 
         let currentEnergy = calculateTotalEnergy(movedParticles, interactionPowers);
@@ -251,6 +262,10 @@ function ProteinFoldingStage() {
           ref={particlesAsChainRef}
           type='checkbox'
         />
+
+        <br/>
+
+        <button className='btn' onClick={rotateParticlesChain}>Повернуть цепочку</button>
 
         <hr/>
 
