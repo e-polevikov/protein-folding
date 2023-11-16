@@ -32,7 +32,15 @@ export function generateParticleColor(colorToExclude) {
   } 
 }
 
-function isValidParticlePosition(
+export function getParticleColor(particle) {
+  if (particle.isIntersecting) {
+    return 'grey';
+  }
+
+  return particle.color;
+}
+
+export function isValidParticlePosition(
   particles, randX, randY,
   particleId, particleRadius
 ) {
@@ -63,6 +71,28 @@ function isValidParticlePosition(
   }
 
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
+}
+
+export function findIntersectingParticles(particles, particleRadius) {
+  let intersectingParticlesIds = [];
+
+  for (let i = 0; i < particles.length - 1; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      if (haveIntersection(particles[i], particles[j], particleRadius)) {
+        intersectingParticlesIds.push(i);
+        intersectingParticlesIds.push(j);
+      }
+    }
+  }
+
+  return intersectingParticlesIds;
+}
+
+function haveIntersection(particle1, particle2, particleRadius) {
+  let xDistance = Math.pow((particle1.x - particle2.x), 2);
+  let yDistance = Math.pow((particle1.y - particle2.y), 2);
+
+  return xDistance + yDistance < 4.0 * Math.pow(particleRadius, 2);
 }
 
 function generateParticlesChain(numOfParticles, particleRadius) {
@@ -122,7 +152,8 @@ export function generateParticles(numOfParticles, particleRadius, particlesAsCha
     )) {
       particles.push({ 
         id: numOfGeneratedParticles.toString(), 
-        x: randX, y: randY, color: generateParticleColor()
+        x: randX, y: randY, color: generateParticleColor(),
+        isIntersecting: false
       });
       
       numOfGeneratedParticles += 1;

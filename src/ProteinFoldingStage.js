@@ -14,7 +14,9 @@ import {
   generateParticles,
   moveParticlesRandomly,
   calculateTotalEnergy,
-  generateParticleColor
+  generateParticleColor,
+  findIntersectingParticles,
+  getParticleColor
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -78,8 +80,33 @@ function ProteinFoldingStage() {
     setMinEnergy(Math.min(energy, minEnergy));
   }
 
+  function handleDragStart(event) {
+    let handledParticle = event.target;
+
+    if (foldingStarted) {
+      handledParticle.stopDrag();
+      return;
+    }
+  }
+
   function handleParticleDragMove(event) {
     let handledParticle = event.target;
+    
+    if (handledParticle.x() + particleRadius >= stageWidth) {
+      handledParticle.x(stageWidth - particleRadius);
+    }
+
+    if (handledParticle.x() - particleRadius < 0) {
+      handledParticle.x(particleRadius);
+    }
+
+    if (handledParticle.y() - particleRadius < 0) {
+      handledParticle.y(particleRadius);
+    }
+
+    if (handledParticle.y() + particleRadius >= stageHeight) {
+      handledParticle.y(stageHeight - particleRadius);
+    }
 
     let newParticles = particles.map((particle) => {
       if (particle.id === handledParticle.id()) {
@@ -87,14 +114,26 @@ function ProteinFoldingStage() {
         particle.y = handledParticle.y();
       }
 
+      particle.isIntersecting = false;
+
       return particle;
     });
 
-    let energy = calculateTotalEnergy(newParticles, interactionPowers);
+    let intersectingParticlesIds = findIntersectingParticles(newParticles, particleRadius);
 
-    setParticles(newParticles);
-    setEnergy(energy);
-    setMinEnergy(Math.min(energy, minEnergy));
+    if (intersectingParticlesIds.length === 0) {
+      setParticles(newParticles);
+      let energy = calculateTotalEnergy(newParticles, interactionPowers);
+
+      setEnergy(energy);
+      setMinEnergy(Math.min(energy, minEnergy));
+    } else {
+      for (let i = 0; i < intersectingParticlesIds.length; i++) {
+        newParticles[intersectingParticlesIds[i]].isIntersecting = true;
+      }
+
+      setParticles(newParticles);
+    }
   }
 
   function generateNewProtein() {
@@ -296,9 +335,10 @@ function ProteinFoldingStage() {
                 x={particle.x}
                 y={particle.y}
                 radius={particleRadius}
-                fill={particle.color}
+                fill={getParticleColor(particle)}
                 onClick={changeParticleColor}
                 draggable
+                onDragStart={handleDragStart}
                 onDragMove={handleParticleDragMove}
               />
             ))}
