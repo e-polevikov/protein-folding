@@ -51,6 +51,12 @@ function ProteinFoldingStage() {
   const [foldingStarted, setFoldingStarted] = useState(false);
 
   function startProteinFolding() {
+    for (let i = 0; i < particles.length; i++) {
+      if (particles[i].isIntersecting) {
+        return;
+      }
+    }
+
     setFoldingStarted(true);
   }
 
