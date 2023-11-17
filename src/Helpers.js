@@ -228,11 +228,11 @@ export function moveParticlesChain(particles, pivotParticleId, rotationDirection
     }
 
     if (rotationDirection == 0 || rotationDirection == 2) {
-      alpha += 0.025;
+      alpha += 0.015;
     }
 
     if (rotationDirection == 1 || rotationDirection == 3) {
-      alpha -= 0.025;
+      alpha -= 0.015;
     }
 
     let distance = Math.sqrt(
