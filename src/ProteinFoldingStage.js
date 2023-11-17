@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {Stage, Layer, Circle} from 'react-konva';
+import {Stage, Layer, Circle, Line} from 'react-konva';
 
 import {
   STAGE_WIDTH, STAGE_HEIGHT,
@@ -241,6 +241,17 @@ function ProteinFoldingStage() {
     }
   });
 
+  function getParticlesJoinLine() {
+    let particlesJoinLine = []
+
+    particles.forEach(particle => {
+      particlesJoinLine.push(particle.x);
+      particlesJoinLine.push(particle.y);
+    });
+
+    return particlesJoinLine;
+  }
+
   return (
     <>
       <h1>Задача "Сворачвание белка" для конкурса КИО</h1>
@@ -408,6 +419,11 @@ function ProteinFoldingStage() {
                 onDragMove={handleParticleDragMove}
               />
             ))}
+            <Line
+              points={getParticlesJoinLine()}
+              stroke={'black'}
+              strokeWidth={4}
+            />
           </Layer>
         </Stage>
       </div>
