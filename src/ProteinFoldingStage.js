@@ -419,11 +419,15 @@ function ProteinFoldingStage() {
                 onDragMove={handleParticleDragMove}
               />
             ))}
-            <Line
-              points={getParticlesJoinLine()}
-              stroke={'black'}
-              strokeWidth={4}
-            />
+            {particlesAsChainRef.current != null &&
+             particlesAsChainRef.current.checked ? 
+              <Line
+                points={getParticlesJoinLine()}
+                stroke={'black'}
+                strokeWidth={4}
+              /> :
+              <></>
+            }
           </Layer>
         </Stage>
       </div>
