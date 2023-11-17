@@ -73,11 +73,15 @@ export function isValidParticlePosition(
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
 
-export function findIntersectingParticles(particles, particleRadius) {
+export function findIntersectingParticles(particles, particleRadius, isChain) {
   let intersectingParticlesIds = [];
 
   for (let i = 0; i < particles.length - 1; i++) {
     for (let j = i + 1; j < particles.length; j++) {
+      if (isChain && j - 1 == i) {
+        continue;
+      }
+
       if (haveIntersection(particles[i], particles[j], particleRadius)) {
         intersectingParticlesIds.push(i);
         intersectingParticlesIds.push(j);
@@ -112,7 +116,7 @@ export function generateParticlesChain(numOfParticles, particleRadius) {
     let currentX = particles[particles.length - 1].x;
     let currentY = particles[particles.length - 1].y;
 
-    let alpha = Math.PI * (2 * Math.random() - 1);
+    let alpha = Math.random() - 0.5;
     let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
 
@@ -189,10 +193,21 @@ export function calculateTotalEnergy(particles, interactionPowers) {
 export function moveParticlesChain(particles, pivotParticleId, rotationDirection) {
   let movedParticles = JSON.parse(JSON.stringify(particles));
 
+  let IdsToRotate = [];
+  if (rotationDirection < 2) {
+    for (let i = pivotParticleId + 1; i < movedParticles.length; i++) {
+      IdsToRotate.push(i);
+    }
+  } else {
+    for (let i = 0; i < pivotParticleId; i++) {
+      IdsToRotate.push(i);
+    }
+  }
+
   let pivotX = particles[pivotParticleId].x;
   let pivotY = particles[pivotParticleId].y;
 
-  for (let i = pivotParticleId + 1; i < movedParticles.length; i++) {
+  IdsToRotate.forEach((i) => {
     let currentX = movedParticles[i].x;
     let currentY = movedParticles[i].y;
 
@@ -212,11 +227,11 @@ export function moveParticlesChain(particles, pivotParticleId, rotationDirection
       alpha = currentAngle;
     }
 
-    if (rotationDirection === 0) {
+    if (rotationDirection == 0 || rotationDirection == 2) {
       alpha += 0.025;
     }
 
-    if (rotationDirection === 1) {
+    if (rotationDirection == 1 || rotationDirection == 3) {
       alpha -= 0.025;
     }
 
@@ -233,7 +248,7 @@ export function moveParticlesChain(particles, pivotParticleId, rotationDirection
 
     movedParticles[i].x = nextX;
     movedParticles[i].y = nextY;
-  }
+  });
 
   return movedParticles;
 }

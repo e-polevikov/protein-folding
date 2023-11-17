@@ -208,12 +208,20 @@ function ProteinFoldingStage() {
       particles, pivotParticleId, rotationDirection
     );
 
-    setParticles(movedParticlesChain);
+    let isChain = true;
 
-    let energy = calculateTotalEnergy(movedParticlesChain, interactionPowers);
+    let intersectingParticlesIds = findIntersectingParticles(
+      movedParticlesChain, particleRadius, isChain
+    );
+    
+    if (intersectingParticlesIds.length == 0) {
+      setParticles(movedParticlesChain);
 
-    setEnergy(energy);
-    setMinEnergy(energy);
+      let energy = calculateTotalEnergy(movedParticlesChain, interactionPowers);
+
+      setEnergy(energy);
+      setMinEnergy(Math.min(energy, minEnergy));
+    }
   }
 
   useEffect(() => {
