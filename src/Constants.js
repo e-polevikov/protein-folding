@@ -6,8 +6,8 @@ export const PARTICLE_COLORS = ['red', 'green', 'blue'];
 export const MOVE_ATTEMPTS_LIMIT = 10;
 export const MOVE_P = 0.005;
 
-export const INITIAL_NUMBER_OF_PARTICLES = 10;
-export const INITIAL_PARTICLE_RADIUS = 80;
+export const INITIAL_NUMBER_OF_PARTICLES = 6;
+export const INITIAL_PARTICLE_RADIUS = 70;
 
 export const INTERACTION_POWERS = {
   'red': {'red': -1, 'green': 1, 'blue': 1},

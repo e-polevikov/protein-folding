@@ -101,7 +101,7 @@ export function generateParticlesChain(numOfParticles, particleRadius) {
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: STAGE_WIDTH * 0.15 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.25 + randomSign() * Math.random() * 10,
     y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
@@ -112,7 +112,7 @@ export function generateParticlesChain(numOfParticles, particleRadius) {
     let currentX = particles[particles.length - 1].x;
     let currentY = particles[particles.length - 1].y;
 
-    let alpha = 2 * Math.random() - 1;
+    let alpha = Math.PI * (2 * Math.random() - 1);
     let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
 
@@ -197,10 +197,20 @@ export function moveParticlesChain(particles, pivotParticleId, rotationDirection
     let currentY = movedParticles[i].y;
 
     let currentAngle = Math.atan(
-      (pivotY - currentY) / (pivotX - currentX)
+      Math.abs((pivotY - currentY) / (pivotX - currentX))
     );
 
-    let alpha = currentAngle;
+    let alpha = 0;
+
+    if (currentX > pivotX && currentY < pivotY) {
+      alpha = -currentAngle;
+    } else if (currentX < pivotX && currentY < pivotY) {
+      alpha = -Math.PI + currentAngle;
+    } else if (currentX < pivotX && currentY > pivotY) {
+      alpha = Math.PI - currentAngle;
+    } else {
+      alpha = currentAngle;
+    }
 
     if (rotationDirection === 0) {
       alpha += 0.025;
@@ -213,6 +223,10 @@ export function moveParticlesChain(particles, pivotParticleId, rotationDirection
     let distance = Math.sqrt(
       Math.pow(pivotX - currentX, 2) + Math.pow(pivotY - currentY, 2)
     );
+
+    if (alpha > Math.PI / 2 || alpha < -Math.PI / 2) {
+      distance *= -1;
+    }
 
     let nextX = pivotX + distance / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = pivotY + Math.tan(alpha) * (nextX - pivotX);
