@@ -55,6 +55,12 @@ function ProteinFoldingStage() {
   const [foldingStarted, setFoldingStarted] = useState(false);
 
   function startProteinFolding() {
+    let isChain = particlesAsChainRef.current.checked;
+
+    if (isChain) {
+      return;
+    }
+
     for (let i = 0; i < particles.length; i++) {
       if (particles[i].isIntersecting) {
         return;
