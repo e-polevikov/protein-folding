@@ -32,6 +32,12 @@ h1 {
 }
 
 .btn {
-  padding: 10px;
+  padding: 20px;
   margin: 4px;
+}
+
+.rotate-btn {
+  padding: 20px;
+  margin: 4px;
+  font-size: xx-large;
 }

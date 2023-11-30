@@ -9,16 +9,22 @@ import {
 } from './Constants';
 
 import {
-  generateParticles
+  generateParticles,
+  haveIntersections,
+  rotateParticles
 } from './Helpers';
 
 function ProteinFoldingStage() {
-  const strokeWidth = 5;
+  const strokeWidth = 4;
 
   const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);
   const [particleRadius, setParticleRadius] = useState(INITIAL_PARTICLE_RADIUS);
-  const [pivotParticleId, setPivotParticleId] = useState(Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2));
 
+  const [pivotParticleId, setPivotParticleId] = useState(
+    Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2)
+  );
+
+  // TODO: energy (initial, minimal, current), interaction powers
   //const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
   const numParticlesRef = useRef(null);
@@ -31,11 +37,17 @@ function ProteinFoldingStage() {
   function generateNewParticles() {
     let currentNumParticles = Number(numParticlesRef.current.value);
     let currentParticleRadius = Number(particleRadiusRef.current.value);
+    let newPivotParticleId = Math.floor(currentNumParticles / 2);
 
     setNumParticles(currentNumParticles);
     setParticleRadius(currentParticleRadius);
-    setPivotParticleId(Math.floor(currentNumParticles / 2));
-    setParticles(generateParticles(currentNumParticles, currentParticleRadius));
+    setPivotParticleId(newPivotParticleId);
+
+    setParticles(generateParticles(
+      currentNumParticles,
+      currentParticleRadius,
+      newPivotParticleId
+    ));
   }
 
   function getParticlesJoinLine() {
@@ -49,13 +61,24 @@ function ProteinFoldingStage() {
     return particlesJoinLine;
   }
 
+  function setPivotParticle(event) {
+    let handledParticleId = Number(event.target.id());
+    setPivotParticleId(handledParticleId);
+  }
+
   function getStrokeLineColor(particleId) {
     return particleId == pivotParticleId ? 'black' : null;
   }
 
-  function setPivotParticle(event) {
-    let handledParticleId = event.target.id();
-    setPivotParticleId(handledParticleId);
+  function handleParticlesRotation(rotationDirection) {
+    let rotatedParticles = rotateParticles(
+      particles, pivotParticleId,
+      rotationDirection
+    );
+
+    if (!haveIntersections(rotatedParticles, particleRadius)) {
+      setParticles(rotatedParticles);
+    }
   }
 
   return (
@@ -65,7 +88,7 @@ function ProteinFoldingStage() {
       <div className='protein-folding-params'>
         <h2>Параметры эксперимента:</h2>
         
-        <label>Количество частиц: </label>
+        <label>Число частиц: </label>
         <input
           ref={numParticlesRef}
           type='number'
@@ -82,14 +105,25 @@ function ProteinFoldingStage() {
           defaultValue={INITIAL_PARTICLE_RADIUS}
         />
 
-        <hr/>
+        <br/>
+        <br/>
 
         <button className='btn' onClick={generateNewParticles}>Новый эксперимент</button>
 
-        <br/>
+        <hr/>
 
-        <p>Текущая энергия взаимодействия: {0.00}</p>
-        <p>Минимальная энергия взаимодействия: {0.00}</p>
+        <h2>Вращение частиц:</h2>
+
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(2)}>&#8635;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(3)}>&#8634;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(0)}>&#8635;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(1)}>&#8634;</button>
+
+        <h3>Значение энергии:</h3>
+
+        <p>Начальное: {0.00}</p>
+        <p>Текущее: {0.00}</p>
+        <p>Минимальное: {0.00}</p>
 
       </div>
 
@@ -115,6 +149,22 @@ function ProteinFoldingStage() {
                 strokeWidth={strokeWidth}
               />
             }
+            <Circle
+              key={particles.length + 1}
+              id={particles.length + 1}
+              x={particles[0].x}
+              y={particles[0].y}
+              radius={Math.floor(particleRadius / 9)}
+              fill={'black'}>
+            </Circle>
+            <Circle
+              key={particles.length}
+              id={particles.length}
+              x={particles[particles.length - 1].x}
+              y={particles[particles.length - 1].y}
+              radius={Math.floor(particleRadius / 5)}
+              fill={'black'}>
+            </Circle>
           </Layer>
         </Stage>
       </div>
