@@ -17,7 +17,7 @@ function ProteinFoldingStage() {
 
   const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);
   const [particleRadius, setParticleRadius] = useState(INITIAL_PARTICLE_RADIUS);
-  const [pivotParticleId, setPivotParticleId] = useState(INITIAL_NUMBER_OF_PARTICLES / 2);
+  const [pivotParticleId, setPivotParticleId] = useState(Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2));
 
   //const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
@@ -34,6 +34,7 @@ function ProteinFoldingStage() {
 
     setNumParticles(currentNumParticles);
     setParticleRadius(currentParticleRadius);
+    setPivotParticleId(Math.floor(currentNumParticles / 2));
     setParticles(generateParticles(currentNumParticles, currentParticleRadius));
   }
 
