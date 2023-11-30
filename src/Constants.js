@@ -4,7 +4,7 @@ export const STAGE_HEIGHT = window.innerHeight * 0.8;
 export const PARTICLE_COLORS = ['red', 'green', 'blue'];
 
 export const INITIAL_NUMBER_OF_PARTICLES = 10;
-export const INITIAL_PARTICLE_RADIUS = 40;
+export const INITIAL_PARTICLE_RADIUS = 45;
 
 export const INTERACTION_POWERS = {
   'red': {'red': -1, 'green': 1, 'blue': 1},

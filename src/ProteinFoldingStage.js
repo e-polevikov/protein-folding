@@ -1,9 +1,9 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useRef} from 'react';
 import {Stage, Layer, Circle, Line} from 'react-konva';
 
 import {
   STAGE_WIDTH, STAGE_HEIGHT,
-  INTERACTION_POWERS,
+  // INTERACTION_POWERS,
   INITIAL_NUMBER_OF_PARTICLES,
   INITIAL_PARTICLE_RADIUS,
 } from './Constants';
@@ -13,9 +13,13 @@ import {
 } from './Helpers';
 
 function ProteinFoldingStage() {
+  const strokeWidth = 5;
+
   const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);
   const [particleRadius, setParticleRadius] = useState(INITIAL_PARTICLE_RADIUS);
-  const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
+  const [pivotParticleId, setPivotParticleId] = useState(INITIAL_NUMBER_OF_PARTICLES / 2);
+
+  //const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
@@ -42,6 +46,15 @@ function ProteinFoldingStage() {
     });
 
     return particlesJoinLine;
+  }
+
+  function getStrokeLineColor(particleId) {
+    return particleId == pivotParticleId ? 'black' : null;
+  }
+
+  function setPivotParticle(event) {
+    let handledParticleId = event.target.id();
+    setPivotParticleId(handledParticleId);
   }
 
   return (
@@ -90,12 +103,15 @@ function ProteinFoldingStage() {
                 y={particle.y}
                 radius={particleRadius}
                 fill={particle.color}
+                stroke={getStrokeLineColor(particle.id)}
+                strokeWidth={strokeWidth}
+                onClick={setPivotParticle}
               />))
             }
             {<Line
                 points={getParticlesJoinLine()}
                 stroke={'black'}
-                strokeWidth={4}
+                strokeWidth={strokeWidth}
               />
             }
           </Layer>
