@@ -89,8 +89,7 @@ export function generateParticles(numOfParticles, particleRadius) {
       particles.push({
         id: numOfGeneratedParticles.toString(),
         x: nextX, y: nextY,
-        color: generateParticleColor(),
-        radius: particleRadius
+        color: generateParticleColor()
       });
 
       numOfGeneratedParticles += 1;
