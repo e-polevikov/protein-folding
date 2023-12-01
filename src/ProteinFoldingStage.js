@@ -3,7 +3,7 @@ import {Stage, Layer, Circle, Line} from 'react-konva';
 
 import {
   STAGE_WIDTH, STAGE_HEIGHT,
-  // INTERACTION_POWERS,
+  INTERACTION_POWERS,
   INITIAL_NUMBER_OF_PARTICLES,
   INITIAL_PARTICLE_RADIUS,
 } from './Constants';
@@ -11,7 +11,8 @@ import {
 import {
   generateParticles,
   haveIntersections,
-  rotateParticles
+  rotateParticles,
+  calculateTotalEnergy
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -24,15 +25,27 @@ function ProteinFoldingStage() {
     Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2)
   );
 
-  // TODO: energy (initial, minimal, current), interaction powers
-  //const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
-
-  const numParticlesRef = useRef(null);
-  const particleRadiusRef = useRef(null);
-
   const [particles, setParticles] = useState(generateParticles(
     INITIAL_NUMBER_OF_PARTICLES, INITIAL_PARTICLE_RADIUS
   ));
+
+  // TODO: allow for changing interaction powers:
+  const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
+
+  const [initialEnergy, setInitialEnergy] = useState(
+    calculateTotalEnergy(particles, interactionPowers)
+  );
+
+  const [currentEnergy, setCurrentEnergy] = useState(
+    calculateTotalEnergy(particles, interactionPowers)
+  );
+
+  const [minimalEnergy, setMinimalEnergy] = useState(
+    calculateTotalEnergy(particles, interactionPowers)
+  );
+
+  const numParticlesRef = useRef(null);
+  const particleRadiusRef = useRef(null);
 
   function generateNewParticles() {
     let currentNumParticles = Number(numParticlesRef.current.value);
@@ -43,11 +56,19 @@ function ProteinFoldingStage() {
     setParticleRadius(currentParticleRadius);
     setPivotParticleId(newPivotParticleId);
 
-    setParticles(generateParticles(
+    let newParticles = generateParticles(
       currentNumParticles,
       currentParticleRadius,
       newPivotParticleId
-    ));
+    );
+
+    setParticles(newParticles);
+
+    let currEnergy = calculateTotalEnergy(newParticles, interactionPowers);
+
+    setInitialEnergy(currEnergy);
+    setCurrentEnergy(currEnergy);
+    setMinimalEnergy(currEnergy);
   }
 
   function getParticlesJoinLine() {
@@ -77,6 +98,17 @@ function ProteinFoldingStage() {
     );
 
     if (!haveIntersections(rotatedParticles, particleRadius)) {
+      let currEnergy = calculateTotalEnergy(rotatedParticles, interactionPowers);
+
+      setCurrentEnergy(currEnergy);
+
+      if (currEnergy < minimalEnergy) {
+        console.log(currEnergy);
+        console.log(minimalEnergy);
+
+        setMinimalEnergy(currEnergy);
+      }
+
       setParticles(rotatedParticles);
     }
   }
@@ -121,9 +153,9 @@ function ProteinFoldingStage() {
 
         <h3>Значение энергии:</h3>
 
-        <p>Начальное: {0.00}</p>
-        <p>Текущее: {0.00}</p>
-        <p>Минимальное: {0.00}</p>
+        <p>Начальное: {initialEnergy.toFixed(3)}</p>
+        <p>Текущее: {currentEnergy.toFixed(3)}</p>
+        <p>Минимальное: {minimalEnergy.toFixed(3)}</p>
 
       </div>
 
