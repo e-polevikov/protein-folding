@@ -70,7 +70,7 @@ export function generateParticles(numOfParticles, particleRadius) {
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: STAGE_WIDTH * 0.1 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.125 + randomSign() * Math.random() * 10,
     y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
