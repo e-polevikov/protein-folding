@@ -35,6 +35,13 @@ function ProteinFoldingStage() {
 
   const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
+  const redInteractionPowerRef = useRef(null);
+  const greenInteractionPowerRef = useRef(null);
+  const blueInteractionPowerRef = useRef(null);
+  const redGreenInteractionPowerRef = useRef(null);
+  const redBlueInteractionPowerRef = useRef(null);
+  const greenBlueInteractionPowerRef = useRef(null);
+
   const [initialEnergy, setInitialEnergy] = useState(
     calculateTotalEnergy(particles, interactionPowers)
   );
@@ -67,7 +74,27 @@ function ProteinFoldingStage() {
 
     setParticles(newParticles);
 
-    let currEnergy = calculateTotalEnergy(newParticles, interactionPowers);
+    let currentInteractionPowers = {
+      'red': {
+        'red': Number(redInteractionPowerRef.current.value),
+        'green': Number(redGreenInteractionPowerRef.current.value),
+        'blue': Number(redBlueInteractionPowerRef.current.value),
+      },
+      'green': {
+        'red': Number(redGreenInteractionPowerRef.current.value),
+        'green': Number(greenInteractionPowerRef.current.value),
+        'blue': Number(greenBlueInteractionPowerRef.current.value),
+      },
+      'blue': {
+        'red': Number(redBlueInteractionPowerRef.current.value),
+        'green': Number(greenBlueInteractionPowerRef.current.value),
+        'blue': Number(blueInteractionPowerRef.current.value),
+      }
+    };
+
+    setInteractionPowers(currentInteractionPowers);
+
+    let currEnergy = calculateTotalEnergy(newParticles, currentInteractionPowers);
 
     setInitialEnergy(currEnergy);
     setCurrentEnergy(currEnergy);
@@ -160,7 +187,7 @@ function ProteinFoldingStage() {
 
   return (
     <>
-      <h1>Задача "Сворачвание белка" для конкурса КИО</h1>
+      <h1 className='title'>Задача "Сворачвание белка" для конкурса КИО</h1>
 
       <div className='protein-folding-params'>
         <h2>Вращение частиц:</h2>
@@ -219,6 +246,70 @@ function ProteinFoldingStage() {
           type='number'
           defaultValue={INITIAL_PARTICLE_RADIUS}
         />
+
+        <h3>Силы взаимодействия:</h3>
+
+        <label>
+          <span className='red-color-span'>КК </span> 
+        </label>
+        <input
+          ref={redInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['red']['red']}>
+        </input>
+        <br/>
+
+        <label>
+          <span className='green-color-span'>ЗЗ </span>
+        </label>
+        <input
+          ref={greenInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['green']['green']}>
+        </input>
+        <br/>
+
+        <label>
+          <span className='blue-color-span'>СС </span>
+        </label>
+        <input
+          ref={blueInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['blue']['blue']}>
+        </input>
+        <br/>
+
+        <label>
+          <span className='red-color-span'>К</span>
+          <span className='green-color-span'>З </span>
+        </label>
+        <input
+          ref={redGreenInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['red']['green']}>
+        </input>
+        <br/>
+
+        <label>
+          <span className='blue-color-span'>С</span>
+          <span className='green-color-span'>З </span>
+        </label>
+        <input
+          ref={greenBlueInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['blue']['green']}>
+        </input>
+        <br/>
+
+        <label>
+          <span className='red-color-span'>К</span>
+          <span className='blue-color-span'>С </span>
+        </label>
+        <input
+          ref={redBlueInteractionPowerRef}
+          type='number'
+          defaultValue={interactionPowers['red']['blue']}>
+        </input>
 
         <br/>
         <br/>
