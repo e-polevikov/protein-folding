@@ -32,8 +32,6 @@ function ProteinFoldingStage() {
   // TODO:
   // - allow for changing particle color
   // - allow for changing interaction powers
-  // - allow for moving the entire protein across the stage
-  // - stage borders?
 
   const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 

@@ -4,8 +4,8 @@ export const STAGE_HEIGHT = window.innerHeight * 0.8;
 export const PARTICLE_COLORS = ['red', 'green', 'blue'];
 export const STROKE_PARTICLE_COLOR = 'black';
 
-export const INITIAL_NUMBER_OF_PARTICLES = 9;
-export const INITIAL_PARTICLE_RADIUS = 45;
+export const INITIAL_NUMBER_OF_PARTICLES = 18;
+export const INITIAL_PARTICLE_RADIUS = 35;
 export const ROTATION_ANGLE = 0.01;
 
 export const INTERACTION_POWERS = {
