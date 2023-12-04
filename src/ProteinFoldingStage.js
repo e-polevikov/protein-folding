@@ -118,6 +118,21 @@ function ProteinFoldingStage() {
       <h1>Задача "Сворачвание белка" для конкурса КИО</h1>
 
       <div className='protein-folding-params'>
+        <h2>Вращение частиц:</h2>
+
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(2)}>&#8635;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(3)}>&#8634;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(0)}>&#8635;</button>
+        <button className='rotate-btn' onClick={() => handleParticlesRotation(1)}>&#8634;</button>
+
+        <h3>Значение энергии:</h3>
+
+        <p>Начальное: {initialEnergy.toFixed(3)}</p>
+        <p>Текущее: {currentEnergy.toFixed(3)}</p>
+        <p>Минимальное: {minimalEnergy.toFixed(3)}</p>
+
+        <hr/>
+
         <h2>Параметры эксперимента:</h2>
         
         <label>Число частиц: </label>
@@ -141,21 +156,6 @@ function ProteinFoldingStage() {
         <br/>
 
         <button className='btn' onClick={generateNewParticles}>Новый эксперимент</button>
-
-        <hr/>
-
-        <h2>Вращение частиц:</h2>
-
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(2)}>&#8635;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(3)}>&#8634;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(0)}>&#8635;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(1)}>&#8634;</button>
-
-        <h3>Значение энергии:</h3>
-
-        <p>Начальное: {initialEnergy.toFixed(3)}</p>
-        <p>Текущее: {currentEnergy.toFixed(3)}</p>
-        <p>Минимальное: {minimalEnergy.toFixed(3)}</p>
 
       </div>
 
