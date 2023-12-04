@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Stage, Layer, Circle, Line} from 'react-konva';
 
 import {
@@ -91,7 +91,10 @@ function ProteinFoldingStage() {
     return particleId == pivotParticleId ? 'black' : null;
   }
 
-  function handleParticlesRotation(rotationDirection) {
+  const [rotationStarted, setRotationStarted] = useState(false);
+  const [rotationDirection, setRotationDirection] = useState(null);
+
+  function handleParticlesRotation() {
     let rotatedParticles = rotateParticles(
       particles, pivotParticleId,
       rotationDirection
@@ -103,15 +106,29 @@ function ProteinFoldingStage() {
       setCurrentEnergy(currEnergy);
 
       if (currEnergy < minimalEnergy) {
-        console.log(currEnergy);
-        console.log(minimalEnergy);
-
         setMinimalEnergy(currEnergy);
       }
 
       setParticles(rotatedParticles);
     }
   }
+
+  function handleRotationButtonMouseDown(buttonRotationDirection) {
+    setRotationDirection(buttonRotationDirection);
+    setRotationStarted(true);
+  }
+
+  function handleRotationButtonMouseUp() {
+    setRotationStarted(false);
+  }
+
+  useEffect(() => {
+    if (rotationStarted) {
+      setTimeout(() => {
+        handleParticlesRotation();
+      }, 10);
+    }
+  });
 
   return (
     <>
@@ -120,10 +137,33 @@ function ProteinFoldingStage() {
       <div className='protein-folding-params'>
         <h2>Вращение частиц:</h2>
 
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(2)}>&#8635;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(3)}>&#8634;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(0)}>&#8635;</button>
-        <button className='rotate-btn' onClick={() => handleParticlesRotation(1)}>&#8634;</button>
+        <button className='rotate-btn'
+          onMouseDown={() => handleRotationButtonMouseDown(2)}
+          onMouseUp={handleRotationButtonMouseUp}
+        >
+          &#8635;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleRotationButtonMouseDown(3)}
+          onMouseUp={handleRotationButtonMouseUp}
+        >
+          &#8634;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleRotationButtonMouseDown(0)}
+          onMouseUp={handleRotationButtonMouseUp}
+        >
+          &#8635;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleRotationButtonMouseDown(1)}
+          onMouseUp={handleRotationButtonMouseUp}
+        >
+          &#8634;
+        </button>
 
         <h3>Значение энергии:</h3>
 
@@ -182,16 +222,16 @@ function ProteinFoldingStage() {
               />
             }
             <Circle
-              key={particles.length + 1}
-              id={particles.length + 1}
+              key={String(particles.length + 1)}
+              id={String(particles.length + 1)}
               x={particles[0].x}
               y={particles[0].y}
               radius={Math.floor(particleRadius / 9)}
               fill={'black'}>
             </Circle>
             <Circle
-              key={particles.length}
-              id={particles.length}
+              key={String(particles.length)}
+              id={String(particles.length)}
               x={particles[particles.length - 1].x}
               y={particles[particles.length - 1].y}
               radius={Math.floor(particleRadius / 5)}

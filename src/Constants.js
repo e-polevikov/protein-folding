@@ -6,7 +6,7 @@ export const STROKE_PARTICLE_COLOR = 'black';
 
 export const INITIAL_NUMBER_OF_PARTICLES = 9;
 export const INITIAL_PARTICLE_RADIUS = 45;
-export const ROTATION_ANGLE = 0.015;
+export const ROTATION_ANGLE = 0.01;
 
 export const INTERACTION_POWERS = {
   'red': {'red': -1, 'green': 1, 'blue': 1},
