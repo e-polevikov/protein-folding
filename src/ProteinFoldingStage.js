@@ -12,7 +12,8 @@ import {
   generateParticles,
   haveIntersections,
   rotateParticles,
-  calculateTotalEnergy
+  calculateTotalEnergy,
+  generateParticleColor
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -30,7 +31,6 @@ function ProteinFoldingStage() {
   ));
 
   // TODO:
-  // - allow for changing particle color
   // - allow for changing interaction powers
 
   const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
@@ -87,7 +87,32 @@ function ProteinFoldingStage() {
 
   function setPivotParticle(event) {
     let handledParticleId = Number(event.target.id());
-    setPivotParticleId(handledParticleId);
+
+    if (pivotParticleId != handledParticleId) {
+      setPivotParticleId(handledParticleId);
+    } else { // Change particle color
+      let newParticles = particles.map((particle) => {
+        if (particle.id == pivotParticleId) {
+          if (particle.color == 'red') {
+            particle.color = 'blue';
+          } else if (particle.color == 'blue') {
+            particle.color = 'green';
+          } else if (particle.color == 'green') {
+            particle.color = 'red';
+          }
+        }
+
+        return particle;
+      });
+
+      setParticles(newParticles);
+
+      let currEnergy = calculateTotalEnergy(newParticles, interactionPowers);
+
+      setInitialEnergy(currEnergy);
+      setCurrentEnergy(currEnergy);
+      setMinimalEnergy(currEnergy);
+    }
   }
 
   function getStrokeLineColor(particleId) {
