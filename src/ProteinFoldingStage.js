@@ -29,7 +29,12 @@ function ProteinFoldingStage() {
     INITIAL_NUMBER_OF_PARTICLES, INITIAL_PARTICLE_RADIUS
   ));
 
-  // TODO: allow for changing interaction powers:
+  // TODO:
+  // - allow for changing particle color
+  // - allow for changing interaction powers
+  // - allow for moving the entire protein across the stage
+  // - stage borders?
+
   const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
   const [initialEnergy, setInitialEnergy] = useState(
@@ -201,7 +206,7 @@ function ProteinFoldingStage() {
 
       <div className='protein-folding-stage'>
         <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
-          <Layer>
+          <Layer draggable={true}>
             {particles.map((particle) => (
               <Circle
                 key={particle.id}

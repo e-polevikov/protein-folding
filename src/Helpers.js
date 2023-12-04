@@ -51,6 +51,7 @@ function isValidParticlePosition(
 
   let particleIntersectsStageBoudaries = false;
 
+  /*
   if (randX - particleRadius < 0.0 || randX + particleRadius >= STAGE_WIDTH) {
     particleIntersectsStageBoudaries = true;
   }
@@ -58,6 +59,7 @@ function isValidParticlePosition(
   if (randY - particleRadius < 0.0 || randY + particleRadius >= STAGE_HEIGHT) {
     particleIntersectsStageBoudaries = true;
   }
+  */
 
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
@@ -68,7 +70,7 @@ export function generateParticles(numOfParticles, particleRadius) {
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: STAGE_WIDTH * 0.25 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.1 + randomSign() * Math.random() * 10,
     y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
