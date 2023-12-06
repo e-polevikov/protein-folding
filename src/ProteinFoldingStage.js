@@ -30,9 +30,6 @@ function ProteinFoldingStage() {
     INITIAL_NUMBER_OF_PARTICLES, INITIAL_PARTICLE_RADIUS
   ));
 
-  // TODO:
-  // - allow for changing interaction powers
-
   const [interactionPowers, setInteractionPowers] = useState(INTERACTION_POWERS);
 
   const redInteractionPowerRef = useRef(null);
@@ -177,6 +174,34 @@ function ProteinFoldingStage() {
     setRotationStarted(false);
   }
 
+  function updateInteractionPowers() {
+    let currentInteractionPowers = {
+      'red': {
+        'red': Number(redInteractionPowerRef.current.value),
+        'green': Number(redGreenInteractionPowerRef.current.value),
+        'blue': Number(redBlueInteractionPowerRef.current.value),
+      },
+      'green': {
+        'red': Number(redGreenInteractionPowerRef.current.value),
+        'green': Number(greenInteractionPowerRef.current.value),
+        'blue': Number(greenBlueInteractionPowerRef.current.value),
+      },
+      'blue': {
+        'red': Number(redBlueInteractionPowerRef.current.value),
+        'green': Number(greenBlueInteractionPowerRef.current.value),
+        'blue': Number(blueInteractionPowerRef.current.value),
+      }
+    };
+
+    setInteractionPowers(currentInteractionPowers);
+
+    let currEnergy = calculateTotalEnergy(particles, currentInteractionPowers);
+
+    setInitialEnergy(currEnergy);
+    setCurrentEnergy(currEnergy);
+    setMinimalEnergy(currEnergy);    
+  }
+
   useEffect(() => {
     if (rotationStarted) {
       setTimeout(() => {
@@ -255,7 +280,8 @@ function ProteinFoldingStage() {
         <input
           ref={redInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['red']['red']}>
+          defaultValue={interactionPowers['red']['red']}
+          onChange={updateInteractionPowers}>
         </input>
         <br/>
 
@@ -265,7 +291,8 @@ function ProteinFoldingStage() {
         <input
           ref={greenInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['green']['green']}>
+          defaultValue={interactionPowers['green']['green']}
+          onChange={updateInteractionPowers}>
         </input>
         <br/>
 
@@ -275,7 +302,8 @@ function ProteinFoldingStage() {
         <input
           ref={blueInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['blue']['blue']}>
+          defaultValue={interactionPowers['blue']['blue']}
+          onChange={updateInteractionPowers}>
         </input>
         <br/>
 
@@ -286,7 +314,8 @@ function ProteinFoldingStage() {
         <input
           ref={redGreenInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['red']['green']}>
+          defaultValue={interactionPowers['red']['green']}
+          onChange={updateInteractionPowers}>
         </input>
         <br/>
 
@@ -297,7 +326,8 @@ function ProteinFoldingStage() {
         <input
           ref={greenBlueInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['blue']['green']}>
+          defaultValue={interactionPowers['blue']['green']}
+          onChange={updateInteractionPowers}>
         </input>
         <br/>
 
@@ -308,7 +338,8 @@ function ProteinFoldingStage() {
         <input
           ref={redBlueInteractionPowerRef}
           type='number'
-          defaultValue={interactionPowers['red']['blue']}>
+          defaultValue={interactionPowers['red']['blue']}
+          onChange={updateInteractionPowers}>
         </input>
 
         <br/>
