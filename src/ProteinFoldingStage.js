@@ -6,14 +6,14 @@ import {
   INTERACTION_POWERS,
   INITIAL_NUMBER_OF_PARTICLES,
   INITIAL_PARTICLE_RADIUS,
+  MOVE_DISTANCE,
 } from './Constants';
 
 import {
   generateParticles,
   haveIntersections,
   rotateParticles,
-  calculateTotalEnergy,
-  generateParticleColor
+  calculateTotalEnergy
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -98,18 +98,7 @@ function ProteinFoldingStage() {
     setMinimalEnergy(currEnergy);
   }
 
-  function getParticlesJoinLine() {
-    let particlesJoinLine = []
-
-    particles.forEach(particle => {
-      particlesJoinLine.push(particle.x);
-      particlesJoinLine.push(particle.y);
-    });
-
-    return particlesJoinLine;
-  }
-
-  function setPivotParticle(event) {
+  function setPivotParticleOrChangeParticleColor(event) {
     let handledParticleId = Number(event.target.id());
 
     if (pivotParticleId != handledParticleId) {
@@ -139,9 +128,26 @@ function ProteinFoldingStage() {
     }
   }
 
+  /* Helper functions for drawing particles */
+
+  function getParticlesJoinLine() {
+    let particlesJoinLine = []
+
+    particles.forEach(particle => {
+      particlesJoinLine.push(particle.x);
+      particlesJoinLine.push(particle.y);
+    });
+
+    return particlesJoinLine;
+  }
+
   function getStrokeLineColor(particleId) {
     return particleId == pivotParticleId ? 'black' : null;
   }
+
+  /* *** */
+
+  /* Particles rotation */
 
   const [rotationStarted, setRotationStarted] = useState(false);
   const [rotationDirection, setRotationDirection] = useState(null);
@@ -210,12 +216,56 @@ function ProteinFoldingStage() {
     }
   });
 
+  /* *** */
+
+  /* Particles movement */
+
+  const [movementStarted, setMovementStarted] = useState(false);
+  const [movementDirection, setMovementDirection] = useState(null);
+
+  function handleMovementButtonMouseDown(buttonMovementDirection) {
+    setMovementDirection(buttonMovementDirection);
+    setMovementStarted(true);
+  }
+
+  function handleMovementButtonMouseUp() {
+    setMovementStarted(false);
+  }
+
+  function handleParticlesMovement() {
+    let movedParticles = particles.map((particle) => {
+      if (movementDirection == 0) {
+        particle.x -= MOVE_DISTANCE;
+      } else if (movementDirection == 1) {
+        particle.x += MOVE_DISTANCE;
+      } else if (movementDirection == 2) {
+        particle.y -= MOVE_DISTANCE;
+      } else if (movementDirection == 3) {
+        particle.y += MOVE_DISTANCE;
+      }
+  
+      return particle;
+    });
+  
+    setParticles(movedParticles);
+  }
+
+  useEffect(() => {
+    if (movementStarted) {
+      setTimeout(() => {
+        handleParticlesMovement();
+      }, 10);
+    }
+  });
+
+  /* *** */
+
   return (
     <>
       <h1 className='title'>Задача "Сворачвание белка" для конкурса КИО</h1>
 
       <div className='protein-folding-params'>
-        <h2>Вращение частиц:</h2>
+      <h3>Вращение и перемещение частиц:</h3>
 
         <button className='rotate-btn'
           onMouseDown={() => handleRotationButtonMouseDown(2)}
@@ -244,6 +294,36 @@ function ProteinFoldingStage() {
         >
           &#8634;
         </button>
+        
+        <br/>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleMovementButtonMouseDown(0)}
+          onMouseUp={handleMovementButtonMouseUp}
+        >
+          &#8592;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleMovementButtonMouseDown(1)}
+          onMouseUp={handleMovementButtonMouseUp}
+        >
+          &#8594;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleMovementButtonMouseDown(2)}
+          onMouseUp={handleMovementButtonMouseUp}
+        >
+          &#8593;
+        </button>
+
+        <button className='rotate-btn'
+          onMouseDown={() => handleMovementButtonMouseDown(3)}
+          onMouseUp={handleMovementButtonMouseUp}
+        >
+          &#8595;
+        </button>
 
         <h3>Значение энергии:</h3>
 
@@ -253,7 +333,7 @@ function ProteinFoldingStage() {
 
         <hr/>
 
-        <h2>Параметры эксперимента:</h2>
+        <h3>Параметры эксперимента:</h3>
         
         <label>Число частиц: </label>
         <input
@@ -351,7 +431,7 @@ function ProteinFoldingStage() {
 
       <div className='protein-folding-stage'>
         <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
-          <Layer draggable={true}>
+          <Layer>
             {particles.map((particle) => (
               <Circle
                 key={particle.id}
@@ -362,7 +442,7 @@ function ProteinFoldingStage() {
                 fill={particle.color}
                 stroke={getStrokeLineColor(particle.id)}
                 strokeWidth={strokeWidth}
-                onClick={setPivotParticle}
+                onClick={setPivotParticleOrChangeParticleColor}
               />))
             }
             {<Line
