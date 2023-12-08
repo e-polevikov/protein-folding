@@ -272,7 +272,7 @@ function ProteinFoldingStage() {
       <h1 className='title'>Задача "Сворачвание белка" для конкурса КИО</h1>
 
       <div className='protein-folding-params'>
-      <h3>Вращение и перемещение частиц:</h3>
+        <h3>Вращение и перемещение частиц:</h3>
 
         <button className='rotate-btn'
           onMouseDown={() => handleRotationButtonMouseDown(2)}

@@ -2,16 +2,17 @@
   text-align: center;
 }
 
-.protein-folding-stage {
-  border: solid black 1px;
-  float: right;
-  margin-right: 20px;
-}
-
 .protein-folding-params {
   border: solid black 1px;
   float: left;
   padding: 10px;
+  margin: 20px;
+}
+
+.protein-folding-stage {
+  border: solid black 1px;
+  float: right;
+  margin: 20px;
 }
 
 .red-color-span {
