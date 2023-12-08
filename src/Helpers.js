@@ -51,7 +51,6 @@ function isValidParticlePosition(
 
   let particleIntersectsStageBoudaries = false;
 
-  /*
   if (randX - particleRadius < 0.0 || randX + particleRadius >= STAGE_WIDTH) {
     particleIntersectsStageBoudaries = true;
   }
@@ -59,18 +58,23 @@ function isValidParticlePosition(
   if (randY - particleRadius < 0.0 || randY + particleRadius >= STAGE_HEIGHT) {
     particleIntersectsStageBoudaries = true;
   }
-  */
 
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
 
 export function generateParticles(numOfParticles, particleRadius) {
+  let maxNumOfParticles = Math.floor(STAGE_WIDTH * 0.925 / (2.0 * particleRadius));
+
+  if (numOfParticles > maxNumOfParticles) {
+    numOfParticles = maxNumOfParticles;
+  }
+
   let particles = [];
   let numOfGeneratedParticles = 0;
 
   particles.push({ 
     id: numOfGeneratedParticles.toString(), 
-    x: STAGE_WIDTH * 0.125 + randomSign() * Math.random() * 10,
+    x: STAGE_WIDTH * 0.075 + randomSign() * Math.random() * 10,
     y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
@@ -110,6 +114,20 @@ export function haveIntersections(particles, particleRadius) {
       if (xDistance + yDistance < 4.0 * Math.pow(particleRadius, 2)) {
         return true;
       }
+    }
+  }
+
+  return false;
+}
+
+export function chainIsOutOfStageBoundaries(particles, particleRadius) {
+  for (let i = 0; i < particles.length; i++) {
+    if (particles[i].x - particleRadius < 0.0 || particles[i].x + particleRadius >= STAGE_WIDTH) {
+      return true;
+    }
+  
+    if (particles[i].y - particleRadius < 0.0 || particles[i].y + particleRadius >= STAGE_HEIGHT) {
+      return true;
     }
   }
 

@@ -13,7 +13,8 @@ import {
   generateParticles,
   haveIntersections,
   rotateParticles,
-  calculateTotalEnergy
+  calculateTotalEnergy,
+  chainIsOutOfStageBoundaries
 } from './Helpers';
 
 function ProteinFoldingStage() {
@@ -158,7 +159,9 @@ function ProteinFoldingStage() {
       rotationDirection
     );
 
-    if (!haveIntersections(rotatedParticles, particleRadius)) {
+    if (!haveIntersections(rotatedParticles, particleRadius) &&
+        !chainIsOutOfStageBoundaries(rotatedParticles, particleRadius)
+    ) {
       let currEnergy = calculateTotalEnergy(rotatedParticles, interactionPowers);
 
       setCurrentEnergy(currEnergy);
@@ -233,7 +236,9 @@ function ProteinFoldingStage() {
   }
 
   function handleParticlesMovement() {
-    let movedParticles = particles.map((particle) => {
+    let movedParticles = JSON.parse(JSON.stringify(particles));
+
+    movedParticles = movedParticles.map((particle) => {
       if (movementDirection == 0) {
         particle.x -= MOVE_DISTANCE;
       } else if (movementDirection == 1) {
@@ -246,8 +251,10 @@ function ProteinFoldingStage() {
   
       return particle;
     });
-  
-    setParticles(movedParticles);
+
+    if (!chainIsOutOfStageBoundaries(movedParticles, particleRadius)) {
+      setParticles(movedParticles);
+    }
   }
 
   useEffect(() => {
