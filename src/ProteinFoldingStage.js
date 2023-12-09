@@ -269,7 +269,7 @@ function ProteinFoldingStage() {
 
   return (
     <>
-      <h1 className='title'>Задача "Сворачвание белка" для конкурса КИО</h1>
+      <h1 className='title'>Задача "Сворачивание белка" для конкурса КИО</h1>
 
       <div className='protein-folding-params'>
         <h3>Вращение и перемещение частиц:</h3>
