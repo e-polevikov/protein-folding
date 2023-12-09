@@ -1,5 +1,22 @@
+.title {
+  text-align: center;
+}
+
 .folding-stage {
   border: solid black 1px;
   margin: 20px;
   float: right;
+}
+
+.folding-stage-params-panel {
+  border: solid black 1px;
+  float: left;
+  padding: 10px;
+  margin: 20px;
+}
+
+.rotate-btn {
+  padding: 20px;
+  margin: 4px;
+  font-size: xx-large;
 }

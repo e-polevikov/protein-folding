@@ -1,5 +1,10 @@
 import {Circle, Line} from 'react-konva';
 
+import {
+  PIVOT_PARTICLE_STROKE_WIDTH,
+  JOIN_LINE_STROKE_WIDTH
+} from './Constants';
+
 function particlesJoinLinePoints(particles) {
   let particlesJoinLine = []
 
@@ -11,12 +16,7 @@ function particlesJoinLinePoints(particles) {
   return particlesJoinLine;
 }
 
-export function ParticlesChain(props) {
-  const strokeWidth = 5;
-  const particles = props.particles;
-  const particleRadius = props.particleRadius;
-  const joinLinePoints = particlesJoinLinePoints(particles);
-
+export function ParticlesChain({particles, particleRadius, pivotParticleId}) {
   return (
     <>
       {particles.map((particle) => (
@@ -27,13 +27,15 @@ export function ParticlesChain(props) {
           y={particle.y}
           radius={particleRadius}
           fill={particle.color}
+          stroke={particle.id == pivotParticleId ? 'black' : null}
+          strokeWidth={PIVOT_PARTICLE_STROKE_WIDTH}
         />))
       }
       {
         <Line
-          points={joinLinePoints}
+          points={particlesJoinLinePoints(particles)}
           stroke={'black'}
-          strokeWidth={strokeWidth}
+          strokeWidth={JOIN_LINE_STROKE_WIDTH}
         />
       }
       <Circle
