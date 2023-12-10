@@ -15,8 +15,25 @@
   margin: 20px;
 }
 
-.rotate-btn {
+.btn {
+  padding: 8px;
+  margin-top: 10px;
+}
+
+.control-btn {
   padding: 20px;
   margin: 4px;
   font-size: xx-large;
+}
+
+.red-color-span {
+  color: red;
+}
+
+.green-color-span {
+  color: green;
+}
+
+.blue-color-span {
+  color: blue;
 }

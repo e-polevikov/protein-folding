@@ -20,7 +20,8 @@ export function ParticlesChain({
   particles,
   particleRadius,
   pivotParticleId,
-  setPivotParticle
+  setPivotParticle,
+  changeParticleColor
 }) {
   return (
     <>
@@ -34,7 +35,15 @@ export function ParticlesChain({
           fill={particle.color}
           stroke={particle.id == pivotParticleId ? 'black' : null}
           strokeWidth={PIVOT_PARTICLE_STROKE_WIDTH}
-          onClick={() => setPivotParticle(particle.id)}
+          onClick={() => {
+            let particleId = Number(particle.id);
+
+            if (particleId == pivotParticleId) {
+              changeParticleColor(particleId);
+            } else {
+              setPivotParticle(particleId)
+            }
+          }}
         />))
       }
       {
