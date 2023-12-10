@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Stage, Layer} from 'react-konva';
 
 import {
@@ -19,10 +20,16 @@ import {
 } from './ParticlesGenerator';
 
 function FoldingStage() {
-  const numParticles = INITIAL_NUMBER_OF_PARTICLES;
-  const particlesRadius = INITIAL_PARTICLE_RADIUS;
-  const particles = generateParticles(numParticles, particlesRadius);
-  const pivotParticleId = Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2);
+  const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);
+  const [particlesRadius, setParticlesRadius] = useState(INITIAL_PARTICLE_RADIUS);
+
+  const [particles, setParticles] = useState(
+    generateParticles(numParticles, particlesRadius)
+  );
+
+  const [pivotParticleId, setPivotParticleId] = useState(
+    Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2)
+  );
 
   return (
     <>
@@ -49,6 +56,7 @@ function FoldingStage() {
               particles={particles}
               particleRadius={particlesRadius}
               pivotParticleId={pivotParticleId}
+              setPivotParticle={(particleId) => setPivotParticleId(particleId)}
             />
           </Layer>
         </Stage>

@@ -16,7 +16,12 @@ function particlesJoinLinePoints(particles) {
   return particlesJoinLine;
 }
 
-export function ParticlesChain({particles, particleRadius, pivotParticleId}) {
+export function ParticlesChain({
+  particles,
+  particleRadius,
+  pivotParticleId,
+  setPivotParticle
+}) {
   return (
     <>
       {particles.map((particle) => (
@@ -29,6 +34,7 @@ export function ParticlesChain({particles, particleRadius, pivotParticleId}) {
           fill={particle.color}
           stroke={particle.id == pivotParticleId ? 'black' : null}
           strokeWidth={PIVOT_PARTICLE_STROKE_WIDTH}
+          onClick={() => setPivotParticle(particle.id)}
         />))
       }
       {
