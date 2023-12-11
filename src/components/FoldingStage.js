@@ -202,7 +202,7 @@ function FoldingStage() {
 
   return (
     <>
-      <h1 className='title'>Задача "Сворачивание белка" для конкурса КИО</h1>
+      <h1 className='title'>Задача «Сворачивание белка»</h1>
 
       <div className='folding-stage-params-panel'>
         <h3>Вращение и перемещение частиц:</h3>
