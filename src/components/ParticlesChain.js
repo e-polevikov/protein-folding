@@ -3,7 +3,7 @@ import {Circle, Line} from 'react-konva';
 import {
   PIVOT_PARTICLE_STROKE_WIDTH,
   JOIN_LINE_STROKE_WIDTH
-} from './Constants';
+} from '../Constants';
 
 function particlesJoinLinePoints(particles) {
   let particlesJoinLine = []

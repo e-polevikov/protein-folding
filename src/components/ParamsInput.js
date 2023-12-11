@@ -1,7 +1,7 @@
 import {
   INITIAL_NUMBER_OF_PARTICLES,
   INITIAL_PARTICLE_RADIUS
-} from './Constants';
+} from '../Constants';
 
 export function ParamsInput({
   numParticlesRef,

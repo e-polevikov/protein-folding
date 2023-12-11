@@ -1,7 +1,7 @@
 import {
   ROTATION_DIRECTIONS,
   MOVEMENT_DIRECTIONS
-} from './Constants';
+} from '../Constants';
 
 export function RotationButtons({
   setRotationStarted,

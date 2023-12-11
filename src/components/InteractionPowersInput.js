@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import {
   INTERACTION_POWERS
-} from './Constants';
+} from '../Constants';
 
 export function InteractionPowersInput({ setInteractionPowers }) {
   const redInteractionPowerRef = useRef(null);
