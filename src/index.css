@@ -1,0 +1,39 @@
+.title {
+  text-align: center;
+}
+
+.folding-stage {
+  border: solid black 1px;
+  margin: 20px;
+  float: right;
+}
+
+.folding-stage-params-panel {
+  border: solid black 1px;
+  float: left;
+  padding: 10px;
+  margin: 20px;
+}
+
+.btn {
+  padding: 8px;
+  margin-top: 10px;
+}
+
+.control-btn {
+  padding: 20px;
+  margin: 4px;
+  font-size: xx-large;
+}
+
+.red-color-span {
+  color: red;
+}
+
+.green-color-span {
+  color: green;
+}
+
+.blue-color-span {
+  color: blue;
+}
