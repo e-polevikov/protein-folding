@@ -204,54 +204,56 @@ function FoldingStage() {
     <>
       <h1 className='title'>Задача «Сворачивание белка»</h1>
 
-      <div className='folding-stage-params-panel'>
-        <h3>Вращение и перемещение частиц:</h3>
+      <div className='folding-stage-container'>
+        <div className='folding-stage-params-panel'>
+          <h3>Вращение и перемещение частиц:</h3>
 
-        <RotationButtons
-          setRotationStarted={(value) => setRotationStarted(value)}
-          setRotationDirection={(value) => setRotationDirection(value)}
-        />
-        <br />
-        <MovementButtons
-          setMovementStarted={(value) => setMovementStarted(value)}
-          setMovementDirection={(value) => setMovementDirection(value)}
-        />
+          <RotationButtons
+            setRotationStarted={(value) => setRotationStarted(value)}
+            setRotationDirection={(value) => setRotationDirection(value)}
+          />
+          <br />
+          <MovementButtons
+            setMovementStarted={(value) => setMovementStarted(value)}
+            setMovementDirection={(value) => setMovementDirection(value)}
+          />
 
-        <h3>Значение энергии:</h3>
+          <h3>Значение энергии:</h3>
 
-        Начальное: {initialEnergy.toFixed(3)}
-        <br />
-        Текущее: {currentEnergy.toFixed(3)}
-        <br />
-        Минимальное: {minimalEnergy.toFixed(3)}
+          Начальное: {initialEnergy.toFixed(3)}
+          <br />
+          Текущее: {currentEnergy.toFixed(3)}
+          <br />
+          Минимальное: {minimalEnergy.toFixed(3)}
 
-        <h3>Силы взаимодействия:</h3>
+          <h3>Силы взаимодействия:</h3>
 
-        <InteractionPowersInput
-          setInteractionPowers={(newValues) => updateInteractionPowers(newValues)}
-        />
+          <InteractionPowersInput
+            setInteractionPowers={(newValues) => updateInteractionPowers(newValues)}
+          />
 
-        <h3>Параметры эксперимента:</h3>
+          <h3>Параметры эксперимента:</h3>
 
-        <ParamsInput
-          numParticlesRef={numParticlesRef}
-          particleRadiusRef={particleRadiusRef}
-          generateNewParticles={generateNewParticles}
-        />
-      </div>
+          <ParamsInput
+            numParticlesRef={numParticlesRef}
+            particleRadiusRef={particleRadiusRef}
+            generateNewParticles={generateNewParticles}
+          />
+        </div>
 
-      <div className='folding-stage'>
-        <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
-          <Layer>
-            <ParticlesChain
-              particles={particles}
-              particleRadius={particleRadius}
-              pivotParticleId={pivotParticleId}
-              setPivotParticle={(particleId) => setPivotParticleId(particleId)}
-              changeParticleColor={(particleId) => changeParticleColor(particleId)}
-            />
-          </Layer>
-        </Stage>
+        <div className='folding-stage'>
+          <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
+            <Layer>
+              <ParticlesChain
+                particles={particles}
+                particleRadius={particleRadius}
+                pivotParticleId={pivotParticleId}
+                setPivotParticle={(particleId) => setPivotParticleId(particleId)}
+                changeParticleColor={(particleId) => changeParticleColor(particleId)}
+              />
+            </Layer>
+          </Stage>
+        </div>
       </div>
     </>
   );
