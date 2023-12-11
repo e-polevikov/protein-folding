@@ -88,22 +88,13 @@ export function generateParticles(numOfParticles, particleRadius) {
     let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
     let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
 
-    let generatedParticleId = numOfGeneratedParticles + 1;
+    particles.push({
+      id: numOfGeneratedParticles.toString(),
+      x: nextX, y: nextY,
+      color: generateParticleColor()
+    });
 
-    if (isValidParticlePosition(
-      particles,
-      nextX, nextY,
-      generatedParticleId,
-      particleRadius)
-    ) {
-      particles.push({
-        id: numOfGeneratedParticles.toString(),
-        x: nextX, y: nextY,
-        color: generateParticleColor()
-      });
-
-      numOfGeneratedParticles += 1;
-    }
+    numOfGeneratedParticles += 1;
   }
 
   return particles;
