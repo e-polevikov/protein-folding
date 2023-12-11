@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/protein-folding/static/css/main.9ee2bbd6.css",
-    "main.js": "/protein-folding/static/js/main.6791abce.js",
+    "main.css": "/protein-folding/static/css/main.b3b16b20.css",
+    "main.js": "/protein-folding/static/js/main.41b1ddee.js",
     "index.html": "/protein-folding/index.html",
-    "main.9ee2bbd6.css.map": "/protein-folding/static/css/main.9ee2bbd6.css.map",
-    "main.6791abce.js.map": "/protein-folding/static/js/main.6791abce.js.map"
+    "main.b3b16b20.css.map": "/protein-folding/static/css/main.b3b16b20.css.map",
+    "main.41b1ddee.js.map": "/protein-folding/static/js/main.41b1ddee.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ee2bbd6.css",
-    "static/js/main.6791abce.js"
+    "static/css/main.b3b16b20.css",
+    "static/js/main.41b1ddee.js"
   ]
 }
