@@ -28,18 +28,18 @@ import {
 
 import {
   generateParticles
-} from '../ParticlesGenerator';
+} from '../processors/ParticlesGenerator';
 
 import {
   rotateParticles,
   moveParticles,
   haveIntersections,
   chainIsOutOfStageBoundaries
-} from '../ParticlesController';
+} from '../processors/ParticlesController';
 
 import {
   calculateTotalEnergy
-} from '../EnergyCalculator';
+} from '../processors/EnergyCalculator';
 
 function FoldingStage() {
   const [numParticles, setNumParticles] = useState(INITIAL_NUMBER_OF_PARTICLES);

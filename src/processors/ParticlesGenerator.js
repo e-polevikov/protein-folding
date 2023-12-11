@@ -2,7 +2,7 @@ import {
   STAGE_WIDTH,
   STAGE_HEIGHT,
   PARTICLE_COLORS
-} from './Constants';
+} from '../Constants';
 
 function randomSign() {
   return Math.random() < 0.5 ? 1 : -1;

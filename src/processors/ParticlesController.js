@@ -3,7 +3,7 @@ import {
   STAGE_HEIGHT,
   ROTATION_ANGLE,
   MOVE_DISTANCE
-} from './Constants';
+} from '../Constants';
 
 export function haveIntersections(particles, particleRadius) {
   for (let i = 0; i < particles.length - 1; i++) {
