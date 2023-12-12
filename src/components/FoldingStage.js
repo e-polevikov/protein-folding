@@ -232,12 +232,12 @@ function FoldingStage() {
         <div className='folding-stage'>
           <div className='control-buttons'>
             <RotationButtons
-              setRotationStarted={(value) => setRotationStarted(value)}
-              setRotationDirection={(value) => setRotationDirection(value)}
+              setRotationStarted={setRotationStarted}
+              setRotationDirection={setRotationDirection}
             />
             <MovementButtons
-              setMovementStarted={(value) => setMovementStarted(value)}
-              setMovementDirection={(value) => setMovementDirection(value)}
+              setMovementStarted={setMovementStarted}
+              setMovementDirection={setMovementDirection}
             />
           </div>
 
