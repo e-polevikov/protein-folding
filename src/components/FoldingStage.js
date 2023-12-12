@@ -205,19 +205,7 @@ function FoldingStage() {
       <h1 className='title'>Задача «Сворачивание белка»</h1>
 
       <div className='folding-stage-container'>
-        <div className='folding-stage-params-panel'>
-          <h3>Вращение и перемещение частиц:</h3>
-
-          <RotationButtons
-            setRotationStarted={(value) => setRotationStarted(value)}
-            setRotationDirection={(value) => setRotationDirection(value)}
-          />
-          <br />
-          <MovementButtons
-            setMovementStarted={(value) => setMovementStarted(value)}
-            setMovementDirection={(value) => setMovementDirection(value)}
-          />
-
+        <div className='params-panel'>
           <h3>Значение энергии:</h3>
 
           Начальное: {initialEnergy.toFixed(3)}
@@ -242,17 +230,30 @@ function FoldingStage() {
         </div>
 
         <div className='folding-stage'>
-          <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
-            <Layer>
-              <ParticlesChain
-                particles={particles}
-                particleRadius={particleRadius}
-                pivotParticleId={pivotParticleId}
-                setPivotParticle={(particleId) => setPivotParticleId(particleId)}
-                changeParticleColor={(particleId) => changeParticleColor(particleId)}
-              />
-            </Layer>
-          </Stage>
+          <div className='control-buttons'>
+            <RotationButtons
+              setRotationStarted={(value) => setRotationStarted(value)}
+              setRotationDirection={(value) => setRotationDirection(value)}
+            />
+            <MovementButtons
+              setMovementStarted={(value) => setMovementStarted(value)}
+              setMovementDirection={(value) => setMovementDirection(value)}
+            />
+          </div>
+
+          <div className='stage'>
+            <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
+              <Layer>
+                <ParticlesChain
+                  particles={particles}
+                  particleRadius={particleRadius}
+                  pivotParticleId={pivotParticleId}
+                  setPivotParticle={(particleId) => setPivotParticleId(particleId)}
+                  changeParticleColor={(particleId) => changeParticleColor(particleId)}
+                />
+              </Layer>
+            </Stage>
+          </div>
         </div>
       </div>
     </>

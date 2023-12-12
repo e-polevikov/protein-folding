@@ -6,15 +6,21 @@
   display: flex;
 }
 
+.params-panel {
+  border: solid black 1px;
+  padding: 10px;
+  margin: 6px;
+}
+
 .folding-stage {
   border: solid black 1px;
   margin: 6px;
 }
 
-.folding-stage-params-panel {
-  border: solid black 1px;
-  padding: 10px;
-  margin: 6px;
+.control-buttons {
+  text-align: center;
+  border-bottom: solid black 1px;
+  padding: 6px;
 }
 
 .btn {
