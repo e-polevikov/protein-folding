@@ -53,6 +53,8 @@ function FoldingStage() {
     generateParticles(numParticles, particleRadius)
   );
 
+  const [isSplitted, setIsSplitted] = useState(false);
+
   /* Particles rotation */
 
   const [rotationStarted, setRotationStarted] = useState(false);
@@ -61,10 +63,10 @@ function FoldingStage() {
   function handleParticleRotation() {
     let rotatedParticles = rotateParticles(
       particles, pivotParticleId,
-      rotationDirection
+      rotationDirection, isSplitted
     );
 
-    if (!haveIntersections(rotatedParticles, particleRadius) &&
+    if (!haveIntersections(rotatedParticles, particleRadius, isSplitted) &&
       !chainIsOutOfStageBoundaries(rotatedParticles, particleRadius)
     ) {
       setParticles(rotatedParticles);
@@ -95,10 +97,22 @@ function FoldingStage() {
   const [movementDirection, setMovementDirection] = useState(null);
 
   function handleParticlesMovement() {
-    let movedParticles = moveParticles(particles, movementDirection);
+    let movedParticles = moveParticles(
+      particles, movementDirection,
+      pivotParticleId, isSplitted
+    );
 
-    if (!chainIsOutOfStageBoundaries(movedParticles, particleRadius)) {
+    if (!haveIntersections(movedParticles, particleRadius, isSplitted) &&
+      !chainIsOutOfStageBoundaries(movedParticles, particleRadius)
+    ) {
       setParticles(movedParticles);
+
+      let currEnergy = calculateTotalEnergy(
+        movedParticles, interactionPowers
+      );
+
+      setCurrentEnergy(currEnergy);
+      setMinimalEnergy(Math.min(currEnergy, minimalEnergy));
     }
   }
 
@@ -177,6 +191,7 @@ function FoldingStage() {
 
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
+  const isSplittedRef = useRef(null);
 
   function generateNewParticles() {
     let currentNumParticles = Number(numParticlesRef.current.value);
@@ -186,6 +201,7 @@ function FoldingStage() {
     setNumParticles(currentNumParticles);
     setParticleRadius(currentParticleRadius);
     setPivotParticleId(newPivotParticleId);
+    setIsSplitted(isSplittedRef.current.checked);
 
     let newParticles = generateParticles(
       currentNumParticles,
@@ -225,6 +241,7 @@ function FoldingStage() {
           <ParamsInput
             numParticlesRef={numParticlesRef}
             particleRadiusRef={particleRadiusRef}
+            isSplittedRef={isSplittedRef}
             generateNewParticles={generateNewParticles}
           />
         </div>
@@ -248,6 +265,7 @@ function FoldingStage() {
                   particles={particles}
                   particleRadius={particleRadius}
                   pivotParticleId={pivotParticleId}
+                  isSplitted={isSplitted}
                   setPivotParticle={(particleId) => setPivotParticleId(particleId)}
                   changeParticleColor={(particleId) => changeParticleColor(particleId)}
                 />

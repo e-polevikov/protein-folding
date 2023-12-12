@@ -5,7 +5,7 @@ import {
   JOIN_LINE_STROKE_WIDTH
 } from '../Constants';
 
-function particlesJoinLinePoints(particles) {
+function joinLinePoints(particles) {
   let particlesJoinLine = []
 
   particles.forEach(particle => {
@@ -16,39 +16,12 @@ function particlesJoinLinePoints(particles) {
   return particlesJoinLine;
 }
 
-export function ParticlesChain({
-  particles,
-  particleRadius,
-  pivotParticleId,
-  setPivotParticle,
-  changeParticleColor
-}) {
+function JoinLine({ particles, particleRadius }) {
   return (
     <>
-      {particles.map((particle) => (
-        <Circle
-          key={particle.id}
-          id={particle.id}
-          x={particle.x}
-          y={particle.y}
-          radius={particleRadius}
-          fill={particle.color}
-          stroke={particle.id == pivotParticleId ? 'black' : null}
-          strokeWidth={PIVOT_PARTICLE_STROKE_WIDTH}
-          onClick={() => {
-            let particleId = Number(particle.id);
-
-            if (particleId == pivotParticleId) {
-              changeParticleColor(particleId);
-            } else {
-              setPivotParticle(particleId)
-            }
-          }}
-        />))
-      }
       {
         <Line
-          points={particlesJoinLinePoints(particles)}
+          points={joinLinePoints(particles)}
           stroke={'black'}
           strokeWidth={JOIN_LINE_STROKE_WIDTH}
         />
@@ -68,7 +41,56 @@ export function ParticlesChain({
         y={particles[particles.length - 1].y}
         radius={Math.floor(particleRadius / 5)}
         fill={'black'}
-      />
+      />    
+    </>
+  );
+}
+
+export function ParticlesChain({
+  particles,
+  particleRadius,
+  pivotParticleId,
+  isSplitted,
+  setPivotParticle,
+  changeParticleColor
+}) {
+  return (
+    <>
+      {particles.map((particle) => (
+        <Circle
+          key={particle.id}
+          id={particle.id}
+          x={particle.x}
+          y={particle.y}
+          radius={particleRadius}
+          fill={particle.color}
+          stroke={particle.id == pivotParticleId ? 'black' : null}
+          strokeWidth={PIVOT_PARTICLE_STROKE_WIDTH}
+          onClick={() => {
+            let particleId = Number(particle.id);
+            particleId == pivotParticleId ?
+              changeParticleColor(particleId) :
+              setPivotParticle(particleId);
+          }}
+        />))
+      }
+      {
+        isSplitted ?
+        <>
+          <JoinLine
+            particles={particles.slice(0, Math.floor(particles.length / 2))}
+            particleRadius={particleRadius}
+          />
+          <JoinLine
+            particles={particles.slice(Math.floor(particles.length / 2), particles.length)}
+            particleRadius={particleRadius}
+          />
+        </> :
+        <JoinLine
+          particles={particles}
+          particleRadius={particleRadius}
+        />
+      }
     </>
   );
 }

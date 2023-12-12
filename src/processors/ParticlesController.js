@@ -5,15 +5,31 @@ import {
   MOVE_DISTANCE
 } from '../Constants';
 
-export function haveIntersections(particles, particleRadius) {
+function intersects(particle1, particle2, particleRadius) {
+  let xDistance = Math.pow((particle1.x - particle2.x), 2);
+  let yDistance = Math.pow((particle1.y - particle2.y), 2);
+
+  return xDistance + yDistance < 4.0 * Math.pow(particleRadius, 2);
+}
+
+export function haveIntersections(particles, particleRadius, isSplitted) {
   for (let i = 0; i < particles.length - 1; i++) {
     for (let j = i + 2; j < particles.length; j++) {
-      let xDistance = Math.pow((particles[i].x - particles[j].x), 2);
-      let yDistance = Math.pow((particles[i].y - particles[j].y), 2);
-    
-      if (xDistance + yDistance < 4.0 * Math.pow(particleRadius, 2)) {
+      if (intersects(particles[i], particles[j], particleRadius)) {
         return true;
       }
+    }
+  }
+
+  if (isSplitted) {
+    let splitIdx = Math.floor(particles.length / 2);
+
+    if (intersects(
+      particles[splitIdx - 1],
+      particles[splitIdx],
+      particleRadius)
+    ) {
+      return true;
     }
   }
 
@@ -38,16 +54,39 @@ export function chainIsOutOfStageBoundaries(particles, particleRadius) {
   return false;
 }
 
-export function rotateParticles(particles, pivotParticleId, rotationDirection) {
+export function rotateParticles(
+  particles,
+  pivotParticleId,
+  rotationDirection,
+  isSplitted,
+) {
   let rotatedParticles = JSON.parse(JSON.stringify(particles));
   let IdsToRotate = [];
 
   if (rotationDirection < 2) {
-    for (let i = pivotParticleId + 1; i < rotatedParticles.length; i++) {
+    let upperBound = rotatedParticles.length;
+
+    if (isSplitted) {
+      let splitIdx = Math.floor(rotatedParticles.length / 2);
+      if (pivotParticleId < splitIdx) {
+        upperBound = splitIdx;
+      }
+    }
+
+    for (let i = pivotParticleId + 1; i < upperBound; i++) {
       IdsToRotate.push(i);
     }
   } else {
-    for (let i = 0; i < pivotParticleId; i++) {
+    let lowerBound = 0;
+
+    if (isSplitted) {
+      let splitIdx = Math.floor(rotatedParticles.length / 2);
+      if (pivotParticleId >= splitIdx) {
+        lowerBound = splitIdx;
+      }
+    }
+
+    for (let i = lowerBound; i < pivotParticleId; i++) {
       IdsToRotate.push(i);
     }
   }
@@ -101,22 +140,32 @@ export function rotateParticles(particles, pivotParticleId, rotationDirection) {
   return rotatedParticles;
 }
 
-export function moveParticles(particles, direction) {
+export function moveParticles(particles, direction, pivotParticleId, isSplitted) {
   let movedParticles = JSON.parse(JSON.stringify(particles));
 
-  movedParticles = movedParticles.map((particle) => {
-    if (direction == 0) {
-      particle.x -= MOVE_DISTANCE;
-    } else if (direction == 1) {
-      particle.x += MOVE_DISTANCE;
-    } else if (direction == 2) {
-      particle.y -= MOVE_DISTANCE;
-    } else if (direction == 3) {
-      particle.y += MOVE_DISTANCE;
+  for (let i = 0; i < movedParticles.length; i++) {
+    if (isSplitted) {
+      let splitIdx = Math.floor(movedParticles.length / 2);
+
+      if (pivotParticleId < splitIdx && i >= splitIdx) {
+        continue;
+      }
+
+      if (pivotParticleId >= splitIdx && i < splitIdx) {
+        continue;
+      }
     }
 
-    return particle;
-  });
+    if (direction == 0) {
+      movedParticles[i].x -= MOVE_DISTANCE;
+    } else if (direction == 1) {
+      movedParticles[i].x += MOVE_DISTANCE;
+    } else if (direction == 2) {
+      movedParticles[i].y -= MOVE_DISTANCE;
+    } else if (direction == 3) {
+      movedParticles[i].y += MOVE_DISTANCE;
+    }
+  }
 
   return movedParticles;
 }

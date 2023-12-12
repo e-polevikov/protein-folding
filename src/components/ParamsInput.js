@@ -6,6 +6,7 @@ import {
 export function ParamsInput({
   numParticlesRef,
   particleRadiusRef,
+  isSplittedRef,
   generateNewParticles
 }) {
   return (
@@ -24,6 +25,14 @@ export function ParamsInput({
         ref={particleRadiusRef}
         type='number'
         defaultValue={INITIAL_PARTICLE_RADIUS}
+      />
+
+      <br />
+
+      <label>Две цепи: </label>
+      <input
+        ref={isSplittedRef}
+        type='checkbox'
       />
 
       <br />
