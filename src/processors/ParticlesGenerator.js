@@ -4,6 +4,11 @@ import {
   PARTICLE_COLORS
 } from '../Constants';
 
+import {
+  haveIntersections,
+  chainIsOutOfStageBoundaries
+} from './ParticlesController';
+
 function randomSign() {
   return Math.random() < 0.5 ? 1 : -1;
 }
@@ -29,16 +34,13 @@ function generateParticleColor(colorToExclude) {
 }
 
 function isValidParticlePosition(
-  particles, randX, randY,
-  particleId, particleRadius
+  particles,
+  randX, randY,
+  particleRadius
 ) {
   let particleIntersectsExisting = false;
 
   for (let i = 0; i < particles.length; i++) {
-    if (i === particleId) {
-      continue;
-    }
-
     let xDistance = Math.pow((particles[i].x - randX), 2);
     let yDistance = Math.pow((particles[i].y - randY), 2);
 
@@ -61,7 +63,38 @@ function isValidParticlePosition(
   return !particleIntersectsExisting && !particleIntersectsStageBoudaries;
 }
 
-export function generateParticles(numOfParticles, particleRadius) {
+export function generateParticles(numOfParticles, particleRadius, isSplitted, initY = 0.5) {
+  if (isSplitted) {
+    let particles1 = generateParticles(
+      Math.floor(numOfParticles / 2),
+      particleRadius, false, 0.25
+    );
+
+    let particles2 = generateParticles(
+      Math.ceil(numOfParticles / 2),
+      particleRadius, false, 0.75
+    );
+
+    for (let i = 0; i < particles2.length; i++) {
+      let currentId = Number(particles2[i].id);
+      currentId += particles2.length;
+      particles2[i].id = currentId.toString();
+    }
+
+    particles1 = particles1.concat(particles2);
+
+    if (haveIntersections(particles1, particleRadius, isSplitted) ||
+      chainIsOutOfStageBoundaries(particles1, particleRadius)
+    ) {
+      particles1 = generateParticles(
+        numOfParticles, particleRadius,
+        isSplitted, initY
+      );
+    }
+
+    return particles1;
+  }
+
   let maxNumOfParticles = Math.floor(STAGE_WIDTH * 0.925 / (2.0 * particleRadius));
 
   if (numOfParticles > maxNumOfParticles) {
@@ -74,7 +107,7 @@ export function generateParticles(numOfParticles, particleRadius) {
   particles.push({
     id: numOfGeneratedParticles.toString(),
     x: STAGE_WIDTH * 0.075 + randomSign() * Math.random() * 10,
-    y: STAGE_HEIGHT * 0.5 + randomSign() * Math.random() * 10,
+    y: STAGE_HEIGHT * initY + randomSign() * Math.random() * 10,
     color: generateParticleColor()
   });
 

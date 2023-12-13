@@ -49,11 +49,11 @@ function FoldingStage() {
     Math.floor(INITIAL_NUMBER_OF_PARTICLES / 2)
   );
 
-  const [particles, setParticles] = useState(
-    generateParticles(numParticles, particleRadius)
-  );
-
   const [isSplitted, setIsSplitted] = useState(false);
+
+  const [particles, setParticles] = useState(
+    generateParticles(numParticles, particleRadius, isSplitted)
+  );
 
   /* Particles rotation */
 
@@ -197,15 +197,17 @@ function FoldingStage() {
     let currentNumParticles = Number(numParticlesRef.current.value);
     let currentParticleRadius = Number(particleRadiusRef.current.value);
     let newPivotParticleId = Math.floor(currentNumParticles / 2);
+    let newIsSplitted = isSplittedRef.current.checked;
 
     setNumParticles(currentNumParticles);
     setParticleRadius(currentParticleRadius);
     setPivotParticleId(newPivotParticleId);
-    setIsSplitted(isSplittedRef.current.checked);
+    setIsSplitted(newIsSplitted);
 
     let newParticles = generateParticles(
       currentNumParticles,
-      currentParticleRadius
+      currentParticleRadius,
+      newIsSplitted
     );
 
     setParticles(newParticles);
