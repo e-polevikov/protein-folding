@@ -1,0 +1,21 @@
+.red-color-span {
+  color: red;
+}
+
+.green-color-span {
+  color: green;
+}
+
+.blue-color-span {
+  color: blue;
+}
+
+.power-input {
+  width: 20%;
+  margin: 2px;
+}
+
+.power-inputs {
+  margin: 6px;
+  margin-bottom: 20px;
+}

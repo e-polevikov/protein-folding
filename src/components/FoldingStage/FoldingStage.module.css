@@ -1,0 +1,26 @@
+.folding-stage {
+  display: flex;
+}
+
+.params-panel {
+  border: solid black 2px;
+  padding: 10px;
+  margin: 6px;
+  width: 20%;
+}
+
+.new-chain-btn {
+  padding: 10px;
+  margin: 6px;
+}
+
+.controls-panel {
+  text-align: center;
+  border-bottom: solid black 2px;
+  padding: 6px;
+}
+
+.stage {
+  border: solid black 2px;
+  margin: 6px;
+}
