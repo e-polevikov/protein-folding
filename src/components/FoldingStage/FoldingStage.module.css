@@ -14,6 +14,11 @@
   margin: 6px;
 }
 
+.save-config-btn {
+  padding: 10px;
+  margin: 6px;
+}
+
 .controls-panel {
   text-align: center;
   border-bottom: solid black 2px;

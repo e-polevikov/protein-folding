@@ -79,6 +79,25 @@ export function FoldingStage() {
     });
   }
 
+  function displayParams() {
+    let particlesColors = particles.map(particle => {
+      return {
+        'id': particle.id,
+        'color': particle.color
+      };
+    });
+
+    let params = {
+      'particlesColors': particlesColors,
+      'particleRadius': particleRadius,
+      'isSplitted': isSplitted,
+      'powers': powers
+    }
+
+    let paramsJSON = JSON.stringify(params);
+    alert(paramsJSON);
+  }
+
   return (
     <div className={styles['folding-stage']}>
       <div className={styles['params-panel']}>
@@ -101,6 +120,12 @@ export function FoldingStage() {
           onClick={generateNewParticlesChain}
         >
           Сгенерировать новую цепь
+        </button>
+        <button
+          className={styles['save-config-btn']}
+          onClick={displayParams}
+        >
+          Показать параметры в виде JSON
         </button>
       </div>
 
