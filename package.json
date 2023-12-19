@@ -41,7 +41,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0"
+    "gh-pages": "^6.0.0",
+    "react-router-dom": "^6.21.0"
   },
   "homepage": "https://e-polevikov.github.io/protein-folding"
 }
