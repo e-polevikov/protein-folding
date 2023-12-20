@@ -1,9 +1,8 @@
-
+import { FoldingStage } from '../components/FoldingStage/FoldingStage';
+import { LEVEL3_SETTINGS } from '../constants/Levels';
 
 export function Level3() {
   return (
-    <>
-      <h1>Level 3</h1>
-    </>
+    <FoldingStage settings={LEVEL3_SETTINGS} />
   );
 }
