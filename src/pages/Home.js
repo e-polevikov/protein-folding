@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 export function Home() {
   return (
@@ -8,10 +9,10 @@ export function Home() {
       </div>
       <div>
         <ul>
-          <li>Уровень 1</li>
-          <li>Уровень 2</li>
-          <li>Уровень 3</li>
-          <li>Конструктор</li>
+          <li><Link to="/protein-folding/level-1">Уровень 1</Link></li>
+          <li><Link to="/protein-folding/level-2">Уровень 2</Link></li>
+          <li><Link to="/protein-folding/level-3">Уровень 3</Link></li>
+          <li><Link to="/protein-folding/constructor">Конструктор</Link></li>
         </ul>
       </div>
     </div>
