@@ -1,5 +1,5 @@
 
-export function MainPage() {
+export function Home() {
   return (
     <div>
       <h1>Задача «Сворачивание белка»</h1>
