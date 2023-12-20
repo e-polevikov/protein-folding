@@ -1,14 +1,7 @@
 import { useState, useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
 
-import {
-  STAGE_WIDTH,
-  STAGE_HEIGHT,
-  NUMBER_OF_PARTICLES,
-  PARTICLE_RADIUS,
-  IS_SPLITTED,
-  INTERACTION_POWERS
-} from '../../constants/FoldingStage';
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../../constants/FoldingStage';
 
 import { ParticlesChain } from '../ParticlesChain/ParticlesChain';
 import { RotationControl } from '../Controls/RotationControl';
@@ -23,29 +16,28 @@ import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
 import styles from './FoldingStage.module.css';
 
-
-export function FoldingStage() {
-  const [numParticles, setNumParticles] = useState(NUMBER_OF_PARTICLES);
-  const [particleRadius, setParticleRadius] = useState(PARTICLE_RADIUS);
+export function FoldingStage({ settings }) {
+  const [numParticles, setNumParticles] = useState(settings.NUMBER_OF_PARTICLES);
+  const [particleRadius, setParticleRadius] = useState(settings.PARTICLE_RADIUS);
 
   const [pivotParticleId, setPivotParticleId] = useState(
-    Math.floor(NUMBER_OF_PARTICLES / (IS_SPLITTED ? 4 : 2))
+    Math.floor(settings.NUMBER_OF_PARTICLES / (settings.IS_SPLITTED ? 4 : 2))
   );
 
-  const [isSplitted, setIsSplitted] = useState(IS_SPLITTED);
+  const [isSplitted, setIsSplitted] = useState(settings.IS_SPLITTED);
 
   const [particles, setParticles] = useState(generateParticles(
     numParticles, particleRadius, isSplitted
   ));
 
-  let energy = calculateTotalEnergy(particles, INTERACTION_POWERS);
+  let energy = calculateTotalEnergy(particles, settings.POWERS);
   const [energies, setEnergies] = useState({
     'initial': energy,
     'current': energy,
     'minimal': energy
   });
 
-  const [powers, setPowers] = useState(INTERACTION_POWERS);
+  const [powers, setPowers] = useState(settings.POWERS);
 
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
@@ -109,11 +101,13 @@ export function FoldingStage() {
           setPowers={setPowers}
           setEnergies={setEnergies}
           particles={particles}
+          settings={settings}
         />
         <ChainParamsInput
           numParticlesRef={numParticlesRef}
           particleRadiusRef={particleRadiusRef}
           isSplittedRef={isSplittedRef}
+          settings={settings}
         />
         <button
           className={styles['new-chain-btn']}

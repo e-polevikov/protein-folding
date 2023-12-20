@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 
-import { INTERACTION_POWERS } from '../../constants/FoldingStage';
 import styles from './PowersInput.module.css';
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
 export function PowersInput({
   setPowers,
   setEnergies,
-  particles
+  particles,
+  settings
 }) {
   const redRedPowerRef = useRef(null);
   const greenGreenPowerRef = useRef(null);
@@ -57,7 +57,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redRedPowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['red']['red']}
+        defaultValue={settings.POWERS['red']['red']}
         onChange={updatePowers}>
       </input>
 
@@ -68,7 +68,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={greenGreenPowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['green']['green']}
+        defaultValue={settings.POWERS['green']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -79,7 +79,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={blueBluePowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['blue']['blue']}
+        defaultValue={settings.POWERS['blue']['blue']}
         onChange={updatePowers}>
       </input>
 
@@ -91,7 +91,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redGreenPowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['red']['green']}
+        defaultValue={settings.POWERS['red']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -103,7 +103,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={greenBluePowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['blue']['green']}
+        defaultValue={settings.POWERS['blue']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -115,7 +115,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redBluePowerRef}
         type='number'
-        defaultValue={INTERACTION_POWERS['red']['blue']}
+        defaultValue={settings.POWERS['red']['blue']}
         onChange={updatePowers}>
       </input>
     </div>

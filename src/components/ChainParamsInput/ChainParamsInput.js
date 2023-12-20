@@ -1,14 +1,10 @@
-import {
-  NUMBER_OF_PARTICLES,
-  PARTICLE_RADIUS
-} from '../../constants/FoldingStage';
-
 import styles from './ChainParamsInput.module.css';
 
 export function ChainParamsInput({
   numParticlesRef,
   particleRadiusRef,
-  isSplittedRef
+  isSplittedRef,
+  settings
 }) {
   return (
     <div className={styles['param-inputs']}>
@@ -17,7 +13,7 @@ export function ChainParamsInput({
         className={styles['param-input']}
         ref={numParticlesRef}
         type='number'
-        defaultValue={NUMBER_OF_PARTICLES}
+        defaultValue={settings.NUMBER_OF_PARTICLES}
       />
 
       <br />
@@ -27,7 +23,7 @@ export function ChainParamsInput({
         className={styles['param-input']}
         ref={particleRadiusRef}
         type='number'
-        defaultValue={PARTICLE_RADIUS}
+        defaultValue={settings.PARTICLE_RADIUS}
       />
 
       <br />
