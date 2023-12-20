@@ -53,9 +53,9 @@ export function ParticlesChain({
   setPivotParticleId,
   isSplitted,
   particleRadius,
-  energies,
   setEnergies,
-  powers
+  powers,
+  isConstructor
 }) {
   function changeParticleColor(particleId) {
     let newParticles = particles.map((particle) => {
@@ -90,7 +90,7 @@ export function ParticlesChain({
   }
 
   function handleParticleClick(particleId) {
-    particleId == pivotParticleId ?
+    particleId == pivotParticleId && isConstructor ?
       changeParticleColor(particleId) :
       setPivotParticleId(Number(particleId));
   }

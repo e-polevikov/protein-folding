@@ -154,9 +154,9 @@ export function FoldingStage({ settings, isConstructor }) {
               setPivotParticleId={setPivotParticleId}
               isSplitted={isSplitted}
               particleRadius={particleRadius}
-              energies={energies}
               setEnergies={setEnergies}
               powers={powers}
+              isConstructor={isConstructor}
             />
           </Layer>
         </Stage>
