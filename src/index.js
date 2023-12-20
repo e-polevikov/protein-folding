@@ -25,6 +25,12 @@ function App() {
   );
 }
 
+// TODO:
+// - Add description
+// - Refactoring
+// - Configure Level2 and Level3 settings
+// - ? Minor constructor enhancements
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
