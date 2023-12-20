@@ -30,3 +30,14 @@ export const LEVEL3_SETTINGS = {
     'blue': { 'red': +4, 'green': +1, 'blue': -3 }
   }
 };
+
+export const CONSTRUCTOR_SETTINGS = {
+  'NUMBER_OF_PARTICLES': 14,
+  'PARTICLE_RADIUS': 45,
+  'IS_SPLITTED': false,
+  'POWERS': {
+    'red': { 'red': -1, 'green': +1, 'blue': +1 },
+    'green': { 'red': +1, 'green': -1, 'blue': +1 },
+    'blue': { 'red': +1, 'green': +1, 'blue': -1 }
+  }
+};

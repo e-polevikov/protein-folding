@@ -1,9 +1,8 @@
-
+import { FoldingStage } from '../components/FoldingStage/FoldingStage';
+import { CONSTRUCTOR_SETTINGS } from '../constants/Levels';
 
 export function Constructor() {
   return (
-    <>
-      <h1>Constructor</h1>
-    </>
+    <FoldingStage settings={CONSTRUCTOR_SETTINGS} isConstructor={true} />
   );
 }

@@ -16,7 +16,7 @@ import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
 import styles from './FoldingStage.module.css';
 
-export function FoldingStage({ settings }) {
+export function FoldingStage({ settings, isConstructor }) {
   const [numParticles, setNumParticles] = useState(settings.NUMBER_OF_PARTICLES);
   const [particleRadius, setParticleRadius] = useState(settings.PARTICLE_RADIUS);
 
@@ -90,37 +90,44 @@ export function FoldingStage({ settings }) {
     alert(paramsJSON);
   }
 
+  let experimentParams = <></>;
+
+  if (isConstructor) {
+    experimentParams = <>
+      <h3 style={{textAlign: "center"}}>Параметры эксперимента</h3>
+      <PowersInput
+        setPowers={setPowers}
+        setEnergies={setEnergies}
+        particles={particles}
+        settings={settings}
+      />
+      <ChainParamsInput
+        numParticlesRef={numParticlesRef}
+        particleRadiusRef={particleRadiusRef}
+        isSplittedRef={isSplittedRef}
+        settings={settings}
+      />
+      <button
+        className={styles['new-chain-btn']}
+        onClick={generateNewParticlesChain}
+      >
+        Сгенерировать новую цепь
+      </button>
+      <button
+        className={styles['save-config-btn']}
+        onClick={displayParams}
+      >
+        Показать параметры в виде JSON
+      </button>
+    </>
+  }
+
   return (
     <div className={styles['folding-stage']}>
       <div className={styles['params-panel']}>
         <PowersTable powers={powers}/>
         <EnergiesTable energies={energies}/>
-
-        <h3 style={{textAlign: "center"}}>Параметры эксперимента</h3>
-        <PowersInput
-          setPowers={setPowers}
-          setEnergies={setEnergies}
-          particles={particles}
-          settings={settings}
-        />
-        <ChainParamsInput
-          numParticlesRef={numParticlesRef}
-          particleRadiusRef={particleRadiusRef}
-          isSplittedRef={isSplittedRef}
-          settings={settings}
-        />
-        <button
-          className={styles['new-chain-btn']}
-          onClick={generateNewParticlesChain}
-        >
-          Сгенерировать новую цепь
-        </button>
-        <button
-          className={styles['save-config-btn']}
-          onClick={displayParams}
-        >
-          Показать параметры в виде JSON
-        </button>
+        {experimentParams}
       </div>
 
       <div className={styles['stage']}>

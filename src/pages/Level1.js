@@ -3,6 +3,6 @@ import { LEVEL1_SETTINGS } from '../constants/Levels';
 
 export function Level1() {
   return (
-    <FoldingStage settings={LEVEL1_SETTINGS} />
+    <FoldingStage settings={LEVEL1_SETTINGS} isConstructor={false} />
   );
 }
