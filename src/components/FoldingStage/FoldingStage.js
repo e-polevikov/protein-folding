@@ -17,27 +17,25 @@ import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 import styles from './FoldingStage.module.css';
 
 export function FoldingStage({ settings, isConstructor }) {
-  const [numParticles, setNumParticles] = useState(settings.NUMBER_OF_PARTICLES);
-  const [particleRadius, setParticleRadius] = useState(settings.PARTICLE_RADIUS);
+  const [numParticles, setNumParticles] = useState(settings.particles.length);
+  const [particleRadius, setParticleRadius] = useState(settings.particleRadius);
 
   const [pivotParticleId, setPivotParticleId] = useState(
-    Math.floor(settings.NUMBER_OF_PARTICLES / (settings.IS_SPLITTED ? 4 : 2))
+    Math.floor(settings.particles.length / (settings.isSplitted ? 4 : 2))
   );
 
-  const [isSplitted, setIsSplitted] = useState(settings.IS_SPLITTED);
+  const [isSplitted, setIsSplitted] = useState(settings.isSplitted);
+  const [particles, setParticles] = useState(settings.particles);
 
-  const [particles, setParticles] = useState(generateParticles(
-    numParticles, particleRadius, isSplitted
-  ));
+  let energy = calculateTotalEnergy(settings.particles, settings.powers);
 
-  let energy = calculateTotalEnergy(particles, settings.POWERS);
   const [energies, setEnergies] = useState({
     'initial': energy,
     'current': energy,
     'minimal': energy
   });
 
-  const [powers, setPowers] = useState(settings.POWERS);
+  const [powers, setPowers] = useState(settings.powers);
 
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
@@ -72,15 +70,8 @@ export function FoldingStage({ settings, isConstructor }) {
   }
 
   function displayParams() {
-    let particlesColors = particles.map(particle => {
-      return {
-        'id': particle.id,
-        'color': particle.color
-      };
-    });
-
     let params = {
-      'particlesColors': particlesColors,
+      'particles': particles,
       'particleRadius': particleRadius,
       'isSplitted': isSplitted,
       'powers': powers

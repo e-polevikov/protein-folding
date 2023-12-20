@@ -13,7 +13,7 @@ export function ChainParamsInput({
         className={styles['param-input']}
         ref={numParticlesRef}
         type='number'
-        defaultValue={settings.NUMBER_OF_PARTICLES}
+        defaultValue={settings.particles.length}
       />
 
       <br />
@@ -23,7 +23,7 @@ export function ChainParamsInput({
         className={styles['param-input']}
         ref={particleRadiusRef}
         type='number'
-        defaultValue={settings.PARTICLE_RADIUS}
+        defaultValue={settings.particleRadius}
       />
 
       <br />

@@ -57,7 +57,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redRedPowerRef}
         type='number'
-        defaultValue={settings.POWERS['red']['red']}
+        defaultValue={settings.powers['red']['red']}
         onChange={updatePowers}>
       </input>
 
@@ -68,7 +68,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={greenGreenPowerRef}
         type='number'
-        defaultValue={settings.POWERS['green']['green']}
+        defaultValue={settings.powers['green']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -79,7 +79,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={blueBluePowerRef}
         type='number'
-        defaultValue={settings.POWERS['blue']['blue']}
+        defaultValue={settings.powers['blue']['blue']}
         onChange={updatePowers}>
       </input>
 
@@ -91,7 +91,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redGreenPowerRef}
         type='number'
-        defaultValue={settings.POWERS['red']['green']}
+        defaultValue={settings.powers['red']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -103,7 +103,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={greenBluePowerRef}
         type='number'
-        defaultValue={settings.POWERS['blue']['green']}
+        defaultValue={settings.powers['blue']['green']}
         onChange={updatePowers}>
       </input>
 
@@ -115,7 +115,7 @@ export function PowersInput({
         className={styles['power-input']}
         ref={redBluePowerRef}
         type='number'
-        defaultValue={settings.POWERS['red']['blue']}
+        defaultValue={settings.powers['red']['blue']}
         onChange={updatePowers}>
       </input>
     </div>
