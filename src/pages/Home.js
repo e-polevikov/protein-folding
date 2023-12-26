@@ -1,11 +1,33 @@
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 import { Link } from 'react-router-dom';
 
 export function Home() {
+  let energyFormulaLatex = "$$E(d) = 4 \\cdot \\epsilon \\left( \\frac{1}{d^{12}} - \\frac{1}{d^6} \\right)$$";
+  let currentEnergyLatex = "$E_{curr}$";
+
   return (
     <div>
-      <h1>Задача «Сворачивание белка»</h1>
+      <h1 style={{textAlign: "center"}}>Задача «Сворачивание белка»</h1>
       <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus iaculis urna id volutpat lacus. Semper viverra nam libero justo laoreet sit amet cursus sit. Ut aliquam purus sit amet luctus venenatis lectus magna fringilla. Duis at consectetur lorem donec massa sapien. Viverra justo nec ultrices dui sapien. Penatibus et magnis dis parturient. Amet luctus venenatis lectus magna fringilla. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat. Euismod in pellentesque massa placerat duis ultricies lacus sed turpis. In iaculis nunc sed augue lacus viverra vitae congue eu. Amet est placerat in egestas erat imperdiet sed euismod nisi. Porttitor massa id neque aliquam vestibulum morbi blandit. Tortor at auctor urna nunc id cursus. Facilisis leo vel fringilla est ullamcorper eget nulla facilisi etiam.
+        Общее описание: что такое белок, функции, в каком виде существует в организме. <br /> <br />
+
+        <h3>Описание модели. Формулировка задачи.</h3>
+
+        В нашей задаче в качестве модели белка будем рассматривать цепочку, состояющую из частиц трех типов. Каждая из частиц представляет собой окружность, для которой задан свой цвет — красный, синий или зеленый. Все частицы имеют одинаковый радиус, каждый цвет соответсвует отдельному типу частицы. Для каждого типа частиц задана сила притяжения <Latex>$\epsilon$</Latex>. <br /> <br />
+
+        Для нашей модели энергию взаимодействия между двумя частицами будем рассчитывать по следующей формуле:
+        
+        <Latex>{energyFormulaLatex}</Latex>
+
+        Здесь <Latex>$d$</Latex> — расстояние между центрами частиц, <Latex>$\epsilon$</Latex> — сила притяжения между частицами. Общую энергию взаимодействия <Latex>{currentEnergyLatex}</Latex> будем рассчитывать как сумму энергий всех пар частиц. Задача участника — свернуть цепочку таким образом, чтобы общее значение энергии взаимодействия было минимально. <br /> <br />
+        
+        <h3>Как сворачивать цепочку</h3>
+
+        Для того, чтобы свернуть цепочку, необходимо использовать элементы управления в верхней части экрана: <br /> <br />
+
+        Первые четыре элемента позволяют вращать частицы по часовой стрелке и против часовой стрелки, слева и справа от опорного элемента. Для того, чтобы сделать частицу опорным элементом, нужно кликнуть на неё. Последние четыре элемента позволяют перемещать всю цепочку по плоскости.
+
       </div>
       <div>
         <ul>

@@ -44,7 +44,7 @@ export function PowersTable({ powers }) {
 
   return (
     <>
-      <h3 style={{textAlign: "center"}}>Силы взаимодействия</h3>
+      <h3 style={{textAlign: "center"}}>Силы притяжения</h3>
       <table style={tableStyle}>
         <tr>
           <td style={tableDataStyle}></td>
