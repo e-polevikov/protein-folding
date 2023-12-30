@@ -1,13 +1,36 @@
 import styles from './Buttons.module.css';
 
-export function StartAnewButton() {
+import { calculateTotalEnergy } from '../../services/EnergyCalculator';
+
+export function StartAnewButton({
+  settings,
+  setParticles,
+  setPivotParticleId,
+  setEnergies
+}) {
+  function startAnew() {
+    setParticles(settings.particles);
+    setPivotParticleId(
+      Math.floor(settings.particles.length / (settings.isSplitted ? 4 : 2))
+    );
+
+    let energy = calculateTotalEnergy(settings.particles, settings.powers);
+
+    setEnergies({
+      'initial': energy,
+      'current': energy,
+      'minimal': energy
+    });
+  }
+
   return (
-    <div>
+    <>
       <button
         className={styles['button']}
+        onClick={startAnew}
       >
         Начать заново
       </button>
-    </div>
+    </>
   );
 }

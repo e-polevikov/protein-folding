@@ -58,7 +58,12 @@ export function FoldingStage({ settings, isConstructor }) {
             settings={settings}
           /> :
           <div className={styles['buttons-container']}>
-            <StartAnewButton />
+            <StartAnewButton
+              settings={settings}
+              setParticles={setParticles}
+              setPivotParticleId={setPivotParticleId}
+              setEnergies={setEnergies}
+            />
             <SaveResultButton />
           </div>
         }
