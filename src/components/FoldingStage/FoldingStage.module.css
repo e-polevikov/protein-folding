@@ -9,6 +9,12 @@
   width: 20%;
 }
 
+.buttons-container {
+  text-align: center;
+  padding: 4px;
+  margin: 4px;
+}
+
 .controls-panel {
   text-align: center;
   border-bottom: solid black 2px;

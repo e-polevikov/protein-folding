@@ -9,6 +9,8 @@ import { MovementControl } from '../Controls/MovementControl';
 import { EnergiesTable } from '../EnergiesTable/EnergiesTable';
 import { PowersTable } from '../PowersTable/PowersTable';
 import { ParamsInput } from '../ParamsInput/ParamsInput';
+import { StartAnewButton } from '../Buttons/StartAnewButton';
+import { SaveResultButton } from '../Buttons/SaveResultButton';
 
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
@@ -55,7 +57,10 @@ export function FoldingStage({ settings, isConstructor }) {
             isSplitted={isSplitted}
             settings={settings}
           /> :
-          <></>
+          <div className={styles['buttons-container']}>
+            <StartAnewButton />
+            <SaveResultButton />
+          </div>
         }
       </div>
 
