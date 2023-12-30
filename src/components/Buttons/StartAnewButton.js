@@ -9,6 +9,12 @@ export function StartAnewButton({
   setEnergies
 }) {
   function startAnew() {
+    let start = window.confirm("Вы действительно хотите начать эксперимент заново?");
+
+    if (!start) {
+      return;
+    }
+
     setParticles(settings.particles);
     setPivotParticleId(
       Math.floor(settings.particles.length / (settings.isSplitted ? 4 : 2))
