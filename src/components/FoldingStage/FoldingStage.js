@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Stage, Layer } from 'react-konva';
 
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../../constants/FoldingStage';
@@ -8,10 +8,8 @@ import { RotationControl } from '../Controls/RotationControl';
 import { MovementControl } from '../Controls/MovementControl';
 import { EnergiesTable } from '../EnergiesTable/EnergiesTable';
 import { PowersTable } from '../PowersTable/PowersTable';
-import { PowersInput } from '../PowersInput/PowersInput';
-import { ChainParamsInput } from '../ChainParamsInput/ChainParamsInput';
+import { ParamsInput } from '../ParamsInput/ParamsInput';
 
-import { generateParticles } from '../../services/ParticlesGenerator';
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
 import styles from './FoldingStage.module.css';
@@ -37,88 +35,28 @@ export function FoldingStage({ settings, isConstructor }) {
 
   const [powers, setPowers] = useState(settings.powers);
 
-  const numParticlesRef = useRef(null);
-  const particleRadiusRef = useRef(null);
-  const isSplittedRef = useRef(null);
-
-  function generateNewParticlesChain() {
-    let currentNumParticles = Number(numParticlesRef.current.value);
-    let currentParticleRadius = Number(particleRadiusRef.current.value);
-    let currentIsSplitted = isSplittedRef.current.checked;
-    let newPivotParticleId = Math.floor(currentNumParticles / (currentIsSplitted ? 4 : 2));
-
-    setNumParticles(currentNumParticles);
-    setParticleRadius(currentParticleRadius);
-    setIsSplitted(currentIsSplitted);
-    setPivotParticleId(newPivotParticleId);
-
-    let newParticles = generateParticles(
-      currentNumParticles,
-      currentParticleRadius,
-      currentIsSplitted
-    );
-
-    setParticles(newParticles);
-
-    let energy = calculateTotalEnergy(newParticles, powers);  
-
-    setEnergies({
-      'initial': energy,
-      'current': energy,
-      'minimal': energy
-    });
-  }
-
-  function displayParams() {
-    let params = {
-      'particles': particles,
-      'particleRadius': particleRadius,
-      'isSplitted': isSplitted,
-      'powers': powers
-    }
-
-    let paramsJSON = JSON.stringify(params);
-    alert(paramsJSON);
-  }
-
-  let experimentParams = <></>;
-
-  if (isConstructor) {
-    experimentParams = <>
-      <h3 style={{textAlign: "center"}}>Параметры эксперимента</h3>
-      <PowersInput
-        setPowers={setPowers}
-        setEnergies={setEnergies}
-        particles={particles}
-        settings={settings}
-      />
-      <ChainParamsInput
-        numParticlesRef={numParticlesRef}
-        particleRadiusRef={particleRadiusRef}
-        isSplittedRef={isSplittedRef}
-        settings={settings}
-      />
-      <button
-        className={styles['new-chain-btn']}
-        onClick={generateNewParticlesChain}
-      >
-        Сгенерировать новую цепь
-      </button>
-      <button
-        className={styles['save-config-btn']}
-        onClick={displayParams}
-      >
-        Показать параметры в виде JSON
-      </button>
-    </>
-  }
-
   return (
     <div className={styles['folding-stage']}>
       <div className={styles['params-panel']}>
         <PowersTable powers={powers}/>
         <EnergiesTable energies={energies}/>
-        {experimentParams}
+        { isConstructor ?
+          <ParamsInput
+            powers={powers}
+            setPowers={setPowers}
+            setEnergies={setEnergies}
+            particles={particles}
+            setParticles={setParticles}
+            setNumParticles={setNumParticles}
+            setParticleRadius={setParticleRadius}
+            setIsSplitted={setIsSplitted}
+            setPivotParticleId={setPivotParticleId}
+            particleRadius={particleRadius}
+            isSplitted={isSplitted}
+            settings={settings}
+          /> :
+          <></>
+        }
       </div>
 
       <div className={styles['stage']}>
