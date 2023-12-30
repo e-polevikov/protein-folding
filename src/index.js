@@ -9,6 +9,8 @@ import { Level2 } from './pages/Level2';
 import { Level3 } from './pages/Level3';
 import { Constructor } from './pages/Constructor';
 
+import './styles.css'
+
 function App() {
   return (
     <>
