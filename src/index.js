@@ -28,7 +28,7 @@ function App() {
 }
 
 // TODO:
-// - Configure Level2 and Level3 settings
+// - Configure Level2 and Level3
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

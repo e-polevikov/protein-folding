@@ -82,13 +82,13 @@ export function ParamsInput({
         settings={settings}
       />
       <button
-        className={styles['new-chain-btn']}
+        className={styles['button']}
         onClick={generateNewParticlesChain}
       >
         Сгенерировать новую цепь
       </button>
       <button
-        className={styles['save-config-btn']}
+        className={styles['button']}
         onClick={displayParams}
       >
         Показать параметры в виде JSON

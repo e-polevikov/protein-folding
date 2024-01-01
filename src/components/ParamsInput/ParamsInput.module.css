@@ -1,9 +1,11 @@
-.new-chain-btn {
+.button {
   padding: 10px;
   margin: 6px;
+  font-size: medium;
+  border-radius: 8px;
+  background-color: #f0f8ff;
 }
 
-.save-config-btn {
-  padding: 10px;
-  margin: 6px;
+.button:hover {
+  background-color: #f2f4ff;
 }

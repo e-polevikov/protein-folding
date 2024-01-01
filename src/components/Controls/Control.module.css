@@ -2,5 +2,10 @@
   padding: 20px;
   margin: 4px;
   font-size: xx-large;
-  background-color: aliceblue;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+}
+
+.button:hover {
+  background-color: #f2f4ff;
 }
