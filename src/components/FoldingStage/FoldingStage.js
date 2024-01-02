@@ -11,6 +11,7 @@ import { PowersTable } from '../PowersTable/PowersTable';
 import { ParamsInput } from '../ParamsInput/ParamsInput';
 import { StartAnewButton } from '../Buttons/StartAnewButton';
 import { SaveResultButton } from '../Buttons/SaveResultButton';
+import { MoveAllCheckbox } from '../MoveAllCheckbox/MoveAllCheckbox';
 
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 
@@ -25,6 +26,8 @@ export function FoldingStage({ settings, isConstructor }) {
   );
 
   const [isSplitted, setIsSplitted] = useState(settings.isSplitted);
+  const [moveAll, setMoveAll] = useState(!settings.isSplitted);
+
   const [particles, setParticles] = useState(settings.particles);
 
   let energy = calculateTotalEnergy(settings.particles, settings.powers);
@@ -42,6 +45,11 @@ export function FoldingStage({ settings, isConstructor }) {
       <div className={styles['params-panel']}>
         <PowersTable powers={powers}/>
         <EnergiesTable energies={energies}/>
+        <hr></hr>
+        { isSplitted ?
+          <MoveAllCheckbox setMoveAll={setMoveAll} /> :
+          <></>
+        }
         { isConstructor ?
           <ParamsInput
             powers={powers}
@@ -87,6 +95,7 @@ export function FoldingStage({ settings, isConstructor }) {
             pivotParticleId={pivotParticleId}
             particleRadius={particleRadius}
             isSplitted={isSplitted}
+            moveAll={moveAll}
             energies={energies}
             setEnergies={setEnergies}
             powers={powers}

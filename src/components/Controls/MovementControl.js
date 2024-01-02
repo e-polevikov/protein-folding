@@ -21,6 +21,7 @@ export function MovementControl({
   pivotParticleId,
   particleRadius,
   isSplitted,
+  moveAll,
   energies,
   setEnergies,
   powers
@@ -31,7 +32,7 @@ export function MovementControl({
   function handleParticlesMovement() {
     let movedParticles = moveParticles(
       particles, movementDirection,
-      pivotParticleId, isSplitted
+      pivotParticleId, !moveAll
     );
 
     if (!haveIntersections(movedParticles, particleRadius, isSplitted) &&

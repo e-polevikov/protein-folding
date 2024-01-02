@@ -20,7 +20,7 @@ export function EnergiesTable({ energies }) {
   };
 
   return (
-    <>
+    <div style={{paddingBottom: "6px"}}>
       <h3 style={{textAlign: "center"}}> Энергия </h3>
       <table style={tableStyle}>
         <tr>
@@ -34,6 +34,6 @@ export function EnergiesTable({ energies }) {
           <td style={tableDataStyle}> {energies.minimal.toFixed(3)} </td>
         </tr>
       </table>
-    </>
+    </div>
   );
 }
