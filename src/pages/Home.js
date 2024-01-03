@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import proteinFoldingUI from '../images/protein-folding-ui.png';
 
 export function Home() {
-  let energyFormulaLatex = "$$E(d) = 4 \\cdot \\epsilon \\cdot \\left( \\frac{1}{d^{12}} - \\frac{1}{d^6} \\right)$$";
+  let energyFormulaLatex = "$$E(d) = 4 \\cdot \\epsilon \\cdot \\left( \\frac{1}{d^{12}} - \\frac{1}{d^6} \\right) \\cdot 10^{10}$$";
   let currentEnergyLatex = "$E_{curr}$";
 
   return (
