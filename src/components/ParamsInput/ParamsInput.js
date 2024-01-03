@@ -25,11 +25,13 @@ export function ParamsInput({
   const numParticlesRef = useRef(null);
   const particleRadiusRef = useRef(null);
   const isSplittedRef = useRef(null);
+  const zigzagChainRef = useRef(null);
 
   function generateNewParticlesChain() {
     let currentNumParticles = Number(numParticlesRef.current.value);
     let currentParticleRadius = Number(particleRadiusRef.current.value);
     let currentIsSplitted = isSplittedRef.current.checked;
+    let zigzagChain = zigzagChainRef.current.checked;
     let newPivotParticleId = Math.floor(currentNumParticles / (currentIsSplitted ? 4 : 2));
 
     setNumParticles(currentNumParticles);
@@ -40,7 +42,8 @@ export function ParamsInput({
     let newParticles = generateParticles(
       currentNumParticles,
       currentParticleRadius,
-      currentIsSplitted
+      currentIsSplitted,
+      0.5, zigzagChain
     );
 
     setParticles(newParticles);
@@ -79,6 +82,7 @@ export function ParamsInput({
         numParticlesRef={numParticlesRef}
         particleRadiusRef={particleRadiusRef}
         isSplittedRef={isSplittedRef}
+        zigzagChainRef={zigzagChainRef}
         settings={settings}
       />
       <button

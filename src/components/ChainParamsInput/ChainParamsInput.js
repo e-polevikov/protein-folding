@@ -4,6 +4,7 @@ export function ChainParamsInput({
   numParticlesRef,
   particleRadiusRef,
   isSplittedRef,
+  zigzagChainRef,
   settings
 }) {
   return (
@@ -31,6 +32,14 @@ export function ChainParamsInput({
       <label>Две цепи: </label>
       <input
         ref={isSplittedRef}
+        type='checkbox'
+      />
+
+      <br />
+
+      <label>Цепь-зигзаг: </label>
+      <input
+        ref={zigzagChainRef}
         type='checkbox'
       />
     </div>

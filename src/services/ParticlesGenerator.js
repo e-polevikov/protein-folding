@@ -60,12 +60,71 @@ function generateSplittedParticles(
   return particles1;
 }
 
+function generateZigzagChain(numOfParticles, particleRadius) {
+  let particles = [];
+  let numOfGeneratedParticles = 0;
+
+  particles.push({
+    id: numOfGeneratedParticles.toString(),
+    x: STAGE_WIDTH * 0.05,
+    y: STAGE_HEIGHT * 0.9,
+    color: generateParticleColor()
+  });
+
+  numOfGeneratedParticles += 1;  
+
+  let alpha = -1.0;
+  while (numOfGeneratedParticles < numOfParticles) {
+    let currentX = particles[particles.length - 1].x;
+    let currentY = particles[particles.length - 1].y;
+
+    let nextX = currentX + 2 * particleRadius / Math.sqrt(1 + Math.pow(Math.tan(alpha), 2));
+    let nextY = currentY + Math.tan(alpha) * (nextX - currentX);
+
+    if (nextX + particleRadius >= STAGE_WIDTH) {
+      break;
+    }
+
+    if (alpha < 0) {
+      if (nextY - particleRadius > 20.0) {
+        particles.push({
+          id: numOfGeneratedParticles.toString(),
+          x: nextX, y: nextY,
+          color: generateParticleColor()
+        });
+          
+        numOfGeneratedParticles += 1;
+      } else {
+        alpha *= -1;
+      }
+    } else {
+      if (nextY + particleRadius < STAGE_HEIGHT - 20.0) {
+        particles.push({
+          id: numOfGeneratedParticles.toString(),
+          x: nextX, y: nextY,
+          color: generateParticleColor()
+        });
+          
+        numOfGeneratedParticles += 1;
+      } else {
+        alpha *= -1;
+      }
+    }
+  }
+
+  return particles;
+}
+
 export function generateParticles(
   numOfParticles, particleRadius,
-  isSplitted, initY = 0.5
+  isSplitted, initY = 0.5, zigzag = false
 ) {
   if (isSplitted) {
     return generateSplittedParticles(numOfParticles, particleRadius);
+  }
+
+  if (!isSplitted && zigzag) {
+    return generateZigzagChain(numOfParticles, particleRadius);
   }
 
   let maxNumOfParticles = Math.floor(STAGE_WIDTH * 0.925 / (2.0 * particleRadius));
