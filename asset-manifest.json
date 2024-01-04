@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/protein-folding/static/css/main.8214ff16.css",
-    "main.js": "/protein-folding/static/js/main.6ed017f5.js",
+    "main.js": "/protein-folding/static/js/main.ff726854.js",
     "static/media/protein-folding-ui.png": "/protein-folding/static/media/protein-folding-ui.c63e9bd4d31155043f06.png",
     "static/media/KaTeX_AMS-Regular.ttf": "/protein-folding/static/media/KaTeX_AMS-Regular.853be92419a6c3766b9a.ttf",
     "static/media/KaTeX_Main-Regular.ttf": "/protein-folding/static/media/KaTeX_Main-Regular.9eba1d77abcf2aa6e94e.ttf",
@@ -65,10 +65,10 @@
     "static/media/KaTeX_Size3-Regular.woff2": "/protein-folding/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/protein-folding/index.html",
     "main.8214ff16.css.map": "/protein-folding/static/css/main.8214ff16.css.map",
-    "main.6ed017f5.js.map": "/protein-folding/static/js/main.6ed017f5.js.map"
+    "main.ff726854.js.map": "/protein-folding/static/js/main.ff726854.js.map"
   },
   "entrypoints": [
     "static/css/main.8214ff16.css",
-    "static/js/main.6ed017f5.js"
+    "static/js/main.ff726854.js"
   ]
 }
