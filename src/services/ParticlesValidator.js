@@ -33,14 +33,14 @@ export function haveIntersections(particles, particleRadius, isSplitted) {
 
 export function chainIsOutOfStageBoundaries(particles, particleRadius) {
   for (let i = 0; i < particles.length; i++) {
-    if (particles[i].x - particleRadius < 0.0 ||
-      particles[i].x + particleRadius >= STAGE_WIDTH
+    if (particles[i].x - particleRadius < -STAGE_WIDTH ||
+      particles[i].x + particleRadius >= 2 * STAGE_WIDTH
     ) {
       return true;
     }
 
-    if (particles[i].y - particleRadius < 0.0 ||
-      particles[i].y + particleRadius >= STAGE_HEIGHT
+    if (particles[i].y - particleRadius < -STAGE_HEIGHT ||
+      particles[i].y + particleRadius >= 2 * STAGE_HEIGHT
     ) {
       return true;
     }
