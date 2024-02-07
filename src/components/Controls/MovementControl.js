@@ -43,9 +43,7 @@ export function MovementControl({
       let energy = calculateTotalEnergy(movedParticles, powers);
 
       setEnergies({
-        'initial': energies.initial,
-        'current': energy,
-        'minimal': Math.min(energy, energies.minimal)
+        initial: energy, current: energy, minimal: energy
       });
     }
   }

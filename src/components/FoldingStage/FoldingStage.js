@@ -8,7 +8,6 @@ import { RotationControl } from '../Controls/RotationControl';
 import { MovementControl } from '../Controls/MovementControl';
 import { EnergiesTable } from '../EnergiesTable/EnergiesTable';
 import { PowersTable } from '../PowersTable/PowersTable';
-import { ParamsInput } from '../ParamsInput/ParamsInput';
 import { MoveAllCheckbox } from '../MoveAllCheckbox/MoveAllCheckbox';
 
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
@@ -16,34 +15,25 @@ import { calculateTotalEnergy } from '../../services/EnergyCalculator';
 import styles from './FoldingStage.module.css';
 
 export function FoldingStage({ settings, isConstructor }) {
-  const [numParticles, setNumParticles] = useState(settings.particles.length);
-  const [particleRadius, setParticleRadius] = useState(settings.particleRadius);
-
   const [pivotParticleId, setPivotParticleId] = useState(
     Math.floor(settings.particles.length / (settings.isSplitted ? 4 : 2))
   );
 
-  const [isSplitted, setIsSplitted] = useState(settings.isSplitted);
-  const [moveAll, setMoveAll] = useState(!settings.isSplitted);
-
   const [particles, setParticles] = useState(settings.particles);
+  const [moveAll, setMoveAll] = useState(!settings.isSplitted);
 
   let energy = calculateTotalEnergy(settings.particles, settings.powers);
 
   const [energies, setEnergies] = useState({
-    'initial': energy,
-    'current': energy,
-    'minimal': energy
+    initial: energy, current: energy, minimal: energy
   });
-
-  const [powers, setPowers] = useState(settings.powers);
 
   return (
     <div className={styles['folding-stage']}>
       <div className={styles['params-panel']}>
-        <PowersTable powers={powers}/>
+        <PowersTable powers={settings.powers}/>
         <EnergiesTable energies={energies}/>
-        { isSplitted ?
+        { settings.isSplitted ?
           <MoveAllCheckbox setMoveAll={setMoveAll} /> :
           <></>
         }
@@ -55,22 +45,22 @@ export function FoldingStage({ settings, isConstructor }) {
             particles={particles}
             setParticles={setParticles}
             pivotParticleId={pivotParticleId}
-            particleRadius={particleRadius}
-            isSplitted={isSplitted}
+            particleRadius={settings.particleRadius}
+            isSplitted={settings.isSplitted}
             energies={energies}
             setEnergies={setEnergies}
-            powers={powers}
+            powers={settings.powers}
           />
           <MovementControl
             particles={particles}
             setParticles={setParticles}
             pivotParticleId={pivotParticleId}
-            particleRadius={particleRadius}
-            isSplitted={isSplitted}
+            particleRadius={settings.particleRadius}
+            isSplitted={settings.isSplitted}
             moveAll={moveAll}
             energies={energies}
             setEnergies={setEnergies}
-            powers={powers}
+            powers={settings.powers}
           />
         </div>
 
@@ -81,10 +71,10 @@ export function FoldingStage({ settings, isConstructor }) {
               setParticles={setParticles}
               pivotParticleId={pivotParticleId}
               setPivotParticleId={setPivotParticleId}
-              isSplitted={isSplitted}
-              particleRadius={particleRadius}
+              isSplitted={settings.isSplitted}
+              particleRadius={settings.particleRadius}
               setEnergies={setEnergies}
-              powers={powers}
+              powers={settings.powers}
               isConstructor={isConstructor}
             />
           </Layer>

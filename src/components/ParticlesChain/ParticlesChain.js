@@ -83,9 +83,7 @@ export function ParticlesChain({
     let energy = calculateTotalEnergy(newParticles, powers);
 
     setEnergies({
-      'initial': energy,
-      'current': energy,
-      'minimal': energy
+      initial: energy, current: energy, minimal: energy
     });
   }
 
