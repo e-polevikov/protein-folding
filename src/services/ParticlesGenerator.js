@@ -167,18 +167,51 @@ export function generateParticles(
   return particles;
 }
 
+function initializeSplittedParticles(
+  particlesColors,
+  particleRadius,
+  angles
+) {
+  let particles1 = initializeParticles(
+    particlesColors.slice(0, particlesColors.length / 2),
+    particleRadius,
+    angles,
+    false, 0.25
+  );
+
+  let particles2 = initializeParticles(
+    particlesColors.slice(particlesColors.length / 2, particlesColors.length),
+    particleRadius,
+    angles,
+    false, 0.75
+  );
+
+  for (let i = 0; i < particles2.length; i++) {
+    let currentId = Number(particles2[i].id);
+    currentId += particles2.length;
+    particles2[i].id = currentId.toString();
+  }
+
+  return particles1.concat(particles2);
+}
+
 export function initializeParticles(
   particlesColors,
   particleRadius,
   angles,
-  isSplitted
+  isSplitted,
+  initY = 0.5
 ) {
+  if (isSplitted) {
+    return initializeSplittedParticles(particlesColors, particleRadius, angles);
+  }
+
   let particles = [];
 
   particles.push({
     id: "0",
     x: STAGE_WIDTH * 0.075,
-    y: STAGE_HEIGHT * 0.5,
+    y: STAGE_HEIGHT * initY,
     color: particlesColors[0]
   });
 
