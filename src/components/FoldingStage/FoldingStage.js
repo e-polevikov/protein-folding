@@ -11,6 +11,7 @@ import { PowersTable } from '../PowersTable/PowersTable';
 import { MoveAllCheckbox } from '../MoveAllCheckbox/MoveAllCheckbox';
 
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
+import { initializeParticles } from '../../services/ParticlesGenerator';
 
 import styles from './FoldingStage.module.css';
 

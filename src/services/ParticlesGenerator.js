@@ -164,3 +164,12 @@ export function generateParticles(
 
   return particles;
 }
+
+export function initializeParticles(
+  particlesColors,
+  particleRadius,
+  angles,
+  isSplitted
+) {
+  return [];
+}
