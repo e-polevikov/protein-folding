@@ -7,7 +7,6 @@ import { Home } from './pages/Home';
 import { Level1 } from './pages/Level1';
 import { Level2 } from './pages/Level2';
 import { Level3 } from './pages/Level3';
-import { Constructor } from './pages/Constructor';
 
 import './styles.css'
 
@@ -20,7 +19,6 @@ function App() {
           <Route path='/protein-folding/level-1' element={<Level1 />} />
           <Route path='/protein-folding/level-2' element={<Level2 />} />
           <Route path='/protein-folding/level-3' element={<Level3 />} />
-          <Route path='/protein-folding/constructor' element={<Constructor />} />
         </Routes>
       </BrowserRouter>
     </>

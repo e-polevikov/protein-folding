@@ -17,7 +17,6 @@ export function Home() {
         <li><Link to="/protein-folding/level-1">Уровень 1</Link></li>
         <li><Link to="/protein-folding/level-2">Уровень 2</Link></li>
         <li><Link to="/protein-folding/level-3">Уровень 3</Link></li>
-        <li><Link to="/protein-folding/constructor">Конструктор</Link></li>
       </ul>
 
       <h2>Описание</h2>

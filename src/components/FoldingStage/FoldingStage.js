@@ -47,22 +47,6 @@ export function FoldingStage({ settings, isConstructor }) {
           <MoveAllCheckbox setMoveAll={setMoveAll} /> :
           <></>
         }
-        { isConstructor ?
-          <ParamsInput
-            powers={powers}
-            setPowers={setPowers}
-            setEnergies={setEnergies}
-            particles={particles}
-            setParticles={setParticles}
-            setNumParticles={setNumParticles}
-            setParticleRadius={setParticleRadius}
-            setIsSplitted={setIsSplitted}
-            setPivotParticleId={setPivotParticleId}
-            particleRadius={particleRadius}
-            isSplitted={isSplitted}
-            settings={settings}
-          /> : <></>
-        }
       </div>
 
       <div className={styles['stage']}>
