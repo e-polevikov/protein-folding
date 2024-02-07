@@ -14,12 +14,13 @@ function SignedValue({ value }) {
 function PowersTableRow({ particleColor, rowPowers}) {
   const tableDataStyle = {
     border: "1px solid black",
+    fontSize: "28px"
   };
 
   return (
     <>
       <tr>
-        <td style={tableDataStyle}> <span style={{color: particleColor, fontSize: 'xx-large'}}>&#9679;</span> </td>
+        <td style={tableDataStyle}> <span style={{color: particleColor, fontSize: "38px"}}>&#9679;</span> </td>
         <td style={tableDataStyle}> <SignedValue value={rowPowers['red']}/> </td>
         <td style={tableDataStyle}> <SignedValue value={rowPowers['green']}/> </td>
         <td style={tableDataStyle}> <SignedValue value={rowPowers['blue']}/> </td>
@@ -49,9 +50,9 @@ export function PowersTable({ powers }) {
         <tbody>
           <tr>
             <td style={tableDataStyle}></td>
-            <td style={tableDataStyle}> <span style={{color: 'red', fontSize: 'xx-large'}}>&#9679;</span> </td>
-            <td style={tableDataStyle}> <span style={{color: 'green', fontSize: 'xx-large'}}>&#9679;</span> </td>
-            <td style={tableDataStyle}> <span style={{color: 'blue', fontSize: 'xx-large'}}>&#9679;</span> </td>
+            <td style={tableDataStyle}> <span style={{color: 'red', fontSize: '38px'}}>&#9679;</span> </td>
+            <td style={tableDataStyle}> <span style={{color: 'green', fontSize: '38px'}}>&#9679;</span> </td>
+            <td style={tableDataStyle}> <span style={{color: 'blue', fontSize: '38px'}}>&#9679;</span> </td>
           </tr>
           <PowersTableRow particleColor={'red'} rowPowers={powers['red']}/>
           <PowersTableRow particleColor={'green'} rowPowers={powers['green']}/>

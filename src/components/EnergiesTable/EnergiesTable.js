@@ -17,6 +17,7 @@ export function EnergiesTable({ energies }) {
 
   const tableDataStyle = {
     border: "1px solid black",
+    fontSize: "20px"
   };
 
   return (
