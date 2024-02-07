@@ -11,8 +11,6 @@ export function Home() {
     <div style={{margin: "4px", padding: "2px", fontSize: "22px"}}>
       <h1 style={{textAlign: "center"}}>Задача «Сворачивание белка»</h1>
 
-      <h2>Уровни</h2>
-
       <ul>
         <li><Link to="/protein-folding/level-1">Уровень 1</Link></li>
         <li><Link to="/protein-folding/level-2">Уровень 2</Link></li>
