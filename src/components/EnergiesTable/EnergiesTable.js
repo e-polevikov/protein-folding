@@ -23,16 +23,18 @@ export function EnergiesTable({ energies }) {
     <div style={{paddingBottom: "6px"}}>
       <h3 style={{textAlign: "center"}}> Энергия </h3>
       <table style={tableStyle}>
-        <tr>
-          <th style={tableDataStyle}><Latex>{initialEnergyLatex}</Latex></th>
-          <th style={tableDataStyle}><Latex>{currentEnergyLatex}</Latex></th>
-          <th style={tableDataStyle}><Latex>{minimalEnergyLatex}</Latex></th>
-        </tr>
-        <tr>
-          <td style={tableDataStyle}> {energies.initial.toFixed(3)} </td>
-          <td style={tableDataStyle}> {energies.current.toFixed(3)} </td>
-          <td style={tableDataStyle}> {energies.minimal.toFixed(3)} </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th style={tableDataStyle}><Latex>{initialEnergyLatex}</Latex></th>
+            <th style={tableDataStyle}><Latex>{currentEnergyLatex}</Latex></th>
+            <th style={tableDataStyle}><Latex>{minimalEnergyLatex}</Latex></th>
+          </tr>
+          <tr>
+            <td style={tableDataStyle}> {energies.initial.toFixed(3)} </td>
+            <td style={tableDataStyle}> {energies.current.toFixed(3)} </td>
+            <td style={tableDataStyle}> {energies.minimal.toFixed(3)} </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );

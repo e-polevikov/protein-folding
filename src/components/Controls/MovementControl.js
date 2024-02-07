@@ -60,6 +60,7 @@ export function MovementControl({
 
   const buttons = MOVEMENT_DIRECTIONS.map((direction) => (
     <button
+      key={direction.key}
       className={styles['button']}
       onMouseDown={() => {
         setMovementDirection(direction.key);

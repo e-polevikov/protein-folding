@@ -59,6 +59,7 @@ export function RotationControl({
 
   const buttons = ROTATION_DIRECTIONS.map((direction) => (
     <button
+      key={direction.key}
       className={styles['button']}
       onMouseDown={() => {
         setRotationDirection(direction.key);
