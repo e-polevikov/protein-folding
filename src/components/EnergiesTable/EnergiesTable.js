@@ -22,7 +22,7 @@ export function EnergiesTable({ energies }) {
 
   return (
     <div style={{paddingBottom: "6px"}}>
-      <h3 style={{textAlign: "center"}}> Энергия </h3>
+      <h3 style={{textAlign: "center", fontSize: "28px"}}> Энергия </h3>
       <table style={tableStyle}>
         <tbody>
           <tr>

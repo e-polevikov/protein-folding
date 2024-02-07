@@ -8,7 +8,7 @@ export function Home() {
   let currentEnergyLatex = "$E_{curr}$";
 
   return (
-    <div style={{margin: "4px", padding: "2px"}}>
+    <div style={{margin: "4px", padding: "2px", fontSize: "22px"}}>
       <h1 style={{textAlign: "center"}}>Задача «Сворачивание белка»</h1>
 
       <h2>Уровни</h2>
