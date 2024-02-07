@@ -24,7 +24,8 @@ export function FoldingStage({ settings, isConstructor }) {
     initializeParticles(
       settings.particlesColors,
       settings.particleRadius,
-      settings.angles
+      settings.angles,
+      settings.isSplitted
     )
   );
   const [moveAll, setMoveAll] = useState(!settings.isSplitted);
