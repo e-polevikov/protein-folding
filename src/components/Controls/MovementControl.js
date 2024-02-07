@@ -40,10 +40,12 @@ export function MovementControl({
     ) {
       setParticles(movedParticles);
 
-      let energy = calculateTotalEnergy(movedParticles, powers);
+      let currentEnergy = calculateTotalEnergy(movedParticles, powers);
 
       setEnergies({
-        initial: energy, current: energy, minimal: energy
+        initial: energies.initial,
+        current: currentEnergy,
+        minimal: Math.min(currentEnergy, energies.minimal)
       });
     }
   }

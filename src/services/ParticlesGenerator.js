@@ -6,6 +6,8 @@ import {
   chainIsOutOfStageBoundaries
 } from './ParticlesValidator';
 
+import { rotatePoint } from './ParticlesRotator';
+
 function randomSign() {
   return Math.random() < 0.5 ? 1 : -1;
 }
@@ -171,5 +173,31 @@ export function initializeParticles(
   angles,
   isSplitted
 ) {
-  return [];
+  let particles = [];
+
+  particles.push({
+    id: "0",
+    x: STAGE_WIDTH * 0.075,
+    y: STAGE_HEIGHT * 0.5,
+    color: particlesColors[0]
+  });
+
+  for (let i = 1; i < particlesColors.length; i++) {
+    let currentX = particles[particles.length - 1].x;
+    let currentY = particles[particles.length - 1].y;
+
+    let nextX = currentX + 2 * particleRadius;
+    let nextY = currentY;
+
+    [nextX, nextY] = rotatePoint(nextX, nextY, currentX, currentY, angles[i - 1]);
+
+    particles.push({
+      id: i.toString(),
+      x: nextX,
+      y: nextY,
+      color: particlesColors[i]
+    });
+  }
+ 
+  return particles;
 }

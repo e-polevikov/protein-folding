@@ -39,10 +39,12 @@ export function RotationControl({
     ) {
       setParticles(rotatedParticles);
 
-      let energy = calculateTotalEnergy(rotatedParticles, powers);
+      let currentEnergy = calculateTotalEnergy(rotatedParticles, powers);
 
       setEnergies({
-        initial: energy, current: energy, minimal: energy
+        initial: energies.initial,
+        current: currentEnergy,
+        minimal: Math.min(currentEnergy, energies.minimal)
       });
     }
   }

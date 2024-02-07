@@ -17,13 +17,22 @@ import styles from './FoldingStage.module.css';
 
 export function FoldingStage({ settings, isConstructor }) {
   const [pivotParticleId, setPivotParticleId] = useState(
-    Math.floor(settings.particles.length / (settings.isSplitted ? 4 : 2))
+    Math.floor(settings.particlesColors.length / (settings.isSplitted ? 4 : 2))
   );
 
-  const [particles, setParticles] = useState(settings.particles);
+  const [particles, setParticles] = useState(
+    initializeParticles(
+      settings.particlesColors,
+      settings.particleRadius,
+      settings.angles
+    )
+  );
   const [moveAll, setMoveAll] = useState(!settings.isSplitted);
 
-  let energy = calculateTotalEnergy(settings.particles, settings.powers);
+  let energy = calculateTotalEnergy(
+    particles,
+    settings.powers
+  );
 
   const [energies, setEnergies] = useState({
     initial: energy, current: energy, minimal: energy

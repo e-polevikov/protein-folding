@@ -1,5 +1,21 @@
 import { ROTATION_ANGLE, ROTATION_DIRECTIONS } from '../constants/RotationControl';
 
+export function rotatePoint(x, y, originX, originY, angle) {
+  let angleRadians = angle * Math.PI / 180;
+
+  let xRotated =
+      (x - originX) * Math.cos(angleRadians)
+    - (y - originY) * Math.sin(angleRadians);
+  let yRotated =
+      (x - originX) * Math.sin(angleRadians)
+    + (y - originY) * Math.cos(angleRadians);
+
+  xRotated += originX;
+  yRotated += originY;
+
+  return [xRotated, yRotated]
+}
+
 export function rotateParticles(
   particles,
   pivotParticleId,
