@@ -9,8 +9,6 @@ import { MovementControl } from '../Controls/MovementControl';
 import { EnergiesTable } from '../EnergiesTable/EnergiesTable';
 import { PowersTable } from '../PowersTable/PowersTable';
 import { ParamsInput } from '../ParamsInput/ParamsInput';
-import { StartAnewButton } from '../Buttons/StartAnewButton';
-import { SaveResultButton } from '../Buttons/SaveResultButton';
 import { MoveAllCheckbox } from '../MoveAllCheckbox/MoveAllCheckbox';
 
 import { calculateTotalEnergy } from '../../services/EnergyCalculator';
@@ -45,7 +43,6 @@ export function FoldingStage({ settings, isConstructor }) {
       <div className={styles['params-panel']}>
         <PowersTable powers={powers}/>
         <EnergiesTable energies={energies}/>
-        <hr></hr>
         { isSplitted ?
           <MoveAllCheckbox setMoveAll={setMoveAll} /> :
           <></>
@@ -64,16 +61,7 @@ export function FoldingStage({ settings, isConstructor }) {
             particleRadius={particleRadius}
             isSplitted={isSplitted}
             settings={settings}
-          /> :
-          <div className={styles['buttons-container']}>
-            <StartAnewButton
-              settings={settings}
-              setParticles={setParticles}
-              setPivotParticleId={setPivotParticleId}
-              setEnergies={setEnergies}
-            />
-            <SaveResultButton />
-          </div>
+          /> : <></>
         }
       </div>
 
