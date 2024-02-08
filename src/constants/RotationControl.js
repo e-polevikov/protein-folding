@@ -5,5 +5,5 @@ export const ROTATION_DIRECTIONS = [
   { 'key': 1, 'arrow': '\u21BA' }  // counter clockwise, right from pivot 
 ];
 
-export const ROTATION_ANGLE = 0.01;
+export const ROTATION_ANGLE = 0.75;
 export const ROTATION_TIMEOUT = 10;
